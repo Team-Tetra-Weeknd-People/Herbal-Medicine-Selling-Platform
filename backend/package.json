@@ -1,0 +1,20 @@
+{
+  "name": "Beheth-Kade",
+  "version": "1.0.0",
+  "description": "Backend of the Beheth Kade, Backend of Online Herbal Medicine Selling Platform",
+  "main": "index.js",
+  "repository": "https://github.com/Team-Tetra-Weeknd-People/Herbal-Medicine-Selling-Platform-Backend.git",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Team Tetra",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.10.0",
+    "nodemon": "^2.0.20"
+  }
+}
