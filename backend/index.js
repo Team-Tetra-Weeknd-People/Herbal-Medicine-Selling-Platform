@@ -20,7 +20,6 @@ app.use(session({
         sameSite: 'none',
         secure: true
     }
-
 }));
 
 const URL = process.env.REACT_APP_MONGODB_URL;
