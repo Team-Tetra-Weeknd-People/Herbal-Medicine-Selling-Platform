@@ -41,3 +41,6 @@
     display: flex;
     justify-content: space-around;
 } */
+.me-auto{
+    align-items: center;
+}

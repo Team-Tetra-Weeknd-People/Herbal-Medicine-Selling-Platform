@@ -10,14 +10,11 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import auth from "../firebase";
-import { signOut } from "firebase/auth";
+// import auth from "../firebase";
+// import { signOut } from "firebase/auth";
 
 function Navbar() {
   const [show, setShow] = useState(false);
-  const [showLogout, setLogout] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -40,30 +37,26 @@ function Navbar() {
   }
 
   // loggin in user in backend
-  useEffect(() => {
-    if (user) {
-      axios
-        .post("http://localhost:8070/client/login", {
-          email,
-          password: password,
-        })
-        .then((client) => {
-          sessionStorage.setItem("ID", client.data._id);
-          return navigate(`/ClientDashboard/${client.data._id}`);
-        })
-        .catch((err) => {
-          alert("Login unsuccessful");
-          signOut(auth);
-          console.log(err);
-        });
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     axios
+  //       .post("http://localhost:8070/client/login", {
+  //         email,
+  //         password: password,
+  //       })
+  //       .then((client) => {
+  //         sessionStorage.setItem("ID", client.data._id);
+  //         return navigate(`/ClientDashboard/${client.data._id}`);
+  //       })
+  //       .catch((err) => {
+  //         alert("Login unsuccessful");
+  //         console.log(err);
+  //       });
+  //   }
+  // }, [user]);
 
 
 
-  useEffect(() => {
-    if (error || gError) alert("Login unsuccessful");
-  }, [error, gError]);
 
 
   return (
@@ -71,7 +64,7 @@ function Navbar() {
       <Container>
         <Navbarx.Toggle aria-controls="basic-navbar-nav" />
         <Navbarx.Collapse id="basic-navbar-nav" className="NavbarList">
-          <LinkContainer to="/" className="NavbarLogo">
+          {/* <LinkContainer to="/" className="NavbarLogo">
             <Navbarx.Brand>
               <img
                 src={
@@ -80,22 +73,19 @@ function Navbar() {
                 alt="heroimg"
               />
             </Navbarx.Brand>
-          </LinkContainer>
+          </LinkContainer> */}
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/flights" className="navlink">
-              Flights
+              Drugs
             </Nav.Link>
             <Nav.Link as={Link} to="/hotels" className="navlink">
-              Hotels
+              Beauty
             </Nav.Link>
             <Nav.Link as={Link} to="/taxis" className="navlink">
-              Taxis
+              Supplements
             </Nav.Link>
             <Nav.Link as={Link} to="/packages" className="navlink">
-              Packages
-            </Nav.Link>
-            <Nav.Link as={Link} to="/attractions" className="navlink">
-              Attractions
+              Sports
             </Nav.Link>
           </Nav>
           {view()}
@@ -109,7 +99,7 @@ function Navbar() {
                 onSubmit={async (e) => {
                   e.preventDefault();
 
-                  signInWithEmailAndPassword(email, password);
+               //   signInWithEmailAndPassword(email, password);
                 }}
               >
                 <Form.Group
@@ -122,7 +112,7 @@ function Navbar() {
                     placeholder="Enter your email"
                     autoFocus
                     onChange={(e) => {
-                      setEmail(e.target.value);
+                 //     setEmail(e.target.value);
                     }}
                     required
                   />
@@ -136,12 +126,12 @@ function Navbar() {
                     type="password"
                     placeholder="Enter your password"
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                    //  setPassword(e.target.value);
                     }}
                     required
                   />
                 </Form.Group>
-                <div className="btnContainerlosgin">
+                {/* <div className="btnContainerlosgin">
                   {loading ? (
                     <Button type="submit" className="blackbtn">
                       Loading ...
@@ -175,7 +165,7 @@ function Navbar() {
                       />
                       Continue with Google
                     </span>
-                  )}
+                  )} */}
 
                   {/* <div id="googlelogin"></div>
                   
@@ -187,7 +177,7 @@ function Navbar() {
                     cookiePolicy={'single_host_origin'}
                     isSignedIn={true}
                 /> */}
-                </div>
+                {/* </div> */}
               </Form>
             </Modal.Body>
             <Modal.Footer>
