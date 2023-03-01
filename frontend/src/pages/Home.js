@@ -5,9 +5,6 @@ function Home() {
   return(
     <>
     <Navbar/>
-    <div>
-      <h1>jasdnf</h1>
-    </div>
     </>
   );
 }
