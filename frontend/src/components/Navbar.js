@@ -20,12 +20,20 @@ function Navbar() {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
 
+  const logo = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Flogo%20(transparent).png?alt=media&token=78d6bc1e-59bb-461c-b32e-cd278ebab61a"
+
   function view() {
     if (sessionStorage.getItem("ID") === null) {
       return (
-        <Button className="whitebtn" onClick={handleShow}>
-          Login
-        </Button>
+        <div>
+          <Button className="whitebtn">
+            Register
+          </Button>
+          
+          <Button className="whitebtn" onClick={handleShow}>
+            Login
+          </Button>
+        </div>
       );
     } else {
       return (
@@ -55,25 +63,21 @@ function Navbar() {
   //   }
   // }, [user]);
 
-
-
-
-
   return (
     <Navbarx className="NavbarCont" expand="lg">
       <Container>
         <Navbarx.Toggle aria-controls="basic-navbar-nav" />
         <Navbarx.Collapse id="basic-navbar-nav" className="NavbarList">
-          {/* <LinkContainer to="/" className="NavbarLogo">
+          <LinkContainer to="/" className="NavbarLogo">
             <Navbarx.Brand>
               <img
                 src={
-                  "https://firebasestorage.googleapis.com/v0/b/journeyly-7f164.appspot.com/o/images%2Fothers%2FJourneyly-W.webp?alt=media&token=c779642d-f02b-4d1e-90e1-bd70c77bdfd3"
+                  logo
                 }
                 alt="heroimg"
               />
             </Navbarx.Brand>
-          </LinkContainer> */}
+          </LinkContainer>
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/flights" className="navlink">
               Drugs
@@ -92,14 +96,14 @@ function Navbar() {
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>User Login</Modal.Title>
+              <Modal.Title>Customer Login</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form
                 onSubmit={async (e) => {
                   e.preventDefault();
 
-               //   signInWithEmailAndPassword(email, password);
+                  //   signInWithEmailAndPassword(email, password);
                 }}
               >
                 <Form.Group
@@ -112,7 +116,7 @@ function Navbar() {
                     placeholder="Enter your email"
                     autoFocus
                     onChange={(e) => {
-                 //     setEmail(e.target.value);
+                      //     setEmail(e.target.value);
                     }}
                     required
                   />
@@ -126,10 +130,14 @@ function Navbar() {
                     type="password"
                     placeholder="Enter your password"
                     onChange={(e) => {
-                    //  setPassword(e.target.value);
+                      //  setPassword(e.target.value);
                     }}
                     required
                   />
+
+                  <Button type="submit" className="blackbtn">
+                    Login
+                  </Button>
                 </Form.Group>
                 {/* <div className="btnContainerlosgin">
                   {loading ? (
@@ -167,7 +175,7 @@ function Navbar() {
                     </span>
                   )} */}
 
-                  {/* <div id="googlelogin"></div>
+                {/* <div id="googlelogin"></div>
                   
                 <GoogleLogin
                     clientId={clientId}
@@ -184,13 +192,10 @@ function Navbar() {
               <div style={{}}>
                 <h4>Other Logins</h4>
                 <Link to={"/financeDashboard"}>
-                  <button className="blackbtn">Login as an Accountant</button>
+                  <button className="blackbtn">Login as a Seller</button>
                 </Link>
                 <Link to={"/editorDashboard"}>
-                  <button className="blackbtn">Login as an Editor</button>
-                </Link>
-                <Link to={"/ceoDashboard"}>
-                  <button className="blackbtn">Login as a CEO</button>
+                  <button className="blackbtn">Login as an Admin</button>
                 </Link>
               </div>
             </Modal.Footer>
@@ -200,5 +205,7 @@ function Navbar() {
     </Navbarx>
   );
 }
+
+
 
 export default Navbar;
