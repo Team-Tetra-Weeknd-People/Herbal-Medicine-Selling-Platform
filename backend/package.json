@@ -4,9 +4,11 @@
   "description": "Backend of the Beheth Kade, Backend of Online Herbal Medicine Selling Platform",
   "main": "index.js",
   "repository": "https://github.com/Team-Tetra-Weeknd-People/Herbal-Medicine-Selling-Platform-Backend.git",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
+    
   },
   "author": "Team Tetra",
   "license": "MIT",

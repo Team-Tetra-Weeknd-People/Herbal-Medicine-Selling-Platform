@@ -1,15 +1,18 @@
-const express = require("express");
-const mongoose = require ("mongoose");
-const bodyParser = require ("body-parser");
-const cors = require ("cors");
-const dotenv = require ("dotenv/config");
-const session = require ("express-session");
+import mongoose from "mongoose";
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import session from "express-session";
+import dotenv from "dotenv/config";
+
+import itemRouter from "./routes/items.js";
 
 const app = express();
-const PORT = process.env.REACT_APP_BACKEND_PORT || 3000;
+const PORT = process.env.REACT_APP_BACKEND_PORT || 8000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/items" , itemRouter);
 
 app.use(session({
     secret: 'beheth_kade',
