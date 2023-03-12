@@ -8,8 +8,10 @@
     z-index: 2;
     color: aliceblue;
     font-family: 'Poppins', sans-serif;
-    background-color: rgba(0, 0, 0, 0.073);
-    backdrop-filter: blur(4px);
+    /* background-color: rgba(0, 255, 13, 0.073);*/
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Fmint-table.png?alt=media&token=25662400-1c7a-457f-8c0f-70ae7001c015");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .NavbarLogo {}
@@ -43,4 +45,8 @@
 } */
 .me-auto{
     align-items: center;
+}
+
+.NavbarCont img{
+    width: 80px;
 }
