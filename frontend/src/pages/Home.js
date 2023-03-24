@@ -1,14 +1,17 @@
-import HeroSection from "../components/heroSection";
-import Navbar from "../components/Navbar";
 import "../styles/sudul/Home.css";
+
+import {
+  Navbar,
+  HeroSection
+} from "../components";
 
 function Home() {
 
   document.title = "Beheth Kade | Home";
   return (
     <>
-      <Navbar />
-      <HeroSection />
+       <Navbar />
+      {/* <HeroSection /> */}
     </>
 
   );
