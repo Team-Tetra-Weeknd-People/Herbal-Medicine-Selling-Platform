@@ -1,5 +1,32 @@
 import Buyer from "../models/buyer.js";
+import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt';
 
+//authenticating the buyer
+export const authBuyer = async (req, res) => {
+    const { username, password } = req.body;
+    try{
+        const buyer = await Buyer.findOne({username});
+        if(buyer){
+            if(bcrypt.compareSync(password, buyer.password)){
+                const secret = process.env.JWT_SECRET;
+
+                const token = jwt.sign({ id: buyer._id  , verified : buyer.verified }, secret, {
+                    expiresIn: "3h",
+                });
+
+                return res.status(418).json({ success: true , user : "Buyer", message: "Buyer authenticated" , token: token });
+            }
+            return res.status(406).json({ success: false , user: true , message: "Password Incorrect" });
+        }
+        else{
+            return res.status(402).json({ success: false, user: false , message: "Buyer doesn't exist" });
+        }
+    }
+    catch(error){
+        return res.status(404).json({ message: error });
+    }
+}
 
 export const getAllBuyers = async (req, res) => {
     try {
@@ -48,30 +75,6 @@ export const deleteBuyer = async (req, res) => {
         await Buyer.findByIdAndDelete(id);
         res.status(200).send({ status: "Buyer details deleted" });
     } catch {
-        res.status(404).json({ message: error });
-    }
-}
-
-export const loginBuyer = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-
-        const buyer = await Buyer.findOne({ email });
-
-        if (!buyer) {
-            return res.status(404).json({ message: "Buyer doesn't exist" });
-        }
-        if (password != buyer.password) {
-            return res.status(404).json({ message: "invalid credentials" });
-        }
-        // if(buyer){
-        //     req.session.user=user;
-        //     req.session.authorized=true;
-
-        return res.status(200).json(buyer);
-
-    } catch (error) {
         res.status(404).json({ message: error });
     }
 }

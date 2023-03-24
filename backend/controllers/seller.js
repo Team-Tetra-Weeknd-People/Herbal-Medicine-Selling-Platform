@@ -1,5 +1,32 @@
 import Seller from "../models/seller.js";
+import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 
+//authenticating the seller
+export const authSeller = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const seller = await Seller.findOne({ username });
+        if (seller) {
+            if (bcrypt.compareSync(password, seller.password)) {
+                const secret = process.env.JWT_SECRET;
+
+                const token = jwt.sign({ id: seller._id, verified: seller.verified }, secret, {
+                    expiresIn: "3h",
+                });
+
+                return res.status(418).json({ success: true, user: "Seller", message: "Seller authenticated", token: token });
+            }
+            return res.status(406).json({ success: false, user: true, message: "Password Incorrect" });
+        }
+        else {
+            return res.status(402).json({ success: false, user: false, message: "Seller doesn't exist" });
+        }
+    }
+    catch (error) {
+        return res.status(404).json({ message: error });
+    }
+}
 
 export const getAllSellers = async (req, res) => {
     try {
@@ -48,30 +75,6 @@ export const deleteSeller = async (req, res) => {
         await Seller.findByIdAndDelete(id);
         res.status(200).send({ status: "Seller details deleted" });
     } catch {
-        res.status(404).json({ message: error });
-    }
-}
-
-export const loginSeller = async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-
-        const seller = await Seller.findOne({ email });
-
-        if (!seller) {
-            return res.status(404).json({ message: "Seller doesn't exist" });
-        }
-        if (password != seller.password) {
-            return res.status(404).json({ message: "invalid credentials" });
-        }
-        // if(seller){
-        //     req.session.user=user;
-        //     req.session.authorized=true;
-
-        return res.status(200).json(seller);
-
-    } catch (error) {
         res.status(404).json({ message: error });
     }
 }
