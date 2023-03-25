@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
 
 const sellerSchema = new Schema({
-  
+
     firstName: {
         type: String,
         required: true
@@ -16,17 +17,29 @@ const sellerSchema = new Schema({
 
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
 
     contactNo: {
         type: String,
         required: true
     },
+    
+    companyName: {
+        type: String,
+        required: true
+    },
+
+    companyAddress: {
+        type: String,
+        required: true
+    },
 
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
 
     password: {
@@ -36,10 +49,49 @@ const sellerSchema = new Schema({
 
     image: {
         type: String,
-        
+        required: false
+    },
+
+    token: {
+        type: Number,
+        required: false,
+        default: Math.floor(Math.random() * 1000000)
+    },
+
+    resetToken: {
+        type: Number,
+        required: false,
+        default: 0
+    },
+
+    verified: {
+        type: Boolean,
+        required: false,
+        default: false
     }
+    
+}, {
+    timestamps: {
+        createdAt: 'createdOn',
+        updatedAt: 'updatedOn'
+    }
+});
 
-    });
+sellerSchema.pre("save", async function (next) {
+	const user = this;
+	const password = user.password;
 
-    const Seller = mongoose.model('Seller', sellerSchema);
-    export default Seller;
+	if (!user.isModified("password")) {
+		return next();
+	}
+
+	// Number of rounds hash function will execute
+	const salt = await bcrypt.genSalt(10);
+
+	const hash = bcrypt.hashSync(password, salt);
+	user.password = hash;
+	return next();
+});
+
+const Seller = mongoose.model('Seller', sellerSchema);
+export default Seller;

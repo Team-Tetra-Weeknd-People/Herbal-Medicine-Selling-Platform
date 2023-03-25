@@ -1,7 +1,7 @@
-import "../styles/chanudi/heroSection.css";
+import "../../styles/chanudi/heroSection.css";
 import Carousel from 'react-bootstrap/Carousel';
 
-export function HeroSection() {
+export default function HeroSection() {
 
 
     const image = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F12abe94c-ecad-42a0-831b-2e1c60f23d42.__CR0%2C0%2C970%2C300_PT0_SX970_V1___.jpg?alt=media&token=e35f938d-8a8c-4e4b-8f33-3efe6d22d8b9";
@@ -47,5 +47,3 @@ export function HeroSection() {
         </Carousel>
     );
 }
-
-export default HeroSection;
