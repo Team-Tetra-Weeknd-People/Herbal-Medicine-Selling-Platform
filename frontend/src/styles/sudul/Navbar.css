@@ -50,3 +50,11 @@
 .NavbarCont img{
     width: 80px;
 }
+
+.modal-footer{
+    justify-content: left;
+}
+
+.form-control{
+    width: 150%;
+}

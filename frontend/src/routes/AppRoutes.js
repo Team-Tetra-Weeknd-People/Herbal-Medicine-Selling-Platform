@@ -8,14 +8,11 @@ import {
 export default function App() {
     return (
         <>
-        <Router>
-        	<Routes>
-       			<Route path="/" >
-        		<Route index element={<Home />} />
-        		</Route>
-        	</Routes>
-        </Router>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </Router>
         </>
-        )
-    }
-    
+    )
+}
