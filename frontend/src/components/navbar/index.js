@@ -4,16 +4,23 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbarx from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import axios from "axios";
+import { LinkContainer } from "react-router-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import { storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+
+import SellerAuth from "../../services/sellerAuth.service";
+import BuyerAuth from "../../services/buyerAuth.service";
+import axios from "axios";
 
 export default function Navbar() {
 
@@ -21,7 +28,10 @@ export default function Navbar() {
   const logo = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Flogo%20(transparent).png?alt=media&token=78d6bc1e-59bb-461c-b32e-cd278ebab61a";
 
   document.body.style.overflow = "visible";
-  const [uploadImage, setUploadImage] = useState("");
+  const [imageBuyer, setImageBuyer] = useState("");
+  const [buyerUrl, setBuyerUrl] = useState("");
+  const [imageSeller, setImageSeller] = useState("");
+  const [sellerUrl, setSellerUrl] = useState("");
 
   //buyer register validation
   const buyerRegisterSchema = Yup.object().shape({
@@ -158,6 +168,102 @@ export default function Navbar() {
   function logout() {
     sessionStorage.clear();
     //window.location.href = "/";
+  }
+
+  async function registerBuyer(values) {
+    const storageRef = ref(storage, `buyer/${Image.name + v4()}`);
+
+    await uploadBytes(storageRef, imageBuyer)
+      .then(() => {
+        console.log("uploaded");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    await getDownloadURL(storageRef)
+      .then(async (url) => {
+        console.log(url);
+        setBuyerUrl(url);
+        const data = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          contactNo: values.contactNo,
+          address: values.address,
+          username: values.username,
+          password: values.password,
+          image: buyerUrl,
+        };
+        const response = BuyerAuth.register(data).data;
+        console.log(response.status);
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Successful',
+      text: 'New Buyer Registered Successfully!',
+      footer: '<a href="/accVerify">Go to your profile</a>'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/accVerify";
+      }
+    })
+  }
+
+  async function registerSeller(values) {
+    const storageRef = ref(storage, `seller/${Image.name + v4()}`);
+    
+    await uploadBytes(storageRef, imageSeller)
+      .then(() => {
+        console.log("uploaded");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    await getDownloadURL(storageRef)
+      .then(async (url) => {
+        console.log(url);
+        setSellerUrl(url);
+        const data = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          contactNo: values.contactNo,
+          companyName: values.companyName,
+          companyAddress: values.companyAddress,
+          username: values.username,
+          password: values.password,
+          image: sellerUrl,
+        };
+        const response = SellerAuth.register(data).data;
+        console.log(response.status);
+      }).catch((err) => {
+        console.log(err);
+      });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Successful',
+      text: 'New Seller Registered Successfully!',
+      footer: '<a href="/accVerify">Go to your profile</a>'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/accVerify";
+      }
+    })
+  }
+
+  async function loginBuyer(values) {
+  }
+
+  async function loginSeller(values) {
+  }
+
+  async function loginAdmin(values) {
   }
 
   function view() {
@@ -344,6 +450,7 @@ export default function Navbar() {
             onSubmit={values => {
               // same shape as initial values
               console.log(values);
+              registerSeller(values);
             }}
           >
             {({ errors, touched }) => (
@@ -374,13 +481,6 @@ export default function Navbar() {
                   <label htmlFor="empNo">Seller Contact No</label>
                   <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.contactNo}</div>
-                </div>
-
-                {/* address */}
-                <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Seller Address</label>
-                  <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.address}</div>
                 </div>
 
                 {/* username */}
@@ -423,7 +523,7 @@ export default function Navbar() {
                   <label htmlFor="empNo">Seller Company Logo</label>
                   <br /><br />
                   <input type="file" name="file" onChange={(e) => {
-                    setUploadImage(e.target.files[0]);
+                    setImageSeller(e.target.files[0]);
                   }} />
                 </div>
 
@@ -459,6 +559,7 @@ export default function Navbar() {
             validationSchema={buyerRegisterSchema}
             onSubmit={values => {
               console.log(values);
+              registerBuyer(values);
             }
             }
           >
@@ -525,7 +626,7 @@ export default function Navbar() {
                   <label htmlFor="empNo">Seller Company Logo</label>
                   <br /><br />
                   <input type="file" name="file" onChange={(e) => {
-                    setUploadImage(e.target.files[0]);
+                    setImageBuyer(e.target.files[0]);
                   }} />
                 </div>
 
@@ -616,6 +717,7 @@ export default function Navbar() {
             validationSchema={loginSchema}
             onSubmit={values => {
               console.log(values);
+              loginSeller(values);
             }
             }
           >
@@ -661,6 +763,7 @@ export default function Navbar() {
             validationSchema={loginSchema}
             onSubmit={values => {
               console.log(values);
+              loginBuyer(values);
             }
             }
           >
@@ -706,6 +809,7 @@ export default function Navbar() {
             validationSchema={loginSchema}
             onSubmit={values => {
               console.log(values);
+              loginAdmin(values);
             }
             }
           >
@@ -736,11 +840,6 @@ export default function Navbar() {
           </Formik>
         </Modal.Body>
       </Modal>
-
-
-
-
-
 
       {/* Navbar component */}
       <Navbarx className="NavbarCont" expand="lg">
