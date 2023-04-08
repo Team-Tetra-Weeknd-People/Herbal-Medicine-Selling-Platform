@@ -15,7 +15,7 @@ export const authSeller = async (req, res) => {
                     expiresIn: "3h",
                 });
 
-                return res.status(418).json({ success: true, user: "Seller", message: "Seller authenticated", token: token });
+                return res.status(200).json({ success: true, user: "Seller", message: "Seller authenticated", token: token });
             }
             return res.status(406).json({ success: false, user: true, message: "Password Incorrect" });
         }
