@@ -1,0 +1,3 @@
+# REACT_APP_BACKEND_PORT = 8000
+REACT_APP_MONGODB_URL = mongodb+srv://notrandula98:2TU1O1QLRTg2PXL5@herbal-shop.yhcckpq.mongodb.net/?retryWrites=true&w=majority
+REACT_APP_BACKEND_PORT = 8000
