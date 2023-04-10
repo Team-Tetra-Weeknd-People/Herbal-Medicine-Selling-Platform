@@ -7,11 +7,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start1": "cd APIGateway && nodemon index.js",
-    "start2": "cd ItemService && nodemon index.js",
-    "start3": "cd OrderService && nodemon index.js",
-    "start4": "cd PaymentService && nodemon index.js",
-    "start5": "cd UserService && nodemon index.js"
+    "api": "cd APIGateway && nodemon index.js",
+    "item": "cd ItemService && nodemon index.js",
+    "order": "cd OrderService && nodemon index.js",
+    "pay": "cd PaymentService && nodemon index.js",
+    "user": "cd UserService && nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
