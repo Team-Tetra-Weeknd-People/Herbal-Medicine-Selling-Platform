@@ -4,9 +4,9 @@ import jwt from "jsonwebtoken";
 
 //authenticating the seller
 export const authSeller = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const seller = await Seller.findOne({ username });
+        const seller = await Seller.findOne({ email });
         if (seller) {
             if (bcrypt.compareSync(password, seller.password)) {
                 const secret = process.env.JWT_SECRET;

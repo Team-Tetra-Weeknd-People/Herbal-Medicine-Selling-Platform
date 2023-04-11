@@ -31,12 +31,6 @@ const buyerSchema = new Schema({
         required: false
     },
 
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-
     password: {
         type: String,
         required: true

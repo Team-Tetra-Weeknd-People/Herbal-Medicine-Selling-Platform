@@ -4,9 +4,9 @@ import bcrypt from 'bcrypt';
 
 //authenticating the buyer
 export const authBuyer = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try{
-        const buyer = await Buyer.findOne({username});
+        const buyer = await Buyer.findOne({email});
         if(buyer){
             if(bcrypt.compareSync(password, buyer.password)){
                 const secret = process.env.JWT_SECRET;
