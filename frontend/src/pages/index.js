@@ -1,5 +1,11 @@
 import Home from './Home';
+import AdminProfile from './AdminProfile';
+import BuyerProfile from './BuyerProfile';
+import SellerProfile from './SellerProfile';
 
 export { 
-    Home 
+    Home,
+    AdminProfile,
+    BuyerProfile,
+    SellerProfile
 }
