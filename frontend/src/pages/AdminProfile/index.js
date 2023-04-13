@@ -1,6 +1,8 @@
 import React from 'react'
 
 import Navbar from './Navbar'
+import Landing from './Landing'
+import Orders from './Orders'
 
 export default function AdminProfile() {
 
@@ -9,6 +11,8 @@ export default function AdminProfile() {
   return (
     <>
       <Navbar />
+      <Landing />
+      <Orders />
     </>
   )
 }

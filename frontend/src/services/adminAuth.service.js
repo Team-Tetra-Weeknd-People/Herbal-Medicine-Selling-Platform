@@ -17,8 +17,17 @@ const login = async (data) => {
     });
 }
 
+const getCurrentUser = (id) => {
+    return axios.get(url.GET_ADMIN(id), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     register,
-    login
+    login,
+    getCurrentUser
 }

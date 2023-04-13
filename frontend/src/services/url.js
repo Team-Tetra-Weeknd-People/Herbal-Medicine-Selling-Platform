@@ -11,4 +11,5 @@ export const LOGIN_BUYER = `${BASE_URL}buyers/login`;
 //admin
 export const REGISTER_ADMIN = `${BASE_URL}admins/create`;
 export const LOGIN_ADMIN = `${BASE_URL}admins/login`;
+export const GET_ADMIN = (id) => `${BASE_URL}admins/${id}`;
 
