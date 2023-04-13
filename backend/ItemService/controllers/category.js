@@ -25,12 +25,8 @@ export const updateCategory = async (req, res) => {
     const id = req.params.id;
     const categories = req.body;
 
-    if (!mongoose.Categories.ObjectId.isValid(id)) {
-        return res.status(404).send(`No category with id: ${id}`)
-    };
-
     try {
-        const category = await Category.findByIdAndUpdate(id, items);
+        const category = await Category.findByIdAndUpdate(id, categories);
         res.status(200).json(category);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -39,10 +35,6 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
     const id = req.params.id;
-
-    if (!mongoose.Categories.ObjectId.isValid(id)) {
-        return res.status(404).send(`No category with id: ${id}`)
-    };
 
     try {
         await Category.findByIdAndRemove(id);
