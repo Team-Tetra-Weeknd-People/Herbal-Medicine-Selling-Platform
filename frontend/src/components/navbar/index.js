@@ -20,7 +20,7 @@ import { v4 } from "uuid";
 
 import SellerAuth from "../../services/sellerAuth.service";
 import BuyerAuth from "../../services/buyerAuth.service";
-import axios from "axios";
+import AdminAuth from "../../services/adminAuth.service";
 
 export default function Navbar() {
 
@@ -60,7 +60,6 @@ export default function Navbar() {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Required'),
   });
-
 
   //seller register validation
   const sellerRegisterSchema = Yup.object().shape({
@@ -345,6 +344,42 @@ export default function Navbar() {
   }
 
   async function loginAdmin(values) {
+
+    const data = {
+      email: values.email,
+      password: values.password,
+    }
+
+    AdminAuth.login(data)
+      .then((res) => {
+        console.log(res.data.user);
+        console.log(res.data.token);
+        sessionStorage.setItem("auth-token", res.data.token);
+        sessionStorage.setItem("user-type", res.data.user);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful',
+          text: 'Login Successfully!',
+          footer: '<a href="/adminProfile">Go to your profile</a>'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/adminProfile";
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Please Check Your Email & Password!!',
+          footer: 'Your Credentails Are Invalid!!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+          }
+        })
+      });
   }
 
   async function handleProfile() {
@@ -819,8 +854,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              username: '',
-              password: '',
+              email: 'Randula9811@gmail.com',
+              password: 'QWERTY123',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -833,9 +868,9 @@ export default function Navbar() {
               <Form>
                 {/* username */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Admin Username</label>
-                  <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.username}</div>
+                  <label htmlFor="empNo">Admin Email</label>
+                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
