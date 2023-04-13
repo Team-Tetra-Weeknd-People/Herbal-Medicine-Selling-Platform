@@ -349,14 +349,11 @@ export default function Navbar() {
 
   async function handleProfile() {
     if (sessionStorage.getItem("user-type") === "Buyer") {
-      //window.location.href = "/buyerProfile";
-      alert("Buyer");
+      window.location.href = "/buyerProfile";
     } else if (sessionStorage.getItem("user-type") === "Seller") {
-      //window.location.href = "/sellerProfile";
-      alert("Seller");
+      window.location.href = "/sellerProfile";
     } else if (sessionStorage.getItem("user-type") === "Admin") {
-      //window.location.href = "/adminProfile";
-      alert("Admin");
+      window.location.href = "/adminProfile";
     }
   }
 
