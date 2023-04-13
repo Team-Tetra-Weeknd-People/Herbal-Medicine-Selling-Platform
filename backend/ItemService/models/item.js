@@ -18,7 +18,23 @@ const ItemSchema = new Schema({
     image:{
         type: String,
         required: true,
-    }
+    },
+    category:{
+        type: String,
+        required: true
+    },
+    brand:{
+        type: String,
+        required: true
+    },
+    sellerID:{
+        type: String,
+        required: true
+    },
+    rating:{
+        type: Number,
+        required: true
+    },
 }, {
     timestamps: {
       createdAt: 'createdOn',
