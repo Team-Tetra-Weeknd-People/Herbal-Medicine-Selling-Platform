@@ -56,12 +56,3 @@ export const deleteBuyer = async (req, res) => {
             res.status(500).json(error);
         });
 }
-
-export const getBuyerInfo = async (req, res) => {
-    axios.get(`${userAPI}/getBuyerInfo/${req.params.username}`)
-        .then(response => {
-            res.status(200).json(response.data);
-        }).catch(error => {
-            res.status(500).json(error);
-        });
-}
