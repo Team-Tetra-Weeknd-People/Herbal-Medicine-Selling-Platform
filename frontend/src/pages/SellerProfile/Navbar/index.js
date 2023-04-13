@@ -17,13 +17,16 @@ export default function Navbar() {
   }
 
   function view() {
-      return (
-        <div>
-          <Button className="whitebtn" onClick={logout}>
-            Logout
-          </Button>
-        </div>
-      );
+    return (
+      <div>
+        <Button className="whitebtn" onClick={() => window.location.href = "/sellerProfile"}>
+          Dashboard
+        </Button>
+        <Button className="whitebtn" onClick={logout}>
+          Logout
+        </Button>
+      </div>
+    );
   }
 
   return (
