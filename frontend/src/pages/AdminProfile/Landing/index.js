@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -54,7 +55,7 @@ export default function Landing() {
                     error.toString();
             });
     }, []);
-    
+
     return (
         <>
             {/* Category View Modal */}
@@ -96,6 +97,7 @@ export default function Landing() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
             {/* Base Div */}
             <div>
                 <br /><br /><br /><br /><br />
@@ -126,7 +128,7 @@ export default function Landing() {
                                     <div className='box'>
                                         <h4>Number of Items in the system</h4>
                                         <h1>1</h1>
-                                        <p><Button variant="primary">Manage Items</Button></p>
+                                        <p><a href="/adminProfile/items"><Button variant="primary">Manage Items</Button></a></p>
                                     </div>
                                 </Col>
                                 <Col>
@@ -143,14 +145,14 @@ export default function Landing() {
                                     <div className='box'>
                                         <h4>Number of Brands in the system</h4>
                                         <h1>1</h1>
-                                        <p><Button variant="primary">Manage Brands</Button></p>
+                                        <p><a href="/adminProfile/brands"><Button variant="primary">Manage Brands</Button></a></p>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className='box'>
                                         <h4>Number of Pending Orders in the system</h4>
                                         <h1>2</h1>
-                                        <p><Button variant="primary">Manage Orders</Button></p>
+                                        <p><a href="/adminProfile/orders"><Button variant="primary">Manage Orders</Button></a></p>
                                     </div>
                                 </Col>
                             </Row>

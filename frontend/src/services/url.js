@@ -20,3 +20,10 @@ export const CREATE_CATEGORY = `${BASE_URL}/categories/create`;
 export const UPDATE_CATEGORY = (id) => `${BASE_URL}/categories/update/${id}`;
 export const DELETE_CATEGORY = (id) => `${BASE_URL}/categories/delete/${id}`;
 
+//brand
+export const GET_ALL_BRANDS = `${BASE_URL}/brands`;
+export const GET_BRAND = (id) => `${BASE_URL}/brands/${id}`;
+export const CREATE_BRAND = `${BASE_URL}/brands/create`;
+export const UPDATE_BRAND = (id) => `${BASE_URL}/brands/update/${id}`;
+export const DELETE_BRAND = (id) => `${BASE_URL}/brands/delete/${id}`;
+
