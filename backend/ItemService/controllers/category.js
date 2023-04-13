@@ -24,7 +24,6 @@ export const createCategory = async (req, res) => {
 export const updateCategory = async (req, res) => {
     const id = req.params.id;
     const categories = req.body;
-
     try {
         const category = await Category.findByIdAndUpdate(id, categories);
         res.status(200).json(category);
@@ -35,7 +34,6 @@ export const updateCategory = async (req, res) => {
 
 export const deleteCategory = async (req, res) => {
     const id = req.params.id;
-
     try {
         await Category.findByIdAndRemove(id);
         res.status(200).json({ message: "Category deleted successfully." });
@@ -46,11 +44,6 @@ export const deleteCategory = async (req, res) => {
 
 export const getOneCategory = async (req, res) => {
     const id = req.params.id;
-
-    if (!mongoose.Categories.ObjectId.isValid(id)) {
-        return res.status(404).send(`No category with id: ${id}`)
-    };
-
     try {
         const category = await Category.findById(id);
         res.status(200).json(category);
