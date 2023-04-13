@@ -285,10 +285,10 @@ export default function Navbar() {
           icon: 'success',
           title: 'Successful',
           text: 'Login Successfully!',
-          footer: '<a href="/profile">Go to your profile</a>'
+          footer: '<a href="/buyerProfile">Go to your profile</a>'
         }).then((result) => {
           if (result.isConfirmed) {
-            //window.location.href = "/accVerify";
+            window.location.href = "/buyerProfile";
           }
         })
       })
@@ -323,10 +323,10 @@ export default function Navbar() {
           icon: 'success',
           title: 'Successful',
           text: 'Login Successfully!',
-          footer: '<a href="/profile">Go to your profile</a>'
+          footer: '<a href="/sellerProfile">Go to your profile</a>'
         }).then((result) => {
           if (result.isConfirmed) {
-            //window.location.href = "/accVerify";
+            window.location.href = "/sellerProfile";
           }
         })
       })
