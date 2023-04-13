@@ -29,9 +29,7 @@ export default function Navbar() {
 
   document.body.style.overflow = "visible";
   const [imageBuyer, setImageBuyer] = useState("");
-  const [buyerUrl, setBuyerUrl] = useState("");
   const [imageSeller, setImageSeller] = useState("");
-  const [sellerUrl, setSellerUrl] = useState("");
 
   //buyer register validation
   const buyerRegisterSchema = Yup.object().shape({
@@ -53,10 +51,6 @@ export default function Navbar() {
     address: Yup.string()
       .min(5, 'Too Short!')
       .max(100, 'Too Long!')
-      .required('Required'),
-    username: Yup.string()
-      .min(5, 'Too Short!')
-      .max(50, 'Too Long!')
       .required('Required'),
     password: Yup.string()
       .min(8, 'Too Short!')
@@ -85,14 +79,6 @@ export default function Navbar() {
       .min(10, 'Too Short!')
       .max(10, 'Too Long!')
       .required('Required'),
-    address: Yup.string()
-      .min(5, 'Too Short! Enter More Than 5 Characters')
-      .max(100, 'Too Long!')
-      .required('Required'),
-    username: Yup.string()
-      .min(5, 'Too Short! Enter More Than 5 Characters')
-      .max(50, 'Too Long!')
-      .required('Required'),
     password: Yup.string()
       .min(8, 'Too Short! Enter More Than 8 Characters')
       .max(50, 'Too Long!')
@@ -112,9 +98,8 @@ export default function Navbar() {
 
   //login validation
   const loginSchema = Yup.object().shape({
-    username: Yup.string()
-      .min(5, 'Too Short!')
-      .max(50, 'Too Long!')
+    email: Yup.string()
+      .email('Invalid email')
       .required('Required'),
     password: Yup.string()
       .min(8, 'Too Short!')
@@ -167,7 +152,7 @@ export default function Navbar() {
 
   function logout() {
     sessionStorage.clear();
-    //window.location.href = "/";
+    window.location.href = "/";
   }
 
   async function registerBuyer(values) {
@@ -184,38 +169,50 @@ export default function Navbar() {
     await getDownloadURL(storageRef)
       .then(async (url) => {
         console.log(url);
-        setBuyerUrl(url);
         const data = {
           firstName: values.firstName,
           lastName: values.lastName,
           email: values.email,
           contactNo: values.contactNo,
           address: values.address,
-          username: values.username,
           password: values.password,
-          image: buyerUrl,
+          image: url,
         };
-        const response = BuyerAuth.register(data).data;
-        console.log(response.status);
+        const response = BuyerAuth.register(data).then((res) => {
+          console.log(res);
+          Swal.fire({
+            icon: 'success',
+            title: 'Successful',
+            text: 'New Buyer Registered Successfully!',
+            footer: '<a href="/accVerify">Go to your profile</a>'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //window.location.href = "/accVerify";
+            }
+          })
+        }).catch((err) => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please Check Your Email!!',
+            footer: 'Your Your Email is already in the Database!!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+            }
+          })
+        });
+
       }).catch((err) => {
         console.log(err);
+        alert("Email already exists!")
+        return;
       });
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Successful',
-      text: 'New Buyer Registered Successfully!',
-      footer: '<a href="/accVerify">Go to your profile</a>'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/accVerify";
-      }
-    })
   }
 
   async function registerSeller(values) {
     const storageRef = ref(storage, `seller/${Image.name + v4()}`);
-    
+
     await uploadBytes(storageRef, imageSeller)
       .then(() => {
         console.log("uploaded");
@@ -227,7 +224,6 @@ export default function Navbar() {
     await getDownloadURL(storageRef)
       .then(async (url) => {
         console.log(url);
-        setSellerUrl(url);
         const data = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -235,39 +231,137 @@ export default function Navbar() {
           contactNo: values.contactNo,
           companyName: values.companyName,
           companyAddress: values.companyAddress,
-          username: values.username,
           password: values.password,
-          image: sellerUrl,
+          image: url,
         };
-        const response = SellerAuth.register(data).data;
-        console.log(response.status);
+        SellerAuth.register(data).then((res) => {
+          console.log(res);
+          Swal.fire({
+            icon: 'success',
+            title: 'Successful',
+            text: 'New Seller Registered Successfully!',
+            footer: '<a href="/accVerify">Go to your profile</a>'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //window.location.href = "/accVerify";
+            }
+          })
+        }).catch((err) => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please Check Your Email!!',
+            footer: 'Your Email is already in the Database!!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+            }
+          })
+        });
+
       }).catch((err) => {
         console.log(err);
+        alert("Email already exists!")
+        return;
       });
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Successful',
-      text: 'New Seller Registered Successfully!',
-      footer: '<a href="/accVerify">Go to your profile</a>'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/accVerify";
-      }
-    })
+
   }
 
   async function loginBuyer(values) {
+    const data = {
+      email: values.email,
+      password: values.password,
+    }
+
+    BuyerAuth.login(data)
+      .then((res) => {
+        console.log(res.data.user);
+        console.log(res.data.token);
+        sessionStorage.setItem("auth-token", res.data.token);
+        sessionStorage.setItem("user-type", res.data.user);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful',
+          text: 'Login Successfully!',
+          footer: '<a href="/profile">Go to your profile</a>'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //window.location.href = "/accVerify";
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Please Check Your Email & Password!!',
+          footer: 'Your Credentails Are Invalid!!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+          }
+        })
+      });
   }
 
   async function loginSeller(values) {
+    const data = {
+      email: values.email,
+      password: values.password,
+    }
+
+    SellerAuth.login(data)
+      .then((res) => {
+        console.log(res.data.user);
+        console.log(res.data.token);
+        sessionStorage.setItem("auth-token", res.data.token);
+        sessionStorage.setItem("user-type", res.data.user);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful',
+          text: 'Login Successfully!',
+          footer: '<a href="/profile">Go to your profile</a>'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //window.location.href = "/accVerify";
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Please Check Your Email & Password!!',
+          footer: 'Your Credentails Are Invalid!!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+          }
+        })
+      });
   }
 
   async function loginAdmin(values) {
   }
 
+  async function handleProfile() {
+    if (sessionStorage.getItem("user-type") === "Buyer") {
+      //window.location.href = "/buyerProfile";
+      alert("Buyer");
+    } else if (sessionStorage.getItem("user-type") === "Seller") {
+      //window.location.href = "/sellerProfile";
+      alert("Seller");
+    } else if (sessionStorage.getItem("user-type") === "Admin") {
+      //window.location.href = "/adminProfile";
+      alert("Admin");
+    }
+  }
+
   function view() {
-    if (sessionStorage.getItem("ID") === null) {
+    if (sessionStorage.getItem("auth-token") === null) {
       return (
         <div>
           <Button className="whitebtn" onClick={handleShowRegSelect}>
@@ -280,95 +374,18 @@ export default function Navbar() {
         </div>
       );
     } else {
-      if (sessionStorage.getItem("user-type").equals("Buyer")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/buyer/profile">
-                Profile
-              </Link>
-            </Button>
 
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      }
-      else if (sessionStorage.getItem("user-type").equals("Seller")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/seller/profile">
-                Profile
-              </Link>
-            </Button>
+      return (
+        <div>
+          <Button className="whitebtn" onClick={handleProfile}>
+            Profile
+          </Button>
 
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      }
-      else if (sessionStorage.getItem("user-type").equals("Admin")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/admin/profile">
-                Profile
-              </Link>
-            </Button>
-
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      } if (sessionStorage.getItem("user-type").equals("buyer")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/buyer/profile">
-                Profile
-              </Link>
-            </Button>
-
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      }
-      else if (sessionStorage.getItem("user-type").equals("seller")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/seller/profile">
-                Profile
-              </Link>
-            </Button>
-
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      }
-      else if (sessionStorage.getItem("user-type").equals("admin")) {
-        return (
-          <div>
-            <Button className="whitebtn">
-              <Link to="/admin/profile">
-                Profile
-              </Link>
-            </Button>
-
-            <Button className="whitebtn" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-        );
-      }
+          <Button className="whitebtn" onClick={logout}>
+            Logout
+          </Button>
+        </div>
+      );
     }
   }
 
@@ -440,7 +457,6 @@ export default function Navbar() {
               email: '',
               contactNo: '',
               address: '',
-              username: '',
               password: '',
               confirmPassword: '',
               companyName: '',
@@ -448,8 +464,6 @@ export default function Navbar() {
             }}
             validationSchema={sellerRegisterSchema}
             onSubmit={values => {
-              // same shape as initial values
-              console.log(values);
               registerSeller(values);
             }}
           >
@@ -481,13 +495,6 @@ export default function Navbar() {
                   <label htmlFor="empNo">Seller Contact No</label>
                   <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.contactNo}</div>
-                </div>
-
-                {/* username */}
-                <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Seller Username</label>
-                  <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.username}</div>
                 </div>
 
                 {/* password */}
@@ -540,7 +547,12 @@ export default function Navbar() {
       </Modal>
 
       {/* buyer register modal */}
-      <Modal show={showRegBuyer} onHide={handleCloseRegBuyer}>
+      <Modal
+        show={showRegBuyer}
+        onHide={handleCloseRegBuyer}
+        backdrop="static"
+        keyboard={false}
+        size="m">
         <Modal.Header closeButton>
           <Modal.Title>Buyer Registration</Modal.Title>
         </Modal.Header>
@@ -552,16 +564,14 @@ export default function Navbar() {
               email: '',
               contactNo: '',
               address: '',
-              username: '',
               password: '',
               confirmPassword: '',
             }}
             validationSchema={buyerRegisterSchema}
             onSubmit={values => {
-              console.log(values);
               registerBuyer(values);
-            }
-            }
+
+            }}
           >
             {({ errors, touched }) => (
               <Form>
@@ -600,13 +610,6 @@ export default function Navbar() {
                   <div className="invalid-feedback">{errors.address}</div>
                 </div>
 
-                {/* username */}
-                <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Buyer Username</label>
-                  <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.username}</div>
-                </div>
-
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Password</label>
@@ -622,8 +625,9 @@ export default function Navbar() {
                 </div>
 
                 {/* image upload */}
+                <br />
                 <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Seller Company Logo</label>
+                  <label htmlFor="empNo">Buyer Profile Picture</label>
                   <br /><br />
                   <input type="file" name="file" onChange={(e) => {
                     setImageBuyer(e.target.files[0]);
@@ -704,15 +708,20 @@ export default function Navbar() {
       </Modal>
 
       {/* seller login modal */}
-      <Modal show={showLoginSeller} onHide={handleCloseLoginSeller}>
+      <Modal
+        show={showLoginSeller}
+        onHide={handleCloseLoginSeller}
+        backdrop="static"
+        keyboard={false}
+        size="m">
         <Modal.Header closeButton>
           <Modal.Title>Seller Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={{
-              username: '',
-              password: '',
+              email: 'Randula98@gmail.com',
+              password: 'QWERTY123',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -723,11 +732,11 @@ export default function Navbar() {
           >
             {({ errors, touched }) => (
               <Form>
-                {/* username */}
+                {/* email */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Seller Username</label>
-                  <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.username}</div>
+                  <label htmlFor="empNo">Seller Email</label>
+                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
@@ -750,15 +759,20 @@ export default function Navbar() {
       </Modal>
 
       {/* buyer login modal */}
-      <Modal show={showLoginBuyer} onHide={handleCloseLoginBuyer}>
+      <Modal
+        show={showLoginBuyer}
+        onHide={handleCloseLoginBuyer}
+        backdrop="static"
+        keyboard={false}
+        size="m">
         <Modal.Header closeButton>
           <Modal.Title>Buyer Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Formik
             initialValues={{
-              username: '',
-              password: '',
+              email: 'notRandula98@gmail.com',
+              password: 'QWERTY123',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -769,11 +783,11 @@ export default function Navbar() {
           >
             {({ errors, touched }) => (
               <Form>
-                {/* username */}
+                {/* email */}
                 <div className="form-group col-md-6">
-                  <label htmlFor="empNo">Buyer Username</label>
-                  <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                  <div className="invalid-feedback">{errors.username}</div>
+                  <label htmlFor="empNo">Buyer Email</label>
+                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
@@ -796,7 +810,12 @@ export default function Navbar() {
       </Modal>
 
       {/* admin login modal */}
-      <Modal show={showLoginAdmin} onHide={handleCloseLoginAdmin}>
+      <Modal
+        show={showLoginAdmin}
+        onHide={handleCloseLoginAdmin}
+        backdrop="static"
+        keyboard={false}
+        size="m">
         <Modal.Header closeButton>
           <Modal.Title>Admin Login</Modal.Title>
         </Modal.Header>

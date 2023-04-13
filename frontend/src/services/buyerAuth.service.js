@@ -2,7 +2,6 @@ import axios from "axios";
 import * as url from "./url";
 
 const register = async (data) => {
-    const token = localStorage.getItem("token");
     return await axios.post(url.REGISTER_BUYER, data, {
         headers: {
             "Content-Type": "application/json"

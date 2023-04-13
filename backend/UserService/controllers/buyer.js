@@ -78,16 +78,3 @@ export const deleteBuyer = async (req, res) => {
         res.status(404).json({ message: error });
     }
 }
-
-export const getBuyerInfo = async (req, res) => {
-    const username = req.params.username;
-    try {
-        const buyer = await Buyer.findOne({ username });
-        if (!buyer) {
-            return res.status(404).json({ message: "Buyer doesn't exist" });
-        }
-        res.status(200).json(buyer);
-    } catch (error) {
-        res.status(404).json({ message: error });
-    }
-}
