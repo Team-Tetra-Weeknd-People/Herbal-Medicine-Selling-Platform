@@ -77,5 +77,16 @@ adminSchema.pre("save", async function (next) {
     return next();
 });
 
+// Define a pre-update middleware function
+adminSchema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hash = bcrypt.hashSync(update.password, salt);
+        update.password = hash;
+    }
+    next();
+});
+
 const Admin = mongoose.model('Admin', adminSchema);
 export default Admin;
