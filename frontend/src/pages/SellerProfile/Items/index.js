@@ -50,28 +50,8 @@ export default function Items() {
                     
                 </Swiper>
                 <br/>
-                <p><a href = "/itemsBySeller"><Button variant="primary">View All Items</Button></a></p>
+                <p><a href = "/sellerProfile/items"><Button variant="primary">View All Items</Button></a></p>
             </div>
         </>
     )
 }
-
-
-{/* <SwiperSlide>
-    <Card className="profile" style={{ width: '18rem' }}>
-        <Card.Img className="profileimg" variant="top" src="" />
-        <Card.Body>
-            <Card.Title>Title</Card.Title>
-            <Card.Text>
-                <h6>
-                    Email
-                </h6>
-                <h6>
-                    Cno
-                </h6>
-            </Card.Text>
-            <p><Button variant="primary">Update Profile</Button></p>
-            <p><Button variant="danger">Security Details</Button></p>
-        </Card.Body>
-    </Card>
-</SwiperSlide> */}
