@@ -8,8 +8,7 @@ import dotenv from "dotenv/config";
 import routers from "./routes/index.js";
 
 const app = express();
-const PORT = process.env.REACT_APP_BACKEND_PORT || 8000;
-
+const PORT = process.env.REACT_APP_BACKEND_PORT;
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -36,5 +35,5 @@ connection.once("open", () => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is up and running on port ${PORT}`);
+    console.log(`User Service is up and running on port ${PORT}`);
 });

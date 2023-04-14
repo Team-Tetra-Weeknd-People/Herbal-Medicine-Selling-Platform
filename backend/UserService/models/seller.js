@@ -25,7 +25,7 @@ const sellerSchema = new Schema({
         type: String,
         required: true
     },
-    
+
     companyName: {
         type: String,
         required: true
@@ -34,12 +34,6 @@ const sellerSchema = new Schema({
     companyAddress: {
         type: String,
         required: true
-    },
-
-    username: {
-        type: String,
-        required: true,
-        unique: true,
     },
 
     password: {
@@ -69,7 +63,7 @@ const sellerSchema = new Schema({
         required: false,
         default: false
     }
-    
+
 }, {
     timestamps: {
         createdAt: 'createdOn',
@@ -78,19 +72,30 @@ const sellerSchema = new Schema({
 });
 
 sellerSchema.pre("save", async function (next) {
-	const user = this;
-	const password = user.password;
+    const user = this;
+    const password = user.password;
 
-	if (!user.isModified("password")) {
-		return next();
-	}
+    if (!user.isModified("password")) {
+        return next();
+    }
 
-	// Number of rounds hash function will execute
-	const salt = await bcrypt.genSalt(10);
+    // Number of rounds hash function will execute
+    const salt = await bcrypt.genSalt(10);
 
-	const hash = bcrypt.hashSync(password, salt);
-	user.password = hash;
-	return next();
+    const hash = bcrypt.hashSync(password, salt);
+    user.password = hash;
+    return next();
+});
+
+// Define a pre-update middleware function
+sellerSchema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hash = bcrypt.hashSync(update.password, salt);
+        update.password = hash;
+    }
+    next();
 });
 
 const Seller = mongoose.model('Seller', sellerSchema);

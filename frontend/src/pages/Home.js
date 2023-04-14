@@ -2,7 +2,6 @@ import "../styles/sudul/Home.css";
 
 import {
   Navbar,
-  HeroSection
 } from "../components";
 
 function Home() {
@@ -11,7 +10,6 @@ function Home() {
   return (
     <>
        <Navbar />
-      {/* <HeroSection /> */}
     </>
 
   );

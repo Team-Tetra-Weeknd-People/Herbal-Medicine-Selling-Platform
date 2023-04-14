@@ -23,47 +23,32 @@ export const createItem = async (req, res) => {
 
 export const updateItem = async (req, res) => {
     const id = req.params.id;
-    const items = req.body;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send(`No item with id: ${id}`)
-    };
-
-    try{
-        const item = await Item.findByIdAndUpdate(id , items);
+    const update = req.body;
+    try {
+        const item = await Item.findByIdAndUpdate(id, update);
         res.status(200).json(item);
-    }catch(error){
+    } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
 
 export const deleteItem = async (req, res) => {
     const id = req.params.id;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send(`No item with id: ${id}`)
-    };
-
-    try{
+    try {
         await Item.findByIdAndRemove(id);
         res.status(200).json({ message: "Item deleted successfully." });
-    }catch(error){
+    } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
 
 export const getOneItem = async (req, res) => {
     const id = req.params.id;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).send(`No item with id: ${id}`)
-    };
-
-    try{
+    try {
         const item = await Item.findById(id);
         res.status(200).json(item);
 
-    }catch(error){
+    } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
