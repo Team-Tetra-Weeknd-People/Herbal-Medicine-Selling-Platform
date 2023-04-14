@@ -12,7 +12,12 @@ import {
     Brands,
     Items,
     Orders
-}from '../pages/AdminProfile/Pages'
+} from '../pages/AdminProfile/Pages'
+
+import {
+    ItemView,
+    ItemSearch
+} from '../pages/SellerProfile/Pages'
 
 export default function App() {
     return (
@@ -28,6 +33,11 @@ export default function App() {
                     <Route path="/adminProfile/brands" element={<Brands />} />
                     <Route path="/adminProfile/items" element={<Items />} />
                     <Route path="/adminProfile/orders" element={<Orders />} />
+                    
+                    {/* Seller Routes */}
+                    <Route path="/sellerProfile/items" element={<ItemView />} />
+                    <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
+
                 </Routes>
             </Router>
         </>
