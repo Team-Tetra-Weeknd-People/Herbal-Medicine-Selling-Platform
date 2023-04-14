@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import Swal from 'sweetalert2';
 import { Formik, Form, Field } from 'formik';
@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import jwt_decode from "jwt-decode";
 
 import SellerAuth from "../../services/sellerAuth.service";
 import BuyerAuth from "../../services/buyerAuth.service";
@@ -24,7 +25,6 @@ import AdminAuth from "../../services/adminAuth.service";
 
 export default function Navbar() {
 
-  const navigate = useNavigate();
   const logo = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Flogo%20(transparent).png?alt=media&token=78d6bc1e-59bb-461c-b32e-cd278ebab61a";
 
   document.body.style.overflow = "visible";
@@ -149,6 +149,15 @@ export default function Navbar() {
     setShowLoginAdmin(true);
   };
 
+  function handleToken(token) {
+    //decode token
+    const decodedToken = jwt_decode(token);
+    console.log(decodedToken);
+    sessionStorage.setItem("auth-token", token);
+    sessionStorage.setItem("user-id", decodedToken.id);
+    sessionStorage.setItem("verification", decodedToken.verified);
+  }
+
   function logout() {
     sessionStorage.clear();
     window.location.href = "/";
@@ -177,16 +186,24 @@ export default function Navbar() {
           password: values.password,
           image: url,
         };
-        const response = BuyerAuth.register(data).then((res) => {
+        BuyerAuth.register(data).then((res) => {
           console.log(res);
           Swal.fire({
             icon: 'success',
             title: 'Successful',
             text: 'New Buyer Registered Successfully!',
-            footer: '<a href="/accVerify">Go to your profile</a>'
+            footer: '<a href="/buyerProfile">Go to your profile</a>'
           }).then((result) => {
             if (result.isConfirmed) {
-              //window.location.href = "/accVerify";
+              const login = { email: values.email, password: values.password };
+              handleCloseRegBuyer();
+              BuyerAuth.login(login).then((res) => {
+                sessionStorage.setItem("user-type", res.data.user);
+                handleToken(res.data.token);
+                window.location.href = "/buyerProfile";
+              }).catch((err) => {
+                console.log(err);
+              });
             }
           })
         }).catch((err) => {
@@ -198,6 +215,7 @@ export default function Navbar() {
             footer: 'Your Your Email is already in the Database!!'
           }).then((result) => {
             if (result.isConfirmed) {
+              return;
             }
           })
         });
@@ -242,7 +260,15 @@ export default function Navbar() {
             footer: '<a href="/accVerify">Go to your profile</a>'
           }).then((result) => {
             if (result.isConfirmed) {
-              //window.location.href = "/accVerify";
+              const login = { email: values.email, password: values.password };
+              handleCloseRegSeller();
+              SellerAuth.login(login).then((res) => {
+                sessionStorage.setItem("user-type", res.data.user);
+                handleToken(res.data.token);
+                window.location.href = "/sellerProfile";
+              }).catch((err) => {
+                console.log(err);
+              });
             }
           })
         }).catch((err) => {
@@ -275,11 +301,8 @@ export default function Navbar() {
 
     BuyerAuth.login(data)
       .then((res) => {
-        console.log(res.data.user);
-        console.log(res.data.token);
-        sessionStorage.setItem("auth-token", res.data.token);
         sessionStorage.setItem("user-type", res.data.user);
-
+        handleToken(res.data.token);
         Swal.fire({
           icon: 'success',
           title: 'Successful',
@@ -313,11 +336,8 @@ export default function Navbar() {
 
     SellerAuth.login(data)
       .then((res) => {
-        console.log(res.data.user);
-        console.log(res.data.token);
-        sessionStorage.setItem("auth-token", res.data.token);
         sessionStorage.setItem("user-type", res.data.user);
-
+        handleToken(res.data.token);
         Swal.fire({
           icon: 'success',
           title: 'Successful',
@@ -344,19 +364,14 @@ export default function Navbar() {
   }
 
   async function loginAdmin(values) {
-
     const data = {
       email: values.email,
       password: values.password,
     }
-
     AdminAuth.login(data)
       .then((res) => {
-        console.log(res.data.user);
-        console.log(res.data.token);
-        sessionStorage.setItem("auth-token", res.data.token);
         sessionStorage.setItem("user-type", res.data.user);
-
+        handleToken(res.data.token);
         Swal.fire({
           icon: 'success',
           title: 'Successful',
@@ -486,15 +501,15 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              firstName: '',
-              lastName: '',
-              email: '',
-              contactNo: '',
-              address: '',
-              password: '',
-              confirmPassword: '',
-              companyName: '',
-              companyAddress: '',
+              firstName: '123123',
+              lastName: '123123',
+              email: 'mail@mail.com',
+              contactNo: '1234567890',
+              address: '123456789',
+              password: '123456789',
+              confirmPassword: '123456789',
+              companyName: '123456789',
+              companyAddress: '123456789',
             }}
             validationSchema={sellerRegisterSchema}
             onSubmit={values => {
@@ -593,13 +608,13 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              firstName: '',
-              lastName: '',
-              email: '',
-              contactNo: '',
-              address: '',
-              password: '',
-              confirmPassword: '',
+              firstName: '123123',
+              lastName: '123123123',
+              email: '123123@123123.com',
+              contactNo: '1231231231',
+              address: '123123123',
+              password: '123123123',
+              confirmPassword: '123123123',
             }}
             validationSchema={buyerRegisterSchema}
             onSubmit={values => {

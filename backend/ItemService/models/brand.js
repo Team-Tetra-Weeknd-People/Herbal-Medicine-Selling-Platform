@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema({
+const BrandSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: true
+    },
+    image: {
+        type: String,
+        required: true
     },
 }, {
     timestamps: {
@@ -15,6 +19,6 @@ const CategorySchema = new Schema({
     }
 });
 
-const Category = mongoose.model("Category", CategorySchema);
+const Brand = mongoose.model("Brand", BrandSchema);
 
-export default Category;
+export default Brand;
