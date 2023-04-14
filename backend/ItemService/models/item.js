@@ -2,43 +2,47 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema({ 
-    name:{
+const ItemSchema = new Schema({
+    name: {
         type: String,
         required: true
     },
-    description:{
+    description: {
         type: String,
         required: true
     },
-    price:{
+    price: {
         type: Number,
         required: true
     },
-    image:{
+    image: {
         type: String,
         required: true,
     },
-    category:{
+    category: {
         type: String,
         required: true
     },
-    brand:{
+    brand: {
         type: String,
         required: true
     },
-    sellerID:{
+    sellerID: {
         type: String,
         required: true
     },
-    rating:{
+    rating: {
+        type: Number,
+        required: true
+    },
+    stocks: {
         type: Number,
         required: true
     },
 }, {
     timestamps: {
-      createdAt: 'createdOn',
-      updatedAt: 'updatedOn'
+        createdAt: 'createdOn',
+        updatedAt: 'updatedOn'
     }
 });
 
