@@ -4,9 +4,9 @@ import bcrypt from 'bcrypt';
 
 //authenticating the buyer
 export const authBuyer = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try{
-        const buyer = await Buyer.findOne({username});
+        const buyer = await Buyer.findOne({email});
         if(buyer){
             if(bcrypt.compareSync(password, buyer.password)){
                 const secret = process.env.JWT_SECRET;
@@ -75,19 +75,6 @@ export const deleteBuyer = async (req, res) => {
         await Buyer.findByIdAndDelete(id);
         res.status(200).send({ status: "Buyer details deleted" });
     } catch {
-        res.status(404).json({ message: error });
-    }
-}
-
-export const getBuyerInfo = async (req, res) => {
-    const username = req.params.username;
-    try {
-        const buyer = await Buyer.findOne({ username });
-        if (!buyer) {
-            return res.status(404).json({ message: "Buyer doesn't exist" });
-        }
-        res.status(200).json(buyer);
-    } catch (error) {
         res.status(404).json({ message: error });
     }
 }

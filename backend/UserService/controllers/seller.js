@@ -4,9 +4,9 @@ import jwt from "jsonwebtoken";
 
 //authenticating the seller
 export const authSeller = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-        const seller = await Seller.findOne({ username });
+        const seller = await Seller.findOne({ email });
         if (seller) {
             if (bcrypt.compareSync(password, seller.password)) {
                 const secret = process.env.JWT_SECRET;
@@ -75,19 +75,6 @@ export const deleteSeller = async (req, res) => {
         await Seller.findByIdAndDelete(id);
         res.status(200).send({ status: "Seller details deleted" });
     } catch {
-        res.status(404).json({ message: error });
-    }
-}
-
-export const getSellerInfo = async (req, res) => {
-    const username = req.params.username;
-    try {
-        const seller = await Seller.findOne({ username });
-        if (!seller) {
-            return res.status(404).json({ message: "Seller doesn't exist" });
-        }
-        res.status(200).json(seller);
-    } catch (error) {
         res.status(404).json({ message: error });
     }
 }

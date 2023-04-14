@@ -31,12 +31,6 @@ const buyerSchema = new Schema({
         required: false
     },
 
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-
     password: {
         type: String,
         required: true
@@ -87,6 +81,18 @@ buyerSchema.pre("save", async function (next) {
 	user.password = hash;
 	return next();
 });
+
+// Define a pre-update middleware function
+buyerSchema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hash = bcrypt.hashSync(update.password, salt);
+        update.password = hash;
+    }
+    next();
+});
+
 
 const Buyer = mongoose.model('Buyer', buyerSchema);
 export default Buyer;
