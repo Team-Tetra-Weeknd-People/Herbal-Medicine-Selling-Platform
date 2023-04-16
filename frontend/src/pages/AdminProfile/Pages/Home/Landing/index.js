@@ -10,8 +10,8 @@ import Table from 'react-bootstrap/Table';
 
 import './Landing.css'
 
-import AdminAuth from '../../../services/adminAuth.service';
-import CategoryService from '../../../services/category.service';
+import AdminAuth from '../../../../../services/adminAuth.service';
+import CategoryService from '../../../../../services/category.service';
 
 export default function Landing() {
 
