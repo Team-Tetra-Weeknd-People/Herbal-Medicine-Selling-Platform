@@ -47,3 +47,12 @@ export const deleteItem = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+export const getNewItems = async (req, res) => {
+    axios.get(`${itemAPI}/newitems`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
