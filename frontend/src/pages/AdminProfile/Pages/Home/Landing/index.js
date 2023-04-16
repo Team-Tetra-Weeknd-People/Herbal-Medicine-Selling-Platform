@@ -6,7 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
-
+import { Formik, Form, Field } from 'formik';
+import Swal from 'sweetalert2'
+import * as Yup from 'yup';
 
 import './Landing.css'
 
@@ -20,9 +22,24 @@ export default function Landing() {
     const [categories, setCategories] = useState([]);
 
     const [showViewCat, setShowViewCat] = useState(false);
+    const [showAddCat, setShowAddCat] = useState(false);
 
     const handleCloseViewCat = () => setShowViewCat(false);
     const handleShowViewCat = () => setShowViewCat(true);
+
+    const handleCloseAddCat = () => setShowAddCat(false);
+    const handleShowAddCat = () => {
+        handleCloseViewCat()
+        setShowAddCat(true)
+    };
+
+    //category validation schema
+    const CategorySchema = Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+    });
 
     //get admin details
     useEffect(() => {
@@ -56,8 +73,130 @@ export default function Landing() {
             });
     }, []);
 
+    //add new category
+    async function addCategory(values) {
+        const data = {
+            name: values.name,
+        };
+
+        CategoryService.create(data)
+            .then(response => {
+                console.log(response.data);
+                Swal.fire(
+                    'Success!',
+                    'New Category has been added !!',
+                    'success'
+                )
+                handleCloseAddCat();
+                handleShowViewCat();
+                CategoryService.getAll().then(
+                    (response) => {
+                        setCategories(response.data);
+                        console.log(categories, 'categories');
+                    },
+                    (error) => {
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                    });
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
+    //delete category
+    async function deleteCategory(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'This Brand has been deleted.',
+                    'success'
+                )
+                CategoryService.remove(id).then(
+                    (response) => {
+                        console.log(response.data);
+                        CategoryService.getAll().then(
+                            (response) => {
+                                setCategories(response.data);
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    },
+                    (error) => {
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                    });
+            }
+        })
+
+    }
+
+
     return (
         <>
+            {/* Add Category Modal */}
+            <Modal
+                show={showAddCat}
+                onHide={handleCloseAddCat}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Category</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            name: '',
+                        }}
+                        validationSchema={CategorySchema}
+                        onSubmit={(values) => {
+                            addCategory(values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                <div className="form-group">
+                                    <label htmlFor="name">Category Name</label>
+                                    <Field name="name" style={{ width: '25rem' }} type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.name}</div>
+                                </div>
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Add</button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseAddCat}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             {/* Category View Modal */}
             <Modal
                 show={showViewCat}
@@ -70,7 +209,7 @@ export default function Landing() {
                     <Modal.Title>View Categories</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p><Button variant="primary">Add New Category</Button></p>
+                    <p><Button variant="primary" onClick={handleShowAddCat}>Add New Category</Button></p>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -84,7 +223,7 @@ export default function Landing() {
                                     <td>{category.name}</td>
                                     <td>
                                         <Button variant="success">Edit</Button>{' '}
-                                        <Button variant="danger">Delete</Button>{' '}
+                                        <Button variant="danger" onClick={() => deleteCategory(category._id)}>Delete</Button>{' '}
                                     </td>
                                 </tr>
                             ))}
