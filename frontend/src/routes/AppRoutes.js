@@ -5,7 +5,9 @@ import {
     Home,
     AdminProfile,
     BuyerProfile,
-    SellerProfile
+    SellerProfile,
+    ForgotPassword,
+    UpdatePassword
 } from '../pages'
 
 import {
@@ -28,6 +30,8 @@ export default function App() {
                     <Route path="/adminProfile" element={<AdminProfile />} />
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
                     <Route path="/sellerProfile" element={<SellerProfile />} />
+                    <Route path="/UpdatePassword" element={<UpdatePassword />} />
+                    <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
                     {/* Admin Routes  */}
                     <Route path="/adminProfile/brands" element={<Brands />} />

@@ -439,6 +439,8 @@ export default function Navbar() {
   return (
 
     <>
+      {/* forgot password modal */}
+
       {/* reg select modal */}
       <Modal
         show={showRegSelect}
