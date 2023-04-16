@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 
 import './SellerLanding.css'
 
-import SellerAuth from '../../../services/sellerAuth.service';
+import SellerAuth from '../../../../../services/sellerAuth.service';
 
 export default function Landing() {
     document.body.style.overflow = "visible";

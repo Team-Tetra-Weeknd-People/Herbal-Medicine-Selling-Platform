@@ -1,8 +1,8 @@
-import "../styles/sudul/Home.css";
+import "../../styles/sudul/Home.css";
 
 import {
   Navbar,
-} from "../components";
+} from "../../components";
 
 function Home() {
 

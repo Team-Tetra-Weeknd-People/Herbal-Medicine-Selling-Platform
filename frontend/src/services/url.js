@@ -38,3 +38,10 @@ export const CREATE_BRAND = `${BASE_URL}/brands/create`;
 export const UPDATE_BRAND = (id) => `${BASE_URL}/brands/update/${id}`;
 export const DELETE_BRAND = (id) => `${BASE_URL}/brands/delete/${id}`;
 
+//item
+export const GET_ALL_ITEMS = `${BASE_URL}/items`;
+export const GET_ITEM = (id) => `${BASE_URL}/items/${id}`;
+export const CREATE_ITEM = `${BASE_URL}/items/create`;
+export const UPDATE_ITEM = (id) => `${BASE_URL}/items/update/${id}`;
+export const DELETE_ITEM = (id) => `${BASE_URL}/items/delete/${id}`;
+
