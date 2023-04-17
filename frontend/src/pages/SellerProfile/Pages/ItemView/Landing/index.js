@@ -102,7 +102,7 @@ export default function Landing() {
                     price: values.price,
                     quantity: values.quantity,
                     category: values.category,
-                    brand: sessionStorage.getItem("company-name"),
+                    brand: sessionStorage.getItem("brand"),
                     image: url,
                     sellerID: sessionStorage.getItem("user-id")
                 };
@@ -126,6 +126,50 @@ export default function Landing() {
             })
     }
 
+    //delete item
+    async function deleteItem(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'This Item has been deleted.',
+                    'success'
+                )
+                ItemService.remove(id).then(
+                    (response) => {
+                        console.log(response.data);
+                        ItemService.getAll().then(
+                            (response) => {
+                                setItems(response.data);
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    },
+                    (error) => {
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                    });
+            }
+        })
+    }
+
+
     return (
         <>
             <Modal
@@ -147,9 +191,7 @@ export default function Landing() {
                             category: '',
                             brand: ''
                         }}
-
                         validationSchema={ItemSchema}
-
                         onSubmit={(values) => {
                             addItem(values);
                         }}>
@@ -242,7 +284,7 @@ export default function Landing() {
                         </ListGroup>
                         <Card.Body>
                             <Button variant="primary">Edit</Button>
-                            <Button variant="danger" style={{ margin: '5px' }}>Delete</Button>
+                            <Button variant="danger" style={{ margin: '5px' }} onClick={() => deleteItem(item._id)}>Delete</Button>
                         </Card.Body>
                     </Card>
                 ))}
