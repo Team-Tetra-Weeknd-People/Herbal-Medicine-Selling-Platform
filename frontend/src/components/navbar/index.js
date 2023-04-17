@@ -770,8 +770,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'Randula98@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
