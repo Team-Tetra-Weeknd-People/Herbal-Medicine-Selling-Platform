@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
     Home,
     BuyerProfile,
+    SellerProfile,
+    ForgotPassword,
+    UpdatePassword
 } from '../pages'
 
 import {
@@ -28,6 +31,11 @@ export default function App() {
 
                     {/* Buyer Routes  */}
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
+                    <Route path="/sellerProfile" element={<SellerProfile />} />
+                    
+                    {/* Forgot Password Routes  */}
+                    <Route path="/UpdatePassword" element={<UpdatePassword />} />
+                    <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
