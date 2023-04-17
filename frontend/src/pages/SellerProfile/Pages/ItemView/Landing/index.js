@@ -15,7 +15,6 @@ import * as Yup from 'yup';
 import '../../itemSellerPages.css'
 
 import CategoryService from '../../../../../services/category.service';
-import BrandService from '../../../../../services/brand.service';
 import ItemService from '../../../../../services/item.service';
 
 export default function Landing() {
@@ -23,7 +22,6 @@ export default function Landing() {
     document.body.style.overflow = "visible";
 
     const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]);
     const [items, setItems] = useState([]);
     const [imageItem, setImageItem] = useState("");
 
@@ -49,9 +47,6 @@ export default function Landing() {
         //category dropdown
         category: Yup.string()
             .required('Required'),
-        //brand dropdown
-        brand: Yup.string()
-            .required('Required')
     });
 
 
@@ -60,21 +55,6 @@ export default function Landing() {
         CategoryService.getAll().then(
             (response) => {
                 setCategories(response.data);
-            },
-            (error) => {
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-            });
-    }, []);
-
-    //get all brands
-    useEffect(() => {
-        BrandService.getAll().then(
-            (response) => {
-                setBrands(response.data);
             },
             (error) => {
                 (error.response &&
@@ -122,7 +102,7 @@ export default function Landing() {
                     price: values.price,
                     quantity: values.quantity,
                     category: values.category,
-                    brand: values.brand,
+                    brand: sessionStorage.getItem("company-name"),
                     image: url,
                     sellerID: sessionStorage.getItem("user-id")
                 };
@@ -212,17 +192,6 @@ export default function Landing() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="brand">Brand</label>
-                                    <Field as="select" name="brand" style={{ width: '25rem' }} className={'form-control' + (errors.brand && touched.brand ? ' is-invalid' : '')}>
-                                        <option value="" label="Select a brand" />
-                                        {brands.map((brand) => (
-                                            <option key={brand._id} value={brand.id}>{brand.name}</option>
-                                        ))}
-                                    </Field>
-                                    <div className="invalid-feedback">{errors.brand}</div>
-                                </div>
-
-                                <div className="form-group">
                                     <label htmlFor="image">Image</label>
                                     <Field name="image" type="file" style={{ width: '25rem' }} className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
                                     <div className="invalid-feedback">{errors.image}</div>
@@ -258,25 +227,25 @@ export default function Landing() {
 
             <div className='sellerItemsPage'>
                 {items.map((item) => (
-                        <Card style={{ width: '18rem', height: '28rem', marginTop: '1rem'}} className = "itemCard">
-                            <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
-                            <Card.Body>
-                                <Card.Title>{item.name}</Card.Title>
-                                <Card.Text>
-                                    Rs. {item.price}
-                                </Card.Text>
-                                </Card.Body>
-                                <ListGroup className="list-group-flush">
-                                    <ListGroup.Item>{item.quantity}</ListGroup.Item>
-                                    <ListGroup.Item>{item.category}</ListGroup.Item>
-                                    <ListGroup.Item>{item.brand}</ListGroup.Item>
-                                </ListGroup>
-                                <Card.Body>
-                                    <Button variant="primary">Edit</Button>
-                                    <Button variant="danger" style={{ margin: '5px' }}>Delete</Button>
-                            </Card.Body>
-                        </Card>
-                        ))}
+                    <Card style={{ width: '18rem', height: '28rem', marginTop: '1rem' }} className="itemCard">
+                        <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
+                        <Card.Body>
+                            <Card.Title>{item.name}</Card.Title>
+                            <Card.Text>
+                                Rs. {item.price}
+                            </Card.Text>
+                        </Card.Body>
+                        <ListGroup className="list-group-flush">
+                            <ListGroup.Item>{item.quantity}</ListGroup.Item>
+                            <ListGroup.Item>{item.category}</ListGroup.Item>
+                            <ListGroup.Item>{item.brand}</ListGroup.Item>
+                        </ListGroup>
+                        <Card.Body>
+                            <Button variant="primary">Edit</Button>
+                            <Button variant="danger" style={{ margin: '5px' }}>Delete</Button>
+                        </Card.Body>
+                    </Card>
+                ))}
             </div>
         </>
     )
