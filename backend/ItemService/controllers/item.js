@@ -52,3 +52,27 @@ export const getOneItem = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
+//get new 5 items by sellerID
+export const getNewItems = async (req, res) => {
+    const sellerID = req.params.sellerID;
+    try {
+        const items = await Item.find({sellerID : sellerID}).sort({ _id: -1 }).limit(5);
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get all items by sellerID
+export const getItemsBySellerID = async (req, res) => {
+    const sellerID = req.params.sellerID;
+    try {
+        const items = await Item.find({sellerID : sellerID});
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+} 
+
+
