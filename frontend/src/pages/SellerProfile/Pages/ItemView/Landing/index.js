@@ -67,7 +67,7 @@ export default function Landing() {
 
     //get all items
     useEffect(() => {
-        ItemService.getAll().then(
+        ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
             (response) => {
                 setItems(response.data);
             },
@@ -269,11 +269,11 @@ export default function Landing() {
 
             <div className='sellerItemsPage'>
                 {items.map((item) => (
-                    <Card style={{ width: '18rem', height: '28rem', marginTop: '1rem' }} className="itemCard">
+                    <Card style={{ width: '18rem', height: '30rem', marginTop: '1rem' }} className="itemCard">
                         <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
                         <Card.Body>
-                            <Card.Title>{item.name}</Card.Title>
-                            <Card.Text>
+                            <Card.Title style={{height: '3rem'}}>{item.name}</Card.Title>
+                            <Card.Text style={{height: '1rem'}}>
                                 Rs. {item.price}
                             </Card.Text>
                         </Card.Body>

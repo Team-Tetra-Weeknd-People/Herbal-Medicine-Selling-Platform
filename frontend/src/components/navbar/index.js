@@ -927,16 +927,16 @@ export default function Navbar() {
             </LinkContainer>
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/" className="navlink">
-                Drugs
+                Categories
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
-                Beauty
+                Brands
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
-                Supplements
+                About Us
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
-                Sports
+                Contact Us
               </Nav.Link>
             </Nav>
             {view()}
