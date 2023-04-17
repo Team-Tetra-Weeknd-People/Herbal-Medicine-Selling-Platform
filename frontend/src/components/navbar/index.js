@@ -156,6 +156,7 @@ export default function Navbar() {
     sessionStorage.setItem("auth-token", token);
     sessionStorage.setItem("user-id", decodedToken.id);
     sessionStorage.setItem("verification", decodedToken.verified);
+    sessionStorage.setItem("brand", decodedToken.brand);
   }
 
   function logout() {

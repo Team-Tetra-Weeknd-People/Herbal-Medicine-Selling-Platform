@@ -4,13 +4,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
     Home,
     BuyerProfile,
-    SellerProfile,
     ForgotPassword,
     UpdatePassword
 } from '../pages'
 
 import {
-    Brands,
     Items,
     Orders,
     Home as AdminHome
@@ -31,7 +29,6 @@ export default function App() {
 
                     {/* Buyer Routes  */}
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
-                    <Route path="/sellerProfile" element={<SellerProfile />} />
                     
                     {/* Forgot Password Routes  */}
                     <Route path="/UpdatePassword" element={<UpdatePassword />} />
@@ -39,7 +36,6 @@ export default function App() {
 
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
-                    <Route path="/adminProfile/brands" element={<Brands />} />
                     <Route path="/adminProfile/items" element={<Items />} />
                     <Route path="/adminProfile/orders" element={<Orders />} />
 

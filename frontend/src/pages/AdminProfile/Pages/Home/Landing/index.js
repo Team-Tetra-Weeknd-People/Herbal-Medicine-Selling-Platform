@@ -148,10 +148,8 @@ export default function Landing() {
                     });
             }
         })
-
     }
-
-
+    
     return (
         <>
             {/* Add Category Modal */}
