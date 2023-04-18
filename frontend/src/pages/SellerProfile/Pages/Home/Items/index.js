@@ -1,9 +1,10 @@
 /* eslint-disable no-lone-blocks */
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 // Import Swiper styles
@@ -14,11 +15,32 @@ import 'swiper/css/scrollbar';
 
 import './sellerItems.css'
 
+import ItemService from '../../../../../services/item.service';
+
 export default function Items() {
+
+    const [items, setItems] = useState([]);
+
+    //get all items
+    useEffect(() => {
+        ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
+            (response) => {
+                setItems(response.data);
+            },
+            (error) => {
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+            });
+    }, []);
+
+
     return (
         <>
             <div className="sellerItems">
-                <h1>Items By You</h1>
+                <h1>New Items By You</h1>
                 <Swiper
                     // install Swiper modules
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -29,28 +51,24 @@ export default function Items() {
                     onSwiper={(swiper) => console.log(swiper)}
                     onSlideChange={() => console.log('slide change')}
                 >
-                    <SwiperSlide>
-                        <Card className="profile" style={{ width: '18rem' }}>
-                            <Card.Img className="profileimg" variant="top" src="" />
-                            <Card.Body>
-                                <Card.Title>Title</Card.Title>
-                                <Card.Text>
-                                    <h6>
-                                        Email
-                                    </h6>
-                                    <h6>
-                                        Cno
-                                    </h6>
-                                </Card.Text>
-                                <p><Button variant="primary">Update Profile</Button></p>
-                                <p><Button variant="danger">Security Details</Button></p>
-                            </Card.Body>
-                        </Card>
-                    </SwiperSlide>
-                    
+                    {items.map((item) => (
+                        <SwiperSlide key={item.id}>
+                            <Card style={{ width: '18rem' , margin : '10px' }}>
+                                <Card.Img variant="top" src={item.image} />
+                                <Card.Body>
+                                    <Card.Title style={{ height: '3rem' }}>{item.name}</Card.Title>
+                                </Card.Body>
+                                <ListGroup className="list-group-flush">
+                                    <ListGroup.Item style={{ height: '2rem' }}>Price: {item.price}</ListGroup.Item>
+                                    <ListGroup.Item style={{ height: '3rem' }}>Quantity: {item.quantity}</ListGroup.Item>
+                                </ListGroup>
+                            </Card>
+                        </SwiperSlide>
+                    ))}
+
                 </Swiper>
-                <br/>
-                <p><a href = "/sellerProfile/items"><Button variant="primary">View All Items</Button></a></p>
+                <br />
+                <p><a href="/sellerProfile/items"><Button variant="primary">View All Items</Button></a></p>
             </div>
         </>
     )
