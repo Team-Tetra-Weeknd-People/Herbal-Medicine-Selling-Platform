@@ -38,7 +38,7 @@ export default function Landing() {
             .required('Required'),
         description: Yup.string()
             .min(2, 'Too Short!')
-            .max(50, 'Too Long!')
+            .max(500, 'Too Long!')
             .required('Required'),
         price: Yup.number()
             .required('Required'),
@@ -110,7 +110,7 @@ export default function Landing() {
 
                 ItemService.create(item).then((response) => {
                     console.log(response.data);
-                    ItemService.getAll().then(
+                    ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
                         (response) => {
                             setItems(response.data);
                             handleCloseItemAdd();
@@ -146,7 +146,7 @@ export default function Landing() {
                 ItemService.remove(id).then(
                     (response) => {
                         console.log(response.data);
-                        ItemService.getAll().then(
+                        ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
                             (response) => {
                                 setItems(response.data);
                             },
@@ -272,8 +272,8 @@ export default function Landing() {
                     <Card style={{ width: '18rem', height: '30rem', marginTop: '1rem' }} className="itemCard">
                         <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
                         <Card.Body>
-                            <Card.Title style={{height: '3rem'}}>{item.name}</Card.Title>
-                            <Card.Text style={{height: '1rem'}}>
+                            <Card.Title style={{ height: '3rem' }}>{item.name}</Card.Title>
+                            <Card.Text style={{ height: '1rem' }}>
                                 Rs. {item.price}
                             </Card.Text>
                         </Card.Body>
