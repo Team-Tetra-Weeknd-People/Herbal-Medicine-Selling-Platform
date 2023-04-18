@@ -33,11 +33,11 @@ export default function Landing() {
     //item validation
     const ItemSchema = Yup.object().shape({
         name: Yup.string()
-            .min(2, 'Too Short!')
+            .min(5, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
         description: Yup.string()
-            .min(2, 'Too Short!')
+            .min(10, 'Too Short!')
             .max(500, 'Too Long!')
             .required('Required'),
         price: Yup.number()
@@ -67,7 +67,7 @@ export default function Landing() {
 
     //get all items
     useEffect(() => {
-        ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
+        ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
             (response) => {
                 setItems(response.data);
             },
@@ -110,7 +110,7 @@ export default function Landing() {
 
                 ItemService.create(item).then((response) => {
                     console.log(response.data);
-                    ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
+                    ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
                         (response) => {
                             setItems(response.data);
                             handleCloseItemAdd();
@@ -146,7 +146,7 @@ export default function Landing() {
                 ItemService.remove(id).then(
                     (response) => {
                         console.log(response.data);
-                        ItemService.getNewBySeller(sessionStorage.getItem("user-id")).then(
+                        ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
                             (response) => {
                                 setItems(response.data);
                             },
@@ -184,10 +184,10 @@ export default function Landing() {
                 <Modal.Body>
                     <Formik
                         initialValues={{
-                            name: '1212',
-                            description: '1212',
-                            price: '1212',
-                            quantity: '1212',
+                            name: '',
+                            description: '',
+                            price: '',
+                            quantity: '',
                             category: '',
                             brand: ''
                         }}

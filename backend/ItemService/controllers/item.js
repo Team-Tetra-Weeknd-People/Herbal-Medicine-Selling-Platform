@@ -78,7 +78,7 @@ export const getNewItemsBySeller = async (req, res) => {
 export const getItemsBySeller = async (req, res) => {
     const sellerID = req.params.seller;
     try {
-        const items = await Item.find({ sellerID: sellerID });
+        const items = await Item.find({ sellerID: sellerID }).sort({ _id: -1 });
         res.status(200).json(items);
     } catch (error) {
         res.status(409).json({ message: error.message });
