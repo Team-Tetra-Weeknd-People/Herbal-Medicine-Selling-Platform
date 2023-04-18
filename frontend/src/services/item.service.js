@@ -50,7 +50,7 @@ const getNew = async () => {
 }
 
 const getNewBySeller = async (seller) => {
-    return await axios.get(url.GET_NEW_ITEMS_BY_SELLER(seller), {
+    return await axios.get(url.GET_NEW_ITEMS_BY_SELLERID(seller), {
         headers: {
             "Content-Type": "application/json"
         },
@@ -58,7 +58,7 @@ const getNewBySeller = async (seller) => {
 }
 
 const getBySeller = async (seller) => {
-    return await axios.get(url.GET_ITEMS_BY_SELLER(seller), {
+    return await axios.get(url.GET_ITEMS_BY_SELLERID(seller), {
         headers: {
             "Content-Type": "application/json"
         },
@@ -67,6 +67,14 @@ const getBySeller = async (seller) => {
 
 const getByCategory = async (category) => {
     return await axios.get(url.GET_ITEMS_BY_CATEGORY(category), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getByBrand = async (brand) => {
+    return await axios.get(url.GET_ITEMS_BY_BRAND(brand), {
         headers: {
             "Content-Type": "application/json"
         },
@@ -83,5 +91,6 @@ export default {
     getNew,
     getNewBySeller,
     getBySeller,
-    getByCategory
+    getByCategory,
+    getByBrand
 }

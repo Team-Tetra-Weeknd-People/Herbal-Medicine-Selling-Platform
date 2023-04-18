@@ -926,10 +926,10 @@ export default function Navbar() {
               </Navbarx.Brand>
             </LinkContainer>
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/categories" className="navlink">
                 Categories
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">

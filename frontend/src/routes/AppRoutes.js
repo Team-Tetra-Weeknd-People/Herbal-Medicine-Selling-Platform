@@ -20,6 +20,16 @@ import {
     ItemSearch
 } from '../pages/SellerProfile/Pages'
 
+import {
+    Brands,
+    BrandItems
+} from '../pages/Brand'
+
+import {
+    Categories,
+    CategoryItems
+} from '../pages/Category'
+
 export default function App() {
     return (
         <>
@@ -43,6 +53,14 @@ export default function App() {
                     <Route path="/sellerProfile" element={<SellerHome />} />
                     <Route path="/sellerProfile/items" element={<ItemView />} />
                     <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
+
+                    {/* Brand Routes */}
+                    <Route path="/brands" element={<Brands />} />
+                    <Route path="/brands/:param" element={<BrandItems />} />
+
+                    {/* Category Routes */}
+                    <Route path="/categories" element={<Categories />} />
+                    <Route path="/categories/:param" element={<CategoryItems />} />
 
                 </Routes>
             </Router>
