@@ -83,3 +83,12 @@ export const getItemsByCategory = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+export const getItemByBrand = async (req, res) => {
+    axios.get(`${itemAPI}/brand/${req.params.brand}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
