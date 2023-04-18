@@ -53,11 +53,21 @@ export const getOneItem = async (req, res) => {
     }
 }
 
-//get new 5 items by sellerID
+//get new 8 items
 export const getNewItems = async (req, res) => {
-    const sellerID = req.params.sellerID;
     try {
-        const items = await Item.find({sellerID : sellerID}).sort({ _id: -1 }).limit(5);
+        const items = await Item.find().limit(8);
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get new 6 items by sellerID
+export const getNewItemsBySeller = async (req, res) => {
+    const sellerID = req.params.seller;
+    try {
+        const items = await Item.find({ sellerID: sellerID }).sort({ _id: -1 }).limit(6);
         res.status(200).json(items);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -65,14 +75,24 @@ export const getNewItems = async (req, res) => {
 }
 
 //get all items by sellerID
-export const getItemsBySellerID = async (req, res) => {
-    const sellerID = req.params.sellerID;
+export const getItemsBySeller = async (req, res) => {
+    const sellerID = req.params.seller;
     try {
-        const items = await Item.find({sellerID : sellerID});
+        const items = await Item.find({ sellerID: sellerID }).sort({ _id: -1 });
         res.status(200).json(items);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
-} 
+}
 
+//get all items by category
+export const getItemsByCategory = async (req, res) => {
+    const category = req.params.category;
+    try {
+        const items = await Item.find({ category: category });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
 

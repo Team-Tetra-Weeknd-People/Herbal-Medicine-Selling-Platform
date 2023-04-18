@@ -12,7 +12,7 @@ export const getOneItem = async (req, res) => {
         });
 }
 
-export const getItems = async (req, res) => { 
+export const getItems = async (req, res) => {
     axios.get(`${itemAPI}/`)
         .then(response => {
             res.status(200).json(response.data);
@@ -49,7 +49,34 @@ export const deleteItem = async (req, res) => {
 }
 
 export const getNewItems = async (req, res) => {
-    axios.get(`${itemAPI}/newitems`)
+    axios.get(`${itemAPI}/new/items`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
+
+export const getNewItemsBySeller = async (req, res) => {
+    axios.get(`${itemAPI}/new/${req.params.seller}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
+
+export const getItemsBySeller = async (req, res) => {
+    axios.get(`${itemAPI}/seller/${req.params.seller}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
+
+export const getItemsByCategory = async (req, res) => {
+    axios.get(`${itemAPI}/category/${req.params.category}`)
         .then(response => {
             res.status(200).json(response.data);
         }).catch(error => {

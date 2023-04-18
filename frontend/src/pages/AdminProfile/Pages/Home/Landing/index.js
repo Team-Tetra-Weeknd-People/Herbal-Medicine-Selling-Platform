@@ -148,10 +148,8 @@ export default function Landing() {
                     });
             }
         })
-
     }
-
-
+    
     return (
         <>
             {/* Add Category Modal */}
@@ -282,9 +280,9 @@ export default function Landing() {
                             <Row>
                                 <Col>
                                     <div className='box'>
-                                        <h4>Number of Brands in the system</h4>
+                                        <h4>Number of Companies in the system</h4>
                                         <h1>1</h1>
-                                        <p><a href="/adminProfile/brands"><Button variant="primary">Manage Brands</Button></a></p>
+                                        <p><a href="/"><Button variant="primary">Manage Companies</Button></a></p>
                                     </div>
                                 </Col>
                                 <Col>

@@ -15,7 +15,6 @@ import * as Yup from 'yup';
 import '../../itemSellerPages.css'
 
 import CategoryService from '../../../../../services/category.service';
-import BrandService from '../../../../../services/brand.service';
 import ItemService from '../../../../../services/item.service';
 
 export default function Landing() {
@@ -23,7 +22,6 @@ export default function Landing() {
     document.body.style.overflow = "visible";
 
     const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]);
     const [items, setItems] = useState([]);
     const [imageItem, setImageItem] = useState("");
 
@@ -35,12 +33,12 @@ export default function Landing() {
     //item validation
     const ItemSchema = Yup.object().shape({
         name: Yup.string()
-            .min(2, 'Too Short!')
+            .min(5, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
         description: Yup.string()
-            .min(2, 'Too Short!')
-            .max(50, 'Too Long!')
+            .min(10, 'Too Short!')
+            .max(500, 'Too Long!')
             .required('Required'),
         price: Yup.number()
             .required('Required'),
@@ -49,9 +47,6 @@ export default function Landing() {
         //category dropdown
         category: Yup.string()
             .required('Required'),
-        //brand dropdown
-        brand: Yup.string()
-            .required('Required')
     });
 
 
@@ -70,24 +65,9 @@ export default function Landing() {
             });
     }, []);
 
-    //get all brands
-    useEffect(() => {
-        BrandService.getAll().then(
-            (response) => {
-                setBrands(response.data);
-            },
-            (error) => {
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-            });
-    }, []);
-
     //get all items
     useEffect(() => {
-        ItemService.getAll().then(
+        ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
             (response) => {
                 setItems(response.data);
             },
@@ -122,7 +102,7 @@ export default function Landing() {
                     price: values.price,
                     quantity: values.quantity,
                     category: values.category,
-                    brand: values.brand,
+                    brand: sessionStorage.getItem("brand"),
                     image: url,
                     sellerID: sessionStorage.getItem("user-id")
                 };
@@ -130,7 +110,7 @@ export default function Landing() {
 
                 ItemService.create(item).then((response) => {
                     console.log(response.data);
-                    ItemService.getAll().then(
+                    ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
                         (response) => {
                             setItems(response.data);
                             handleCloseItemAdd();
@@ -146,6 +126,50 @@ export default function Landing() {
             })
     }
 
+    //delete item
+    async function deleteItem(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'This Item has been deleted.',
+                    'success'
+                )
+                ItemService.remove(id).then(
+                    (response) => {
+                        console.log(response.data);
+                        ItemService.getBySeller(sessionStorage.getItem("user-id")).then(
+                            (response) => {
+                                setItems(response.data);
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    },
+                    (error) => {
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                    });
+            }
+        })
+    }
+
+
     return (
         <>
             <Modal
@@ -160,16 +184,14 @@ export default function Landing() {
                 <Modal.Body>
                     <Formik
                         initialValues={{
-                            name: '1212',
-                            description: '1212',
-                            price: '1212',
-                            quantity: '1212',
+                            name: '',
+                            description: '',
+                            price: '',
+                            quantity: '',
                             category: '',
                             brand: ''
                         }}
-
                         validationSchema={ItemSchema}
-
                         onSubmit={(values) => {
                             addItem(values);
                         }}>
@@ -212,17 +234,6 @@ export default function Landing() {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="brand">Brand</label>
-                                    <Field as="select" name="brand" style={{ width: '25rem' }} className={'form-control' + (errors.brand && touched.brand ? ' is-invalid' : '')}>
-                                        <option value="" label="Select a brand" />
-                                        {brands.map((brand) => (
-                                            <option key={brand._id} value={brand.id}>{brand.name}</option>
-                                        ))}
-                                    </Field>
-                                    <div className="invalid-feedback">{errors.brand}</div>
-                                </div>
-
-                                <div className="form-group">
                                     <label htmlFor="image">Image</label>
                                     <Field name="image" type="file" style={{ width: '25rem' }} className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
                                     <div className="invalid-feedback">{errors.image}</div>
@@ -258,25 +269,25 @@ export default function Landing() {
 
             <div className='sellerItemsPage'>
                 {items.map((item) => (
-                        <Card style={{ width: '18rem', height: '28rem', marginTop: '1rem'}} className = "itemCard">
-                            <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
-                            <Card.Body>
-                                <Card.Title>{item.name}</Card.Title>
-                                <Card.Text>
-                                    Rs. {item.price}
-                                </Card.Text>
-                                </Card.Body>
-                                <ListGroup className="list-group-flush">
-                                    <ListGroup.Item>{item.quantity}</ListGroup.Item>
-                                    <ListGroup.Item>{item.category}</ListGroup.Item>
-                                    <ListGroup.Item>{item.brand}</ListGroup.Item>
-                                </ListGroup>
-                                <Card.Body>
-                                    <Button variant="primary">Edit</Button>
-                                    <Button variant="danger" style={{ margin: '5px' }}>Delete</Button>
-                            </Card.Body>
-                        </Card>
-                        ))}
+                    <Card style={{ width: '18rem', height: '30rem', marginTop: '1rem' }} className="itemCard">
+                        <Card.Img variant="top" style={{ width: '10rem', margin: '0px auto' }} src={item.image} />
+                        <Card.Body>
+                            <Card.Title style={{ height: '3rem' }}>{item.name}</Card.Title>
+                            <Card.Text style={{ height: '1rem' }}>
+                                Rs. {item.price}
+                            </Card.Text>
+                        </Card.Body>
+                        <ListGroup className="list-group-flush">
+                            <ListGroup.Item>{item.quantity}</ListGroup.Item>
+                            <ListGroup.Item>{item.category}</ListGroup.Item>
+                            <ListGroup.Item>{item.brand}</ListGroup.Item>
+                        </ListGroup>
+                        <Card.Body>
+                            <Button variant="primary">Edit</Button>
+                            <Button variant="danger" style={{ margin: '5px' }} onClick={() => deleteItem(item._id)}>Delete</Button>
+                        </Card.Body>
+                    </Card>
+                ))}
             </div>
         </>
     )

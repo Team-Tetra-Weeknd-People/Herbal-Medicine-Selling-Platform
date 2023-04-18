@@ -41,11 +41,47 @@ const remove = async (id) => {
     });
 }
 
+const getNew = async () => {
+    return await axios.get(url.GET_NEW_ITEMS, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getNewBySeller = async (seller) => {
+    return await axios.get(url.GET_NEW_ITEMS_BY_SELLER(seller), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getBySeller = async (seller) => {
+    return await axios.get(url.GET_ITEMS_BY_SELLER(seller), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getByCategory = async (category) => {
+    return await axios.get(url.GET_ITEMS_BY_CATEGORY(category), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getAll,
     get,
     create,
     update,
-    remove
+    remove,
+    getNew,
+    getNewBySeller,
+    getBySeller,
+    getByCategory
 }
