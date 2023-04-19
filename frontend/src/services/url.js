@@ -43,3 +43,12 @@ export const GET_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/seller/${sel
 export const GET_ITEMS_BY_CATEGORY = (category) => `${BASE_URL}/items/category/${category}`;
 export const GET_ITEMS_BY_BRAND = (brand) => `${BASE_URL}/items/brand/${brand}`;
 
+//review
+export const GET_ALL_REVIEWS = `${BASE_URL}/reviews`;
+export const GET_REVIEW = (id) => `${BASE_URL}/reviews/${id}`;
+export const CREATE_REVIEW = `${BASE_URL}/reviews/create`;
+export const UPDATE_REVIEW = (id) => `${BASE_URL}/reviews/update/${id}`;
+export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
+export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
+export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/buyer/${buyer}`;
+

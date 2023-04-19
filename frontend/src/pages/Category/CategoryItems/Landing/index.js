@@ -34,7 +34,7 @@ export default function Landing(props) {
                     </div>
                 ) : (
                     items.map((item) => (
-                        <a href={`/items/${item._id}`} className="content">
+                        <a href={`/itemOne/${item._id}`} className="content">
                             <Card style={{ width: '18rem', height: '20rem', marginTop: '1rem' }} className="itemCard">
                                 <Card.Img variant="top" style={{ width: '10rem', height: '10rem', margin: '0px auto', padding: '5px' }} src={item.image} />
                                 <Card.Body>
