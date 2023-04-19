@@ -68,3 +68,4 @@ networks:
     
 # run below command in terminal
 # docker compose up -d 
+# docker build -t herbal-medicine-selling-platform-frontend .     
