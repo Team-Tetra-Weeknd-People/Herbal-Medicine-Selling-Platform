@@ -2,7 +2,8 @@ import "../../styles/sudul/Home.css";
 
 import {
   Navbar,
-  ItemCart
+  ItemCart,
+  AppSlider
 } from "../../components";
 
 function Home() {
@@ -12,6 +13,7 @@ function Home() {
     <>
        <Navbar />
        <ItemCart />
+       <AppSlider/>
     </>
 
   );
