@@ -5,7 +5,8 @@ import {
     Home,
     BuyerProfile,
     ForgotPassword,
-    UpdatePassword
+    UpdatePassword,
+    ItemOne
 } from '../pages'
 
 import {
@@ -61,6 +62,9 @@ export default function App() {
                     {/* Category Routes */}
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/categories/:param" element={<CategoryItems />} />
+
+                    {/* Item Routes */}
+                    <Route path="/itemOne/:param" element={<ItemOne />} />
 
                 </Routes>
             </Router>
