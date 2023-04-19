@@ -31,10 +31,15 @@ export const CREATE_CATEGORY = `${BASE_URL}/categories/create`;
 export const UPDATE_CATEGORY = (id) => `${BASE_URL}/categories/update/${id}`;
 export const DELETE_CATEGORY = (id) => `${BASE_URL}/categories/delete/${id}`;
 
-//brand
-export const GET_ALL_BRANDS = `${BASE_URL}/brands`;
-export const GET_BRAND = (id) => `${BASE_URL}/brands/${id}`;
-export const CREATE_BRAND = `${BASE_URL}/brands/create`;
-export const UPDATE_BRAND = (id) => `${BASE_URL}/brands/update/${id}`;
-export const DELETE_BRAND = (id) => `${BASE_URL}/brands/delete/${id}`;
+//item
+export const GET_ALL_ITEMS = `${BASE_URL}/items`;
+export const GET_ITEM = (id) => `${BASE_URL}/items/${id}`;
+export const CREATE_ITEM = `${BASE_URL}/items/create`;
+export const UPDATE_ITEM = (id) => `${BASE_URL}/items/update/${id}`;
+export const DELETE_ITEM = (id) => `${BASE_URL}/items/delete/${id}`;
+export const GET_NEW_ITEMS = `${BASE_URL}/items/new/items`;
+export const GET_NEW_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/new/${seller}`;
+export const GET_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/seller/${seller}`;
+export const GET_ITEMS_BY_CATEGORY = (category) => `${BASE_URL}/items/category/${category}`;
+export const GET_ITEMS_BY_BRAND = (brand) => `${BASE_URL}/items/brand/${brand}`;
 

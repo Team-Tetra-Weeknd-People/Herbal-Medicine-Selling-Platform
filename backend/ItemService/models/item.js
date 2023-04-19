@@ -33,9 +33,9 @@ const ItemSchema = new Schema({
     },
     rating: {
         type: Number,
-        required: true
+        default: 0
     },
-    stocks: {
+    quantity: {
         type: Number,
         required: true
     },

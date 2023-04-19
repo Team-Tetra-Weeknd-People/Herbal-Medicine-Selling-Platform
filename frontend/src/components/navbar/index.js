@@ -156,6 +156,7 @@ export default function Navbar() {
     sessionStorage.setItem("auth-token", token);
     sessionStorage.setItem("user-id", decodedToken.id);
     sessionStorage.setItem("verification", decodedToken.verified);
+    sessionStorage.setItem("brand", decodedToken.brand);
   }
 
   function logout() {
@@ -439,6 +440,8 @@ export default function Navbar() {
   return (
 
     <>
+      {/* forgot password modal */}
+
       {/* reg select modal */}
       <Modal
         show={showRegSelect}
@@ -767,8 +770,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'Randula98@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -923,17 +926,17 @@ export default function Navbar() {
               </Navbarx.Brand>
             </LinkContainer>
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/" className="navlink">
-                Drugs
+              <Nav.Link as={Link} to="/categories" className="navlink">
+                Categories
+              </Nav.Link>
+              <Nav.Link as={Link} to="/brands" className="navlink">
+                Brands
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
-                Beauty
+                About Us
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
-                Supplements
-              </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
-                Sports
+                Contact Us
               </Nav.Link>
             </Nav>
             {view()}

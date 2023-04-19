@@ -52,3 +52,57 @@ export const getOneItem = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
+//get new 8 items
+export const getNewItems = async (req, res) => {
+    try {
+        const items = await Item.find().limit(8);
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get new 6 items by sellerID
+export const getNewItemsBySeller = async (req, res) => {
+    const sellerID = req.params.seller;
+    try {
+        const items = await Item.find({ sellerID: sellerID }).sort({ _id: -1 }).limit(6);
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get all items by sellerID
+export const getItemsBySeller = async (req, res) => {
+    const sellerID = req.params.seller;
+    try {
+        const items = await Item.find({ sellerID: sellerID }).sort({ _id: -1 });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get all items by category
+export const getItemsByCategory = async (req, res) => {
+    const category = req.params.category;
+    try {
+        const items = await Item.find({ category: category });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get all items by brand
+export const getItemsByBrand = async (req, res) => {
+    const brand = req.params.brand;
+    try {
+        const items = await Item.find({ brand: brand });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
