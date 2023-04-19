@@ -5,25 +5,25 @@ import bcrypt from 'bcrypt';
 //authenticating the buyer
 export const authBuyer = async (req, res) => {
     const { email, password } = req.body;
-    try{
-        const buyer = await Buyer.findOne({email});
-        if(buyer){
-            if(bcrypt.compareSync(password, buyer.password)){
+    try {
+        const buyer = await Buyer.findOne({ email });
+        if (buyer) {
+            if (bcrypt.compareSync(password, buyer.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: buyer._id  , verified : buyer.verified }, secret, {
+                const token = jwt.sign({ id: buyer._id, verified: buyer.verified, fname: buyer.firstName, lname: buyer.lastName }, secret, {
                     expiresIn: "3h",
                 });
 
-                return res.status(200).json({ success: true , user : "Buyer", message: "Buyer authenticated" , token: token });
+                return res.status(200).json({ success: true, user: "Buyer", message: "Buyer authenticated", token: token });
             }
-            return res.status(406).json({ success: false , user: true , message: "Password Incorrect" });
+            return res.status(406).json({ success: false, user: true, message: "Password Incorrect" });
         }
-        else{
-            return res.status(402).json({ success: false, user: false , message: "Buyer doesn't exist" });
+        else {
+            return res.status(402).json({ success: false, user: false, message: "Buyer doesn't exist" });
         }
     }
-    catch(error){
+    catch (error) {
         return res.status(404).json({ message: error });
     }
 }

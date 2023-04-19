@@ -8,14 +8,23 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import jwt_decode from "jwt-decode";
-import { Link } from "react-router-dom";
+import { Navigation, Pagination } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 import './ItemOneLanding.css'
 
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+
 import ItemService from '../../../services/item.service'
 import BuyerAuth from "../../../services/buyerAuth.service";
+import ReviewService from '../../../services/review.service'
 
 export default function Landing(props) {
+
+  const [rating, setRating] = useState(1);
 
   //login validation
   const loginSchema = Yup.object().shape({
@@ -28,18 +37,43 @@ export default function Landing(props) {
       .required('Required'),
   });
 
+  //review validation
+  const reviewSchema = Yup.object().shape({
+    description: Yup.string()
+      .min(10, 'Too Short!')
+      .max(500, 'Too Long!')
+      .required('Required'),
+  });
+
   const [showLoginBuyer, setShowLoginBuyer] = useState(false);
   const handleCloseLoginBuyer = () => setShowLoginBuyer(false);
-  const handleShowLoginBuyer = () => setShowLoginBuyer(true);;
+  const handleShowLoginBuyer = () => setShowLoginBuyer(true);
+
+  const [showReview, setShowReview] = useState(false);
+  const handleCloseReview = () => setShowReview(false);
+  const handleShowReview = () => setShowReview(true);
 
   const { itemID } = props;
   const [item, setItem] = useState({});
+  const [reviews, setReviews] = useState([]);
 
   //get one item details
   useEffect(() => {
     ItemService.get(itemID)
       .then((response) => {
         setItem(response.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [])
+
+  //get reviews by itemid
+  useEffect(() => {
+    ReviewService.getByItemID(itemID)
+      .then((response) => {
+        setReviews(response.data)
+        console.log(response.data, 'asdasd');
       })
       .catch((error) => {
         console.log(error);
@@ -56,6 +90,8 @@ export default function Landing(props) {
     sessionStorage.setItem("user-id", decodedToken.id);
     sessionStorage.setItem("verification", decodedToken.verified);
     sessionStorage.setItem("brand", decodedToken.brand);
+    sessionStorage.setItem("fname", decodedToken.fname);
+    sessionStorage.setItem("lname", decodedToken.lname);
   }
 
   async function loginBuyer(values) {
@@ -93,6 +129,43 @@ export default function Landing(props) {
       });
   }
 
+  async function addReview(values) {
+    const data = {
+      buyerFname: sessionStorage.getItem("fname"),
+      buyerLname: sessionStorage.getItem("lname"),
+      description: values.description,
+      rating: rating,
+      itemID: itemID,
+      buyerID: sessionStorage.getItem("user-id"),
+    }
+
+    ReviewService.create(data)
+      .then((res) => {
+        console.log(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: 'Successful',
+          text: 'Review Added Successfully!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Please Try Again!!',
+          footer: 'Something Went Wrong!!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+          }
+        })
+      });
+  }
+
   function handleAddCart() {
     if (!sessionStorage.getItem('user-type')) {
       Swal.fire(
@@ -117,17 +190,81 @@ export default function Landing(props) {
       handleShowLoginBuyer();
     }
     else {
-      alert('Added Reviews');
-      handleShowLoginBuyer();
+      handleShowReview();
     }
   }
 
-  function handlePage(){
+  function handlePage() {
     window.location.href = `/brands/${item.brand}`;
   }
 
   return (
     <>
+      {/* review add modal */}
+      <Modal
+        show={showReview}
+        onHide={handleCloseReview}
+        backdrop="static"
+        keyboard={false}
+        size="m">
+        <Modal.Header closeButton>
+          <Modal.Title>Add Review</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Formik
+            initialValues={{
+              description: '',
+            }}
+            validationSchema={reviewSchema}
+            onSubmit={values => {
+              console.log(values);
+              console.log(rating);
+              addReview(values);
+              handleAddReview();
+            }}
+          >
+            {({ errors, touched }) => (
+              <Form>
+                {/* description */}
+                <div className="form-group">
+                  <label htmlFor="description">Description</label>
+                  <Field name="description" type="text" style={{ width: '25rem' }} className={'form-control' + (errors.description && touched.description ? ' is-invalid' : '')} />
+                  <div className="invalid-feedback">{errors.description}</div>
+                </div>
+                {/* radio button for rating horizontally*/}
+                <div className="form-group col-md-10">
+                  <label htmlFor="rating">Rating</label>
+                  <br />
+                  <div className="form-check form-check-inline">
+                    <Field className="form-check-input" type="radio" name="rating" id="inlineRadio1" value="1" onClick={() => setRating(1)} checked />
+                    <label className="form-check-label" htmlFor="inlineRadio1">1</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <Field className="form-check-input" type="radio" name="rating" id="inlineRadio2" value="2" onClick={() => setRating(2)} />
+                    <label className="form-check-label" htmlFor="inlineRadio2">2</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <Field className="form-check-input" type="radio" name="rating" id="inlineRadio3" value="3" onClick={() => setRating(3)} />
+                    <label className="form-check-label" htmlFor="inlineRadio3">3</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <Field className="form-check-input" type="radio" name="rating" id="inlineRadio4" value="4" onClick={() => setRating(4)} />
+                    <label className="form-check-label" htmlFor="inlineRadio4">4</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <Field className="form-check-input" type="radio" name="rating" id="inlineRadio5" value="5" onClick={() => setRating(5)} />
+                    <label className="form-check-label" htmlFor="inlineRadio5">5</label>
+                  </div>
+                </div>
+                <br />
+                <div className="form-group col-md-6">
+                  <button type="submit" className="btn btn-primary mr-2">Submit</button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </Modal.Body>
+      </Modal>
 
       {/* buyer login modal */}
       <Modal
@@ -202,8 +339,24 @@ export default function Landing(props) {
               <h3>{item.description}</h3>
             </Row>
             <Row className="itemReview">
-              <Row>
-
+              <Row style={{ height: '120px' }}>
+                {!reviews.length ? (
+                  <h3 className="text-center">No quotes available to display</h3>
+                ) : (
+                  <div>
+                    <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
+                      {reviews.map((quote) => (
+                        <SwiperSlide style={{ height: '130px' }}>
+                          <div className="quoteCard" >
+                            <p className="text-center quotesTextParagraph ">{quote.description}</p>
+                            <p className="owner">- {quote.buyerFname} {quote.buyerLname}-</p>
+                            <p className="owner">Rating - {quote.rating}/5</p>
+                          </div>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+                )}
               </Row>
               <Row>
                 <Col className='BottomLeft'><Button variant="primary" onClick={() => handleAddReview()}>Add a Review</Button>{' '}</Col>
@@ -212,10 +365,10 @@ export default function Landing(props) {
           </Col>
         </Row>
         <Row>
-        <Col sm={4} className='BottomLeft'>
-        <Button variant="primary" onClick={() => handleAddCart()}>Add To Cart</Button>{' '}<br/><br/>
-        <Button variant="primary" onClick={() => handlePage()}>View Items By This Brand</Button>{' '}
-        </Col>
+          <Col sm={4} className='BottomLeft'>
+            <Button variant="primary" onClick={() => handleAddCart()}>Add To Cart</Button>{' '}<br /><br />
+            <Button variant="primary" onClick={() => handlePage()}>View Items By This Brand</Button>{' '}
+          </Col>
         </Row>
       </div>
     </>
