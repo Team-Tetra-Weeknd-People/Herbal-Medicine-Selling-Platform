@@ -9,9 +9,9 @@ function ItemCart() {
         <div className="container">
             {userType === ("Buyer") && (
                 <div className="floating-parent">
-                    <div className="tooltip">My Cart</div>
-                    <div className="right-button">
-                        <i class="fa-solid fa-phone-flip"></i>
+                 <div className="tooltip">My Cart</div>
+                     <div className="right-button">
+                     <i class="fa-solid fa-cart-shopping"></i>
                     </div>
                 </div>
             )}
