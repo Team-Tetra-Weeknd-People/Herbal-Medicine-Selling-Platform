@@ -2,6 +2,7 @@ import React from 'react'
 
 import {
   Navbar,
+  ItemCart
 } from "../../components";
 
 export default function BuyerProfile() {
@@ -11,6 +12,7 @@ export default function BuyerProfile() {
   return (
     <>
       <Navbar />
+      <ItemCart />
     </>
   )
 }
