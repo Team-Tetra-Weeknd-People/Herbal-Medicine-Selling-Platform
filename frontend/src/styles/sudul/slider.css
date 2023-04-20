@@ -143,30 +143,70 @@
   }
   #img1{
   background-color: #000000;
-  background-image: url('./images/facewash.jpg');
+  background-image: url('./images/st.jpeg');
+  background-size: cover;
+  }
+  #img1 h1, #img1 p{
+    color: #ffffff;
+  }
+  #img1 a{
+    background-color: brown;
   }
   #img2{
   background-color: #000000;
-  background-image: url('./images/facewash.jpg');
+  background-image: url('./images/wg.jpeg');
+  background-size: cover;
+  }
+  #img2 h1, #img2 p{
+    color: #ee5252;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+  #img2 a{
+    background-color: rgb(107, 2, 2);
   }
   #img3{
   background-color: #000000;
-  background-image: url('./images/facewash.jpg');
+  background-image: url('./images/sp.jpg');
+  background-size: cover;
+  }
+  #img3 h1, #img3 p{
+    color: #000000;
+  }
+  #img3 a{
+    background-color: rgb(0, 0, 0);
   }
   #img4{
   background-color: #000000;
-  background-image: url('./images/facewash.jpg');
+  background-image: url('./images/fw1.jpg');
+  background-size: cover;
+  }
+  #img4 h1, #img4 p{
+    color: #aa004f;
+    -webkit-text-stroke-width: 0.3px;
+    -webkit-text-stroke-color: wheat;
+  }
+  #img4 a{
+    background-color: rgb(0, 0, 0);
   }
   #img5{
   background-color: #000000;
   background-image: url('./images/tp.jpg');
   background-size: cover;
   }
-  .bakery-container{
+  #img5 h1, #img5 p{
+    color: #000000;
+    -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: limegreen;
+  }
+  #img5 a{
+    background-color: rgb(0, 0, 0);
+  }
+  .home-container{
   background-color: rgb(255, 255, 255);
   padding-top: 0.25%;
   }
-  .container .bakery-container >h1>center{
+  .container .home-container >h1>center{
     padding-top: 0.15%;
     padding-bottom: 0.15%;
     font-size: 5rem;
