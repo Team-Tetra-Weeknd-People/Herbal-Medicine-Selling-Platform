@@ -12,6 +12,6 @@ export {
     UpdatePassword,
     ForgotPassword,
     ContactUs,
-    AboutUs
+    AboutUs,
     ItemOne
 }

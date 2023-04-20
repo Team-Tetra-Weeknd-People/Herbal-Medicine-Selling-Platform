@@ -7,7 +7,7 @@ import {
     ForgotPassword,
     UpdatePassword,
     ContactUs,
-    AboutUs
+    AboutUs,
     ItemOne
 } from '../pages'
 
