@@ -6,6 +6,8 @@ import {
     BuyerProfile,
     ForgotPassword,
     UpdatePassword,
+    ContactUs,
+    AboutUs
     ItemOne
 } from '../pages'
 
@@ -55,6 +57,12 @@ export default function App() {
                     <Route path="/sellerProfile/items" element={<ItemView />} />
                     <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
 
+                    {/* ContactUs Routes */}
+                    <Route path="/ContactUS" element={<ContactUs />} />
+
+                    {/* AboutUs Routes */}
+                    <Route path="/AboutUs" element={<AboutUs />} />
+                    
                     {/* Brand Routes */}
                     <Route path="/brands" element={<Brands />} />
                     <Route path="/brands/:param" element={<BrandItems />} />
