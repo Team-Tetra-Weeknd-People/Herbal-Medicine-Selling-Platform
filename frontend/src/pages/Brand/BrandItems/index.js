@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import {
     Navbar,
+    ItemCart
 } from "../../../components";
 import Landing from './Landing';
 
@@ -13,6 +14,7 @@ export default function BrandItems() {
         <>
             <Navbar />
             <Landing brand={brandName} />
+            <ItemCart />
         </>
     )
 }

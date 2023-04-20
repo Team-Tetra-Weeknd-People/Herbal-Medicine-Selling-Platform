@@ -342,7 +342,7 @@ export default function Landing(props) {
             <Row className="itemReview">
               <Row style={{ height: '120px' }}>
                 {!reviews.length ? (
-                  <h3 className="text-center">No quotes available to display</h3>
+                  <h3 className="text-center">No Reviews available to display</h3>
                 ) : (
                   <div>
                     <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>

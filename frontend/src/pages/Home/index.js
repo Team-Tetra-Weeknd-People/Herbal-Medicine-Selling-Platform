@@ -9,13 +9,13 @@ import {
 function Home() {
 
   document.title = "Beheth Kade | Home";
+  
   return (
     <>
-       <Navbar />
-       <ItemCart />
-       <AppSlider/>
+      <Navbar />
+      <AppSlider />
+      <ItemCart />
     </>
-
   );
 }
 

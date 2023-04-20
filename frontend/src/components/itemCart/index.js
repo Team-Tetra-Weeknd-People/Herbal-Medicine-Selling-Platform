@@ -1,17 +1,20 @@
 import React from "react";
 import '../../styles/sudul/itemCart.css';
 
-function ItemCart(){
-    return(
+function ItemCart() {
+
+    const userType = sessionStorage.getItem("user-type");
+
+    return (
         <div className="container">
-            <a href="tel:">
+            {userType === ("Buyer") && (
                 <div className="floating-parent">
                  <div className="tooltip">My Cart</div>
                      <div className="right-button">
                      <i class="fa-solid fa-cart-shopping"></i>
                     </div>
                 </div>
-            </a>
+            )}
         </div>
     );
 }
