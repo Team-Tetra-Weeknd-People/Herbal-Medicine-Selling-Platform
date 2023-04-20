@@ -52,3 +52,21 @@ export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
 export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
 export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/buyer/${buyer}`;
 
+
+//cart
+export const GET_ALL_CARTS = `${BASE_URL}/carts`;
+export const GET_CART = (id) => `${BASE_URL}/carts/${id}`;
+export const CREATE_CART = `${BASE_URL}/carts/create`;
+export const UPDATE_CART = (id) => `${BASE_URL}/carts/update/${id}`;
+export const DELETE_CART = (id) => `${BASE_URL}/carts/delete/${id}`;
+export const GET_CARTS_BY_BUYERID = (buyer) => `${BASE_URL}/carts/buyer/${buyer}`;
+
+//cartItem
+export const GET_ALL_CARTITEMS = `${BASE_URL}/cartItems`;
+export const GET_CARTITEM = (id) => `${BASE_URL}/cartItems/${id}`;
+export const CREATE_CARTITEM = `${BASE_URL}/cartItems/create`;
+export const UPDATE_CARTITEM = (id) => `${BASE_URL}/cartItems/update/${id}`;
+export const DELETE_CARTITEM = (id) => `${BASE_URL}/cartItems/delete/${id}`;
+export const GET_CARTITEMS_BY_CARTID = (cart) => `${BASE_URL}/cartItems/cart/${cart}`;
+
+
