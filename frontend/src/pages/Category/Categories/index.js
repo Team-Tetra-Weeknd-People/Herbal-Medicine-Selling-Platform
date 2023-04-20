@@ -1,5 +1,6 @@
 import {
     Navbar,
+    ItemCart
 } from "../../../components";
 import Landing from './Landing';
 
@@ -11,6 +12,7 @@ export default function Categories() {
         <>
             <Navbar />
             <Landing />
+            <ItemCart />
         </>
     )
 }
