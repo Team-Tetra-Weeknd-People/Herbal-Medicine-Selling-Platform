@@ -16,7 +16,7 @@ export const createCart = async (req, res) => {
     const newCart = new Cart(cart);
     try {
         await newCart.save();
-        res.status(201).json(newItem);
+        res.status(201).json(newCart);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
@@ -36,7 +36,7 @@ export const updateCart = async (req, res) => {
 export const deleteCart = async (req, res) => {
     const id = req.params.id;
     try {
-        await Item.findByIdAndRemove(id);
+        await Cart.findByIdAndRemove(id);
         res.status(200).json({ message: "Cart deleted successfully." });
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -63,3 +63,4 @@ export const getCartsByBuyerID = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+

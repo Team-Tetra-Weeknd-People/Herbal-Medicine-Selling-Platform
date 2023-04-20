@@ -5,14 +5,14 @@ import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv/config";
 
-//import routers from "./routes/index.js";
+import routers from "./routes/index.js";
 
 const app = express();
 const PORT = process.env.REACT_APP_BACKEND_PORT;
 app.use(cors());
 app.use(bodyParser.json());
 
-//routers(app);
+routers(app);
 
 app.use(session({
     secret: 'beheth_kade',

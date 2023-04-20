@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import CartItem from "../models/cartItem.js";
- 
+
 export const getCartItems = async (req, res) => {
     try {
         const cartItems = await CartItem.find();
@@ -9,18 +9,18 @@ export const getCartItems = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
- 
+
 export const createCartItem = async (req, res) => {
     const cart = req.body;
     const newCartItems = new CartItem(cart);
     try {
-        await newCart.save();
+        await newCartItems.save();
         res.status(201).json(newCartItems);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
- 
+
 export const updateCartItem = async (req, res) => {
     const id = req.params.id;
     const update = req.body;
@@ -31,7 +31,7 @@ export const updateCartItem = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
- 
+
 export const deleteCartItem = async (req, res) => {
     const id = req.params.id;
     try {
@@ -41,7 +41,7 @@ export const deleteCartItem = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
- 
+
 export const getOneCartItem = async (req, res) => {
     const id = req.params.id;
     try {
@@ -56,7 +56,7 @@ export const getOneCartItem = async (req, res) => {
 export const getCartItemsByCartID = async (req, res) => {
     const cartid = req.params.id;
     try {
-        const carts = await CartItem.find({ cartID : cartid});
+        const carts = await CartItem.find({ cartID: cartid });
         res.status(200).json(carts);
     } catch (error) {
         res.status(409).json({ message: error.message });
