@@ -38,7 +38,17 @@ export const CREATE_ITEM = `${BASE_URL}/items/create`;
 export const UPDATE_ITEM = (id) => `${BASE_URL}/items/update/${id}`;
 export const DELETE_ITEM = (id) => `${BASE_URL}/items/delete/${id}`;
 export const GET_NEW_ITEMS = `${BASE_URL}/items/new/items`;
-export const GET_NEW_ITEMS_BY_SELLER = (seller) => `${BASE_URL}/items/new/${seller}`;
-export const GET_ITEMS_BY_SELLER = (seller) => `${BASE_URL}/items/seller/${seller}`;
+export const GET_NEW_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/new/${seller}`;
+export const GET_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/seller/${seller}`;
 export const GET_ITEMS_BY_CATEGORY = (category) => `${BASE_URL}/items/category/${category}`;
+export const GET_ITEMS_BY_BRAND = (brand) => `${BASE_URL}/items/brand/${brand}`;
+
+//review
+export const GET_ALL_REVIEWS = `${BASE_URL}/reviews`;
+export const GET_REVIEW = (id) => `${BASE_URL}/reviews/${id}`;
+export const CREATE_REVIEW = `${BASE_URL}/reviews/create`;
+export const UPDATE_REVIEW = (id) => `${BASE_URL}/reviews/update/${id}`;
+export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
+export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
+export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/buyer/${buyer}`;
 

@@ -4,6 +4,7 @@ import UpdatePassword from './UpdatePassword'
 import ForgotPassword from './ForgotPassword'
 import ContactUs from './ContactUs'
 import AboutUs from './AboutUs'
+import ItemOne from './ItemOne'
 
 export { 
     Home,
@@ -12,4 +13,5 @@ export {
     ForgotPassword,
     ContactUs,
     AboutUs
+    ItemOne
 }

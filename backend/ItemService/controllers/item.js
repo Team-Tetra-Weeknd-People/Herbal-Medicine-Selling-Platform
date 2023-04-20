@@ -96,3 +96,13 @@ export const getItemsByCategory = async (req, res) => {
     }
 }
 
+//get all items by brand
+export const getItemsByBrand = async (req, res) => {
+    const brand = req.params.brand;
+    try {
+        const items = await Item.find({ brand: brand });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}

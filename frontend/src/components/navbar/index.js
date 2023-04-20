@@ -157,6 +157,8 @@ export default function Navbar() {
     sessionStorage.setItem("user-id", decodedToken.id);
     sessionStorage.setItem("verification", decodedToken.verified);
     sessionStorage.setItem("brand", decodedToken.brand);
+    sessionStorage.setItem("fname", decodedToken.fname);
+    sessionStorage.setItem("lname", decodedToken.lname);
   }
 
   function logout() {
@@ -926,10 +928,10 @@ export default function Navbar() {
               </Navbarx.Brand>
             </LinkContainer>
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/categories" className="navlink">
                 Categories
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">
