@@ -155,4 +155,4 @@ function AppSlider() {
    </>
   );
 }
-export default AppSlider;
+//export default AppSlider;
