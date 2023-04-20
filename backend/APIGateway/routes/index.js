@@ -4,6 +4,8 @@ import itemRouter from "./routers/item.js";
 import adminRouter from "./routers/admin.js";
 import categoryRouter from "./routers/category.js"
 import reviewRouter from "./routers/review.js"
+import cartRouter from "./routers/cart.js"
+import cartItemRouter from "./routers/cartItem.js"
 
 function routers(app) {
     app.use("/admins", adminRouter);
@@ -12,6 +14,8 @@ function routers(app) {
     app.use("/items", itemRouter);
     app.use("/categories", categoryRouter)
     app.use("/reviews", reviewRouter);
+    app.use("/carts", cartRouter)
+    app.use("/cartItems", cartItemRouter)
 }
 
 export default routers;
