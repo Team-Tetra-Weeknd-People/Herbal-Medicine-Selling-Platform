@@ -8,7 +8,7 @@ function ItemCart(){
                 <div className="floating-parent">
                  <div className="tooltip">My Cart</div>
                      <div className="right-button">
-                         <i class="fa-solid fa-phone-flip"></i>
+                     <i class="fa-solid fa-cart-shopping"></i>
                     </div>
                 </div>
             </a>

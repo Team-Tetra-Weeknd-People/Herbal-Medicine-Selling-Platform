@@ -160,7 +160,7 @@
   #img5{
   background-color: #000000;
   background-image: url('./images/tp.jpg');
-  background-repeat: no-repeat;
+  background-size: cover;
   }
   .bakery-container{
   background-color: rgb(255, 255, 255);

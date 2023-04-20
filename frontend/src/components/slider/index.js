@@ -102,7 +102,7 @@ function AppSlider() {
 				   <div className="caption">
 					   <h1>Slim Tea</h1>
 					   <p>Tummy Tea.Flat Tummy.</p>
-					   <a href="category.php? categoryId=CA02" >More...</a>
+					   <a href="" >More...</a>
 				   </div>
 			   </div>
 		   </div>
@@ -111,7 +111,7 @@ function AppSlider() {
 				   <div className="caption">
 					   <h1>Weight Gainer</h1>
 					   <p>Follow the passion</p>
-					   <a href="category.php? categoryId=CA01" >More...</a>
+					   <a href="" >More...</a>
 				   </div>
 			   </div>
 		   </div>
@@ -120,7 +120,7 @@ function AppSlider() {
 				   <div className="caption">
 					   <h1>Soap</h1>
 					   <p>Happy Kids. Happy Life</p>
-					   <a href="category.php? categoryId=CA03" >More...</a>
+					   <a href="" >More...</a>
 				   </div>
 			   </div>
 		   </div>
@@ -129,7 +129,7 @@ function AppSlider() {
 				<div className="caption">
 					<h1>Face Wash</h1>
 					<p>Confidence is the KEY</p>
-					<a href="category.php? categoryId=CA05" >More...</a>
+					<a href="" >More...</a>
 				</div>
 			</div>
 		</div>
@@ -137,6 +137,8 @@ function AppSlider() {
 			<div className="container" id='img5'>
 				<div className="caption">
 					<h1>ToothPaste</h1>
+          <p>Confidence is the KEY</p>
+					<a href="" >More...</a>
 				</div>
 			</div>
 		</div>
