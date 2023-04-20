@@ -1,7 +1,7 @@
 {
-  "name": "Beheth-Kade-User-Service",
+  "name": "Beheth-Kade-Payment-Service",
   "version": "1.0.0",
-  "description": "User Service, Backend of the Beheth Kade, Backend of Online Herbal Medicine Selling Platform",
+  "description": "Payment Service, Backend of the Beheth Kade, Backend of Online Herbal Medicine Selling Platform",
   "main": "index.js",
   "repository": "",
   "type": "module",
