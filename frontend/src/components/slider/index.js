@@ -13,39 +13,46 @@ function slider(){
  
     prev.addEventListener("click",function(){
         prevSlide();
-        updateCircleIndicator(); 
+        //updateCircleIndicator(); 
         resetTimer();
     })
  
     next.addEventListener("click",function(){
        nextSlide(); 
-       updateCircleIndicator();
+      //  updateCircleIndicator();
        resetTimer();
        
     })
  
     // create indicators
-     function circleIndicator(){
-         for(let i=0; i< slides.length; i++){
-           const div=document.createElement("div");
-                 div.innerHTML=i+1;
-                 div.id=i;
-                 if(i==0){
-                   div.className="active";
-                 }
-                indicator.appendChild(div);
-         }
-     }
-     circleIndicator();
- 
-
+    //  function circleIndicator(){
+    //      for(let i=0; i< slides.length; i++){
+    //        const div=document.createElement("div");
+    //              div.innerHTML=i+1;
+    //             //  div.setAttribute("onclick",indicateSlide(this))
+    //              div.id=i;
+    //              if(i==0){
+    //                div.className="active";
+    //              }
+    //             // indicator.appendChild(div);
+    //      }
+    //  }
+    //  circleIndicator();
+     
+    //  function indicateSlide(element){
+    //   index=element.id;
+    //   changeSlide();
+    //   updateCircleIndicator();
+    //   resetTimer();
+     
+    //  }
       
-     function updateCircleIndicator(){
-       for(let i=0; i<indicator.children.length; i++){
-         indicator.children[i].classList.remove("active");
-       }
-       indicator.children[index].classList.add("active");
-     }
+    //  function updateCircleIndicator(){
+    //    for(let i=0; i<indicator.children.length; i++){
+    //      indicator.children[i].classList.remove("active");
+    //    }
+    //    indicator.children[index].classList.add("active");
+    //  }
  
     function prevSlide(){
        if(index==0){
@@ -83,18 +90,17 @@ function slider(){
    
    function autoPlay(){
        nextSlide();
-       updateCircleIndicator();
+      //  updateCircleIndicator();
    }
  
    let timer=setInterval(autoPlay,4000);
- 
 }
-setTimeout(slider,10);
 function AppSlider() {
-  
+  setTimeout(slider,1)
   return (
+  
       <>
-      <div className='container'><div className='bakery-container'><h1><center>BAKERY</center></h1>
+      <div className='container'><div className='home-container'><h1><center>Home</center></h1>
 	<section className="slide-show"> 
 		<div className="slider">
 		   <div className="slide active" >
@@ -147,12 +153,14 @@ function AppSlider() {
 		   <div className="prev">&#10094;</div>
 		   <div className="next">&#10095;</div>
 	   </div>
-     <div className="indicator">
-	   </div>
+
 	 </section>
    <br/></div>
    </div>
    </>
+  
   );
+
 }
-//export default AppSlider;
+
+export default AppSlider;
