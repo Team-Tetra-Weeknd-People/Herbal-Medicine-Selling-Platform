@@ -68,6 +68,12 @@ function ItemCart() {
         }
     }
 
+    function handlePayment() {
+        console.log(total);
+        sessionStorage.setItem("total", total);
+        window.location.href = "/payment";
+    }
+
     async function deleteItem(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -169,7 +175,7 @@ function ItemCart() {
                                 </Button>
                             </Col>
                             <Col >
-                                <Button variant="primary">Go To Checkout</Button>
+                                <Button variant="primary" onClick={handlePayment}>Go To Checkout</Button>
                             </Col>
                         </Row>
                     </Container>

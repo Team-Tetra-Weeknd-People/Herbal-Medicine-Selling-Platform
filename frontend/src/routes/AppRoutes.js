@@ -8,7 +8,8 @@ import {
     UpdatePassword,
     ContactUs,
     AboutUs,
-    ItemOne
+    ItemOne,
+    StripeContainer
 } from '../pages'
 
 import {
@@ -42,7 +43,7 @@ export default function App() {
 
                     {/* Buyer Routes  */}
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
-                    
+
                     {/* Forgot Password Routes  */}
                     <Route path="/UpdatePassword" element={<UpdatePassword />} />
                     <Route path="/ForgotPassword" element={<ForgotPassword />} />
@@ -62,7 +63,7 @@ export default function App() {
 
                     {/* AboutUs Routes */}
                     <Route path="/AboutUs" element={<AboutUs />} />
-                    
+
                     {/* Brand Routes */}
                     <Route path="/brands" element={<Brands />} />
                     <Route path="/brands/:param" element={<BrandItems />} />
@@ -73,6 +74,9 @@ export default function App() {
 
                     {/* Item Routes */}
                     <Route path="/itemOne/:param" element={<ItemOne />} />
+
+                    {/* Payment Routes */}
+                    <Route path="/payment" element={<StripeContainer />} />
 
                 </Routes>
             </Router>

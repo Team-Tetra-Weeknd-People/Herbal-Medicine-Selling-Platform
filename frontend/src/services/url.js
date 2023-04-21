@@ -69,4 +69,5 @@ export const UPDATE_CARTITEM = (id) => `${BASE_URL}/cartItems/update/${id}`;
 export const DELETE_CARTITEM = (id) => `${BASE_URL}/cartItems/delete/${id}`;
 export const GET_CARTITEMS_BY_CARTID = (cart) => `${BASE_URL}/cartItems/cart/${cart}`;
 
-
+//payment
+export const INITIATE_PAYMENT = `${BASE_URL}/stripe/payment`;

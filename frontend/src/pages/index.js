@@ -5,13 +5,15 @@ import ForgotPassword from './ForgotPassword'
 import ContactUs from './ContactUs'
 import AboutUs from './AboutUs'
 import ItemOne from './ItemOne'
+import StripeContainer from './CardPayment/StripeContainer.js'
 
-export { 
+export {
     Home,
     BuyerProfile,
     UpdatePassword,
     ForgotPassword,
     ContactUs,
     AboutUs,
-    ItemOne
+    ItemOne,
+    StripeContainer
 }
