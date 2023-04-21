@@ -12,7 +12,7 @@ export default function contactUs() {
         <div className='c_container'>
                 <Form>
                     <Form.Group className="mb-3" controlId="formUP">
-                        <Form.Label className='label'>CONTACT US</Form.Label>
+                        <Form.Label className='label_c'>CONTACT US</Form.Label>
                         <br></br>
                         <Form.Control type="text" className='name' placeholder="name" />
                         <br></br>
@@ -23,7 +23,7 @@ export default function contactUs() {
                         <Form.Control type="text" className='contact' placeholder="Contact Number" />
                     </Form.Group>
 
-                    <Button type="submit" className="button">
+                    <Button type="submit" className="button1">
                         Submit
                     </Button>
                 </Form>
