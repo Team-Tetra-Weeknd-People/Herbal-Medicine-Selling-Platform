@@ -2,7 +2,9 @@ import React from 'react'
 
 import Navbar from '../../Navbar'
 import Landing from './Landing'
-import Orders from './Orders'
+import PendingOrders from './PendingOrders'
+import ConfirmedOrders from './ConfirmedOrders'
+import DispatchedOrders from './DispatchedOrders'
 
 export default function Home() {
 
@@ -12,7 +14,9 @@ export default function Home() {
     <>
       <Navbar />
       <Landing />
-      <Orders />
+      <PendingOrders />
+      <ConfirmedOrders />
+      <DispatchedOrders />
     </>
   )
 }

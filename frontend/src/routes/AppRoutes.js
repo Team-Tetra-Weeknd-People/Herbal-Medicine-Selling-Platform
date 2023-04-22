@@ -6,12 +6,19 @@ import {
     BuyerProfile,
     ForgotPassword,
     UpdatePassword,
-    VerifyEmail
+    VerifyEmail,
+    ContactUs,
+    AboutUs,
+    ItemOne,
+    StripeContainer
 } from '../pages'
 
 import {
+    footer,
+} from '../components'
+
+import {
     Items,
-    Orders,
     Home as AdminHome
 } from '../pages/AdminProfile/Pages'
 
@@ -20,6 +27,16 @@ import {
     ItemView,
     ItemSearch
 } from '../pages/SellerProfile/Pages'
+
+import {
+    Brands,
+    BrandItems
+} from '../pages/Brand'
+
+import {
+    Categories,
+    CategoryItems
+} from '../pages/Category'
 
 export default function App() {
     return (
@@ -30,7 +47,7 @@ export default function App() {
 
                     {/* Buyer Routes  */}
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
-                    
+
                     {/* Forgot Password Routes  */}
                     <Route path="/UpdatePassword" element={<UpdatePassword />} />
                     <Route path="/ForgotPassword" element={<ForgotPassword />} />
@@ -38,7 +55,6 @@ export default function App() {
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
                     <Route path="/adminProfile/items" element={<Items />} />
-                    <Route path="/adminProfile/orders" element={<Orders />} />
 
                     {/* Seller Routes */}
                     <Route path="/sellerProfile" element={<SellerHome />} />
@@ -48,7 +64,28 @@ export default function App() {
                     {/* Verify Buyer Route */}
                     <Route path="/verify/:id" element={<VerifyEmail />} />
 
+                    {/* ContactUs Routes */}
+                    <Route path="/ContactUS" element={<ContactUs />} />
+
+                    {/* AboutUs Routes */}
+                    <Route path="/AboutUs" element={<AboutUs />} />
+
+                    {/* Brand Routes */}
+                    <Route path="/brands" element={<Brands />} />
+                    <Route path="/brands/:param" element={<BrandItems />} />
+
+                    {/* Category Routes */}
+                    <Route path="/categories" element={<Categories />} />
+                    <Route path="/categories/:param" element={<CategoryItems />} />
+
+                    {/* Item Routes */}
+                    <Route path="/itemOne/:param" element={<ItemOne />} />
+
+                    {/* Payment Routes */}
+                    <Route path="/payment" element={<StripeContainer />} />
+
                 </Routes>
+                <footer />
             </Router>
         </>
     )

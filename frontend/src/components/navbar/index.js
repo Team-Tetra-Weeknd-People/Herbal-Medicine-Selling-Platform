@@ -22,6 +22,7 @@ import jwt_decode from "jwt-decode";
 import SellerAuth from "../../services/sellerAuth.service";
 import BuyerAuth from "../../services/buyerAuth.service";
 import AdminAuth from "../../services/adminAuth.service";
+import CartService from "../../services/cart.service";
 
 export default function Navbar() {
 
@@ -157,11 +158,27 @@ export default function Navbar() {
     sessionStorage.setItem("user-id", decodedToken.id);
     sessionStorage.setItem("verification", decodedToken.verified);
     sessionStorage.setItem("brand", decodedToken.brand);
+    sessionStorage.setItem("fname", decodedToken.fname);
+    sessionStorage.setItem("lname", decodedToken.lname);
   }
 
   function logout() {
-    sessionStorage.clear();
-    window.location.href = "/";
+    if (sessionStorage.getItem("user-type") === "Buyer") {
+      const cardID = sessionStorage.getItem("cart-id");
+      console.log(cardID)
+      CartService.remove(cardID).then((res) => {
+        console.log(res);
+        sessionStorage.clear();
+        window.location.href = "/";
+      }
+      ).catch((err) => {
+        console.log(err);
+      });
+    }
+    else {
+      sessionStorage.clear();
+      window.location.href = "/";
+    }
   }
 
   async function registerBuyer(values) {
@@ -304,6 +321,19 @@ export default function Navbar() {
       .then((res) => {
         sessionStorage.setItem("user-type", res.data.user);
         handleToken(res.data.token);
+        const cart = {
+          buyerID: sessionStorage.getItem("user-id"),
+          buyerfname: sessionStorage.getItem("fname"),
+          buyerlname: sessionStorage.getItem("lname"),
+        }
+        CartService.create(cart).then((res) => {
+          console.log(res);
+          console.log(res.data._id);
+          sessionStorage.setItem("cart-id", res.data._id);
+        }).catch((err) => {
+          console.log(err);
+        });
+
         Swal.fire({
           icon: 'success',
           title: 'Successful',
@@ -926,10 +956,10 @@ export default function Navbar() {
               </Navbarx.Brand>
             </LinkContainer>
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/categories" className="navlink">
                 Categories
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
               <Nav.Link as={Link} to="/" className="navlink">

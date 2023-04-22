@@ -39,7 +39,44 @@ export const CREATE_ITEM = `${BASE_URL}/items/create`;
 export const UPDATE_ITEM = (id) => `${BASE_URL}/items/update/${id}`;
 export const DELETE_ITEM = (id) => `${BASE_URL}/items/delete/${id}`;
 export const GET_NEW_ITEMS = `${BASE_URL}/items/new/items`;
-export const GET_NEW_ITEMS_BY_SELLER = (seller) => `${BASE_URL}/items/new/${seller}`;
-export const GET_ITEMS_BY_SELLER = (seller) => `${BASE_URL}/items/seller/${seller}`;
+export const GET_NEW_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/new/${seller}`;
+export const GET_ITEMS_BY_SELLERID = (seller) => `${BASE_URL}/items/seller/${seller}`;
 export const GET_ITEMS_BY_CATEGORY = (category) => `${BASE_URL}/items/category/${category}`;
+export const GET_ITEMS_BY_BRAND = (brand) => `${BASE_URL}/items/brand/${brand}`;
 
+//review
+export const GET_ALL_REVIEWS = `${BASE_URL}/reviews`;
+export const GET_REVIEW = (id) => `${BASE_URL}/reviews/${id}`;
+export const CREATE_REVIEW = `${BASE_URL}/reviews/create`;
+export const UPDATE_REVIEW = (id) => `${BASE_URL}/reviews/update/${id}`;
+export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
+export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
+export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/buyer/${buyer}`;
+
+
+//cart
+export const GET_ALL_CARTS = `${BASE_URL}/carts`;
+export const GET_CART = (id) => `${BASE_URL}/carts/${id}`;
+export const CREATE_CART = `${BASE_URL}/carts/create`;
+export const UPDATE_CART = (id) => `${BASE_URL}/carts/update/${id}`;
+export const DELETE_CART = (id) => `${BASE_URL}/carts/delete/${id}`;
+export const GET_CARTS_BY_BUYERID = (buyer) => `${BASE_URL}/carts/buyer/${buyer}`;
+export const GET_CARTS_BY_STATUS = (status) => `${BASE_URL}/carts/status/${status}`;
+
+//cartItem
+export const GET_ALL_CARTITEMS = `${BASE_URL}/cartItems`;
+export const GET_CARTITEM = (id) => `${BASE_URL}/cartItems/${id}`;
+export const CREATE_CARTITEM = `${BASE_URL}/cartItems/create`;
+export const UPDATE_CARTITEM = (id) => `${BASE_URL}/cartItems/update/${id}`;
+export const DELETE_CARTITEM = (id) => `${BASE_URL}/cartItems/delete/${id}`;
+export const GET_CARTITEMS_BY_CARTID = (cart) => `${BASE_URL}/cartItems/cart/${cart}`;
+
+//payment
+export const INITIATE_PAYMENT = `${BASE_URL}/stripe/payment`;
+
+//delivery
+export const GET_ALL_DELIVERIES = `${BASE_URL}/deliveries`;
+export const GET_DELIVERY = (id) => `${BASE_URL}/deliveries/${id}`;
+export const CREATE_DELIVERY = `${BASE_URL}/deliveries/create`;
+export const UPDATE_DELIVERY = (id) => `${BASE_URL}/deliveries/update/${id}`;
+export const DELETE_DELIVERY = (id) => `${BASE_URL}/deliveries/delete/${id}`;
