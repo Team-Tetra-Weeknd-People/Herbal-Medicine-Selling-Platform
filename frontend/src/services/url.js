@@ -56,7 +56,6 @@ export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
 export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
 export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/user/${buyer}`;
 
-
 //cart
 export const GET_ALL_CARTS = `${BASE_URL}/carts`;
 export const GET_CART = (id) => `${BASE_URL}/carts/${id}`;

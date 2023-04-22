@@ -25,10 +25,27 @@ const getCurrentUser = (id) => {
     });
 }
 
+const updateBuyer = (id, data) => {
+    return axios.put(url.UPDATE_BUYER(id), data, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const deleteBuyer = (id) => {
+    return axios.delete(url.DELETE_BUYER(id), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     register,
     login,
-    getCurrentUser
+    getCurrentUser,
+    updateBuyer,
+    deleteBuyer
 }

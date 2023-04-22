@@ -240,7 +240,6 @@ export default function Landing() {
             })
     }
 
-
     return (
         <>
             {/* Edit Item Modal */}
