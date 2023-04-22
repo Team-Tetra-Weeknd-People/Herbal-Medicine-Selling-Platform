@@ -5,7 +5,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Swal from 'sweetalert2'
 import Alert from 'react-bootstrap/Alert';
 
-import CategoryService from '../../../../../services/category.service';
 import ItemService from '../../../../../services/item.service';
 
 export default function Landing() {

@@ -531,15 +531,15 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              firstName: '123123',
-              lastName: '123123',
-              email: 'mail@mail.com',
-              contactNo: '1234567890',
-              address: '123456789',
-              password: '123456789',
-              confirmPassword: '123456789',
-              companyName: '123456789',
-              companyAddress: '123456789',
+              firstName: '',
+              lastName: '',
+              email: '',
+              contactNo: '',
+              address: '',
+              password: '',
+              confirmPassword: '',
+              companyName: '',
+              companyAddress: '',
             }}
             validationSchema={sellerRegisterSchema}
             onSubmit={values => {

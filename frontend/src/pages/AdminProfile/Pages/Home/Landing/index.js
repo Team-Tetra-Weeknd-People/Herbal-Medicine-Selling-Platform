@@ -150,7 +150,7 @@ export default function Landing() {
     //password update schema
     const UpdatePasswordSchema = Yup.object().shape({
         password: Yup.string()
-            .min(6, 'Too Short!')
+            .min(8, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
         confirmPassword: Yup.string()
