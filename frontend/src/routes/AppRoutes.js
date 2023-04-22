@@ -14,7 +14,6 @@ import {
 
 import {
     Items,
-    Orders,
     Home as AdminHome
 } from '../pages/AdminProfile/Pages'
 
@@ -51,7 +50,6 @@ export default function App() {
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
                     <Route path="/adminProfile/items" element={<Items />} />
-                    <Route path="/adminProfile/orders" element={<Orders />} />
 
                     {/* Seller Routes */}
                     <Route path="/sellerProfile" element={<SellerHome />} />

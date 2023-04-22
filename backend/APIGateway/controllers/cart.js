@@ -57,3 +57,13 @@ export const getCartsByBuyerID = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+//get carts with pending status
+export const getCartsByStatus = async (req, res) => {
+    axios.get(`${cartAPI}/status/${req.params.status}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
