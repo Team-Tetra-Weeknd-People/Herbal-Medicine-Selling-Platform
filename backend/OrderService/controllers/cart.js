@@ -57,7 +57,7 @@ export const getOneCart = async (req, res) => {
 export const getCartsByBuyerID = async (req, res) => {
     const buyerid = req.params.id;
     try {
-        const carts = await Cart.find({ buyerID : buyerid});
+        const carts = await Cart.find({ buyerID: buyerid });
         res.status(200).json(carts);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -68,10 +68,31 @@ export const getCartsByBuyerID = async (req, res) => {
 export const getCartsByStatus = async (req, res) => {
     const status = req.params.status;
     try {
-        const carts = await Cart.find({ status : status});
+        const carts = await Cart.find({ status: status });
         res.status(200).json(carts);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 }
 
+//get carts with that the status is not delivered by buyerID
+export const getCartsByBuyerIDAndNotDelivered = async (req, res) => {
+    const buyerid = req.params.id;
+    try {
+        const carts = await Cart.find({ buyerID: buyerid, status: { $ne: "Delivered" } });
+        res.status(200).json(carts);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get carts with status delivered by buyerID
+export const getCartsByBuyerIDAndDelivered = async (req, res) => {
+    const buyerid = req.params.id;
+    try {
+        const carts = await Cart.find({ buyerID: buyerid, status: "Delivered" });
+        res.status(200).json(carts);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
