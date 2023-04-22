@@ -31,3 +31,11 @@ Card.itemCard {
 .searchInput {
     width: 400px;
 }
+
+img.itemimgprofile{
+    width: 150px;
+    height: 150px;
+    border-radius: 5%;
+    margin-left: 10px;
+    margin-top: 10px;
+}

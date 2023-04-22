@@ -58,6 +58,24 @@ const getByStatus = async (status) => {
     });
 }
 
+//get carts with that the status is not delivered by buyerID
+const getByBuyerIDAndNotDelivered = async (buyer) => {
+    return await axios.get(url.GET_CARTS_BY_BUYER_NOT_DELIVERED(buyer), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+//get carts with that the status is delivered by buyerID
+const getByBuyerIDAndDelivered = async (buyer) => {
+    return await axios.get(url.GET_CARTS_BY_BUYER_DELIVERED(buyer), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 /* eslint-disable import/no-anonymous-default-export */
 export default {
     getAll,
@@ -66,6 +84,8 @@ export default {
     update,
     remove,
     getByBuyerID,
-    getByStatus
+    getByStatus,
+    getByBuyerIDAndNotDelivered,
+    getByBuyerIDAndDelivered
 };
 

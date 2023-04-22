@@ -79,7 +79,7 @@ export const getCartsByStatus = async (req, res) => {
 export const getCartsByBuyerIDAndNotDelivered = async (req, res) => {
     const buyerid = req.params.id;
     try {
-        const carts = await Cart.find({ buyerID: buyerid, status: { $ne: "Delivered" } });
+        const carts = await Cart.find({ buyerID: buyerid, status: {$nin: ["Delivered", "Cart"]} });
         res.status(200).json(carts);
     } catch (error) {
         res.status(409).json({ message: error.message });
