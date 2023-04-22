@@ -8,10 +8,7 @@ export {
     Navbar,
     HeroSection,
     ItemCart,
-<<<<<<<<< Temporary merge branch 1
-    //AppSlider,
+    AppSlider,
     Footer
-=========
-    AppSlider
->>>>>>>>> Temporary merge branch 2
+
 }
