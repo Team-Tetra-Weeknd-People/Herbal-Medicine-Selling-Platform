@@ -7,6 +7,7 @@ export const GET_SELLER = (id) => `${BASE_URL}/sellers/${id}`;
 export const UPDATE_SELLER = (id) => `${BASE_URL}/sellers/update/${id}`;
 export const DELETE_SELLER = (id) => `${BASE_URL}/sellers/delete/${id}`;
 export const GET_ALL_SELLERS = `${BASE_URL}/sellers`;
+export const VERIFY_SELLER = (id) => `${BASE_URL}/sellers/verify/${id}`;
 
 //buyer
 export const REGISTER_BUYER = `${BASE_URL}/buyers/create`;

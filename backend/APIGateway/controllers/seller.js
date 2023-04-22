@@ -56,3 +56,12 @@ export const deleteSeller = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+export const verifySeller = async (req, res) => {
+    axios.get(`${userAPI}/verify/${req.params.id}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+};
