@@ -62,3 +62,14 @@ export const getCartItemsByCartID = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
+//recent 9 orders by brand
+export const getRecentOrdersByBrand = async (req, res) => {
+    const brand = req.params.brand;
+    try {
+        const carts = await CartItem.find({ brand: brand }).sort({ createdAt: -1 }).limit(9);
+        res.status(200).json(carts);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
