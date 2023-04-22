@@ -3,6 +3,7 @@ import BuyerProfile from './BuyerProfile';
 import UpdatePassword from './UpdatePassword'
 import ForgotPassword from './ForgotPassword'
 import BuyerVerifyEmail from './BuyerVerifyEmail'
+import SellerVerifyEmail from './SellerVerifyEmail'
 import ContactUs from './ContactUs'
 import AboutUs from './AboutUs'
 import ItemOne from './ItemOne'
@@ -14,6 +15,7 @@ export {
     UpdatePassword,
     ForgotPassword,
     BuyerVerifyEmail,
+    SellerVerifyEmail,
     ContactUs,
     AboutUs,
     ItemOne,
