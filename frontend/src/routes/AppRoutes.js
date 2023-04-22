@@ -6,6 +6,7 @@ import {
     BuyerProfile,
     ForgotPassword,
     UpdatePassword,
+    VerifyEmail,
     ContactUs,
     AboutUs,
     ItemOne,
@@ -59,6 +60,9 @@ export default function App() {
                     <Route path="/sellerProfile" element={<SellerHome />} />
                     <Route path="/sellerProfile/items" element={<ItemView />} />
                     <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
+
+                    {/* Verify Buyer Route */}
+                    <Route path="/verify/:id" element={<VerifyEmail />} />
 
                     {/* ContactUs Routes */}
                     <Route path="/ContactUS" element={<ContactUs />} />
