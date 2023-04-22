@@ -6,15 +6,23 @@ import {
   AppSlider
 } from "../../components";
 
+import NewItems from "./NewItems";
+import RandomItems from "./RandomItems";
+import TopItems from "./TopItems";
+
 function Home() {
 
   document.title = "Beheth Kade | Home";
-  
+
   return (
     <>
       <Navbar />
       <AppSlider />
       <ItemCart />
+      <NewItems />
+      <TopItems />
+      <RandomItems />
+
     </>
   );
 }
