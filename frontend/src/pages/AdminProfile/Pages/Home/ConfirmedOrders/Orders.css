@@ -1,6 +1,6 @@
 .order {
     width: 90%;
-    height: 500px;
+    min-height: 100px;
     background-color: rgba(83, 153, 94, 0.274);
     margin: 0px auto;
     border-radius: 10px;

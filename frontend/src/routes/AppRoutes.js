@@ -8,7 +8,8 @@ import {
     UpdatePassword,
     ContactUs,
     AboutUs,
-    ItemOne
+    ItemOne,
+    StripeContainer
 } from '../pages'
 
 import {
@@ -17,7 +18,6 @@ import {
 
 import {
     Items,
-    Orders,
     Home as AdminHome
 } from '../pages/AdminProfile/Pages'
 
@@ -54,7 +54,6 @@ export default function App() {
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
                     <Route path="/adminProfile/items" element={<Items />} />
-                    <Route path="/adminProfile/orders" element={<Orders />} />
 
                     {/* Seller Routes */}
                     <Route path="/sellerProfile" element={<SellerHome />} />
@@ -77,6 +76,9 @@ export default function App() {
 
                     {/* Item Routes */}
                     <Route path="/itemOne/:param" element={<ItemOne />} />
+
+                    {/* Payment Routes */}
+                    <Route path="/payment" element={<StripeContainer />} />
 
                 </Routes>
                 <footer />

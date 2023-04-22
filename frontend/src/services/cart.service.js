@@ -49,6 +49,15 @@ const getByBuyerID = async (buyer) => {
     });
 }
 
+//get cart by status
+const getByStatus = async (status) => {
+    return await axios.get(url.GET_CARTS_BY_STATUS(status), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 /* eslint-disable import/no-anonymous-default-export */
 export default {
     getAll,
@@ -56,6 +65,7 @@ export default {
     create,
     update,
     remove,
-    getByBuyerID
+    getByBuyerID,
+    getByStatus
 };
 
