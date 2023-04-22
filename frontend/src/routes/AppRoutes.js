@@ -13,6 +13,10 @@ import {
 } from '../pages'
 
 import {
+    footer,
+} from '../components'
+
+import {
     Items,
     Home as AdminHome
 } from '../pages/AdminProfile/Pages'
@@ -77,6 +81,7 @@ export default function App() {
                     <Route path="/payment" element={<StripeContainer />} />
 
                 </Routes>
+                <footer />
             </Router>
         </>
     )
