@@ -19,9 +19,11 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 
-import ItemService from '../../../services/item.service'
+import ItemService from '../../../services/item.service';
 import BuyerAuth from "../../../services/buyerAuth.service";
-import ReviewService from '../../../services/review.service'
+import ReviewService from '../../../services/review.service';
+import CartService from '../../../services/cart.service';
+import CartItemService from '../../../services/cartItem.service';
 
 export default function Landing(props) {
 
@@ -105,6 +107,18 @@ export default function Landing(props) {
       .then((res) => {
         sessionStorage.setItem("user-type", res.data.user);
         handleToken(res.data.token);
+        const cart = {
+          buyerID: sessionStorage.getItem("user-id"),
+          buyerfname: sessionStorage.getItem("fname"),
+          buyerlname: sessionStorage.getItem("lname"),
+        }
+        CartService.create(cart).then((res) => {
+          console.log(res);
+          console.log(res.data._id);
+          sessionStorage.setItem("cart-id", res.data._id);
+        }).catch((err) => {
+          console.log(err);
+        });
         Swal.fire({
           icon: 'success',
           title: 'Successful',
@@ -177,7 +191,30 @@ export default function Landing(props) {
       handleShowLoginBuyer();
     }
     else {
-      alert('Added Cart');
+      const oneItem = {
+        cartID: sessionStorage.getItem("cart-id"),
+        itemID: item._id,
+        itemName: item.name,
+        itembrand: item.brand,
+        itemimage: item.image,
+        itemPrice: item.price,
+        availableQuantity: item.quantity,
+      }
+
+      console.log(oneItem);
+
+      CartItemService.create(oneItem)
+        .then((res) => {
+          console.log(res.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Successful',
+            text: 'Item Added To The Cart Successfully!',
+          }).then((result) => {
+            if (result.isConfirmed) {
+            }
+          })
+        })
     }
   }
 
@@ -346,12 +383,12 @@ export default function Landing(props) {
                 ) : (
                   <div>
                     <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>
-                      {reviews.map((quote) => (
-                        <SwiperSlide style={{ height: '130px' }}>
+                      {reviews.map((review) => (
+                        <SwiperSlide style={{ height: '130px' }} key={review._id}>
                           <div className="quoteCard" >
-                            <p className="text-center quotesTextParagraph ">{quote.description}</p>
-                            <p className="owner">- {quote.buyerFname} {quote.buyerLname}-</p>
-                            <p className="owner">Rating - {quote.rating}/5</p>
+                            <p className="text-center quotesTextParagraph ">{review.description}</p>
+                            <p className="owner">- {review.buyerFname} {review.buyerLname}-</p>
+                            <p className="owner">Rating - {review.rating}/5</p>
                           </div>
                         </SwiperSlide>
                       ))}

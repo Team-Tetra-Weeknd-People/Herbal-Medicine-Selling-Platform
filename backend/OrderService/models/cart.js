@@ -34,12 +34,11 @@ const CartSchema = new Schema({
     },
     totalPrice: {
         type: Number,
-        required: true
+        default: 0
     },
     status: {
         type: String,
-        required: true,
-        default: 'Pending'
+        default: 'Cart'
     },
     placedDate: {
         type: Date,
