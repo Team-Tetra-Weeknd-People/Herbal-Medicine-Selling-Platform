@@ -969,6 +969,7 @@ export default function Navbar() {
                 Contact Us
               </Nav.Link>
             </Nav>
+            <input type="text" placeholder="Search.." className="searchbar" />
             {view()}
 
           </Navbarx.Collapse>

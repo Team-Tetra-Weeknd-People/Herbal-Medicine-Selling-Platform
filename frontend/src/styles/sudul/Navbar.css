@@ -58,3 +58,11 @@
 .form-control{
     width: 150%;
 }
+
+.searchbar{
+    width: 15%;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 25px;
+    border-radius: 25px;
+}
