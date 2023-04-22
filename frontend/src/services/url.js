@@ -52,7 +52,7 @@ export const CREATE_REVIEW = `${BASE_URL}/reviews/create`;
 export const UPDATE_REVIEW = (id) => `${BASE_URL}/reviews/update/${id}`;
 export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
 export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
-export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/buyer/${buyer}`;
+export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/user/${buyer}`;
 
 
 //cart
@@ -63,6 +63,8 @@ export const UPDATE_CART = (id) => `${BASE_URL}/carts/update/${id}`;
 export const DELETE_CART = (id) => `${BASE_URL}/carts/delete/${id}`;
 export const GET_CARTS_BY_BUYERID = (buyer) => `${BASE_URL}/carts/buyer/${buyer}`;
 export const GET_CARTS_BY_STATUS = (status) => `${BASE_URL}/carts/status/${status}`;
+export const GET_CARTS_BY_BUYER_NOT_DELIVERED = (buyer) => `${BASE_URL}/carts/buyer/${buyer}/notDelivered`;
+export const GET_CARTS_BY_BUYER_DELIVERED = (buyer) => `${BASE_URL}/carts/buyer/${buyer}/delivered`;
 
 //cartItem
 export const GET_ALL_CARTITEMS = `${BASE_URL}/cartItems`;
