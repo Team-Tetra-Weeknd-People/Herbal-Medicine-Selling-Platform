@@ -10,6 +10,6 @@ router.put("/update/:id", updateSeller);
 router.delete("/delete/:id", deleteSeller);
 router.post("/login", authSeller);
 router.get("/:id", getSeller);
-router.get("/verify/:id", verifySeller);
+router.get("/verifySeller/:id", verifySeller);
 
 export default router;

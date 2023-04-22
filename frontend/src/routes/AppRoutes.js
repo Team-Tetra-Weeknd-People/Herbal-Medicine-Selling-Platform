@@ -66,7 +66,7 @@ export default function App() {
                     <Route path="/verify/:id" element={<BuyerVerifyEmail />} />
 
                     {/* Verify Seller Route */}
-                    <Route path="/verify/:id" element={<SellerVerifyEmail />} />
+                    <Route path="/verifySeller/:id" element={<SellerVerifyEmail />} />
 
                     {/* ContactUs Routes */}
                     <Route path="/ContactUS" element={<ContactUs />} />

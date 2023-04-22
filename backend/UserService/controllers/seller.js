@@ -66,14 +66,14 @@ export const createSeller = async (req, res) => {
         res.status(404).json({ message: error });
     }
 
-    const id = newBuyer._id;
+    const id = newSeller._id;
 
 
-    const url = `http://localhost:3000/verify/${id}`;
+    const url = `http://localhost:3000/verifySeller/${id}`;
 
     await transporter.sendMail({
         from: process.env.EMAIL,
-        to: newBuyer.email,
+        to: newSeller.email,
         subject: "Verify your email",
         html: `Please click this email to <a href="${url}">verify</a>`,
     });
@@ -103,7 +103,7 @@ export const deleteSeller = async (req, res) => {
 export const verifySeller = async (req, res) => {
     try {
         const id = req.params.id;
-        await Buyer.findByIdAndUpdate(id, { verified: true });
+        await Seller.findByIdAndUpdate(id, { verified: true });
         res.status(200).send({ status: "Seller verified" });
     } catch (error) {
         res.status(404).json({ message: error });

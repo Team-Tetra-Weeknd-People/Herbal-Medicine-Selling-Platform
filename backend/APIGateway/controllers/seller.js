@@ -58,7 +58,7 @@ export const deleteSeller = async (req, res) => {
 }
 
 export const verifySeller = async (req, res) => {
-    axios.get(`${userAPI}/verify/${req.params.id}`)
+    axios.get(`${userAPI}/verifySeller/${req.params.id}`)
         .then(response => {
             res.status(200).json(response.data);
         }).catch(error => {
