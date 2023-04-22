@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getAllBuyers, getBuyer, createBuyer, updateBuyer, deleteBuyer, authBuyer } from "../../controllers/buyer.js";
+import { getAllBuyers, getBuyer, createBuyer, updateBuyer, deleteBuyer, authBuyer, verifyBuyer } from "../../controllers/buyer.js";
 
 const router = express.Router();
 
@@ -10,5 +10,6 @@ router.put("/update/:id", updateBuyer);
 router.delete("/delete/:id", deleteBuyer);
 router.post("/login", authBuyer);
 router.get("/:id", getBuyer);
+router.get("/verify/:id", verifyBuyer);
 
 export default router;

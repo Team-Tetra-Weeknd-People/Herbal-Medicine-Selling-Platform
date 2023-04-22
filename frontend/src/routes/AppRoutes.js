@@ -5,7 +5,8 @@ import {
     Home,
     BuyerProfile,
     ForgotPassword,
-    UpdatePassword
+    UpdatePassword,
+    VerifyEmail
 } from '../pages'
 
 import {
@@ -43,6 +44,9 @@ export default function App() {
                     <Route path="/sellerProfile" element={<SellerHome />} />
                     <Route path="/sellerProfile/items" element={<ItemView />} />
                     <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
+
+                    {/* Verify Buyer Route */}
+                    <Route path="/verify/:id" element={<VerifyEmail />} />
 
                 </Routes>
             </Router>

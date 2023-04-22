@@ -15,6 +15,7 @@ export const GET_BUYER = (id) => `${BASE_URL}/buyers/${id}`;
 export const UPDATE_BUYER = (id) => `${BASE_URL}/buyers/update/${id}`;
 export const DELETE_BUYER = (id) => `${BASE_URL}/buyers/delete/${id}`;
 export const GET_ALL_BUYERS = `${BASE_URL}/buyers`;
+export const VERIFY_BUYER = (id) => `${BASE_URL}/buyers/verify/${id}`;
 
 //admin
 export const REGISTER_ADMIN = `${BASE_URL}/admins/create`;
