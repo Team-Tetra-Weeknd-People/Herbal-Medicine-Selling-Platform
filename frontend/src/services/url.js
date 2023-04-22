@@ -60,6 +60,7 @@ export const CREATE_CART = `${BASE_URL}/carts/create`;
 export const UPDATE_CART = (id) => `${BASE_URL}/carts/update/${id}`;
 export const DELETE_CART = (id) => `${BASE_URL}/carts/delete/${id}`;
 export const GET_CARTS_BY_BUYERID = (buyer) => `${BASE_URL}/carts/buyer/${buyer}`;
+export const GET_CARTS_BY_STATUS = (status) => `${BASE_URL}/carts/status/${status}`;
 
 //cartItem
 export const GET_ALL_CARTITEMS = `${BASE_URL}/cartItems`;
@@ -69,4 +70,12 @@ export const UPDATE_CARTITEM = (id) => `${BASE_URL}/cartItems/update/${id}`;
 export const DELETE_CARTITEM = (id) => `${BASE_URL}/cartItems/delete/${id}`;
 export const GET_CARTITEMS_BY_CARTID = (cart) => `${BASE_URL}/cartItems/cart/${cart}`;
 
+//payment
+export const INITIATE_PAYMENT = `${BASE_URL}/stripe/payment`;
 
+//delivery
+export const GET_ALL_DELIVERIES = `${BASE_URL}/deliveries`;
+export const GET_DELIVERY = (id) => `${BASE_URL}/deliveries/${id}`;
+export const CREATE_DELIVERY = `${BASE_URL}/deliveries/create`;
+export const UPDATE_DELIVERY = (id) => `${BASE_URL}/deliveries/update/${id}`;
+export const DELETE_DELIVERY = (id) => `${BASE_URL}/deliveries/delete/${id}`;

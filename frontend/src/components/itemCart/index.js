@@ -35,7 +35,7 @@ function ItemCart() {
     }
 
     let tax = subtotal * 0.12;
-    let deliver = subtotal * 0.05;
+    let deliver = 300;
     let total = subtotal + tax + deliver;
 
     const handleClose = () => setShow(false);
@@ -66,6 +66,16 @@ function ItemCart() {
             // eslint-disable-next-line react-hooks/exhaustive-deps
             subtotal = cartItems[i].quantity * cartItems[i].itemPrice;
         }
+    }
+
+    function handlePayment() {
+        console.log(total);
+        for (let i = 0; i < cartItems.length; i++) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            console.log()
+        }
+        sessionStorage.setItem("total", total);
+        window.location.href = "/payment";
     }
 
     async function deleteItem(id) {
@@ -160,18 +170,20 @@ function ItemCart() {
                             <Row><Col sm={4}>Tax : </Col><Col>Rs {tax.toFixed(2)}</Col></Row>
                             <Row><Col sm={4}>Delivery Charges : </Col><Col>Rs {deliver.toFixed(2)}</Col></Row>
                             <Row><Col sm={4}>Total Price : </Col><Col>Rs {total.toFixed(2)}</Col></Row>
+                            <Row style={{ marginTop: '2rem' }}>
+                                <Col sm={4}>
+                                    <Button variant="secondary" onClick={handleClose}>
+                                        Close
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Col >
+                                        <Button variant="primary" onClick={handlePayment}>Go To Checkout</Button>
+                                    </Col>
+                                </Col>
+                            </Row>
                         </Row>
-                        <br />
-                        <Row>
-                            <Col sm={2}>
-                                <Button variant="secondary" onClick={handleClose}>
-                                    Close
-                                </Button>
-                            </Col>
-                            <Col >
-                                <Button variant="primary">Go To Checkout</Button>
-                            </Col>
-                        </Row>
+                        
                     </Container>
                 </Modal.Footer>
             </Modal>

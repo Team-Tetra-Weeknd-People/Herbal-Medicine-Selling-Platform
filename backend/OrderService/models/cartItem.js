@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const CartItemSchema = new Schema({
-
     cartID: {
         type: String,
         required: true

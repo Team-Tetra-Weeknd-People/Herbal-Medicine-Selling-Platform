@@ -1,18 +1,17 @@
-import mongoose from "mongoose";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
 import dotenv from "dotenv/config";
 
-//import routers from "./routes/index.js";
+import routers from "./routes/index.js";
 
 const app = express();
 const PORT = process.env.REACT_APP_BACKEND_PORT;
 app.use(cors());
 app.use(bodyParser.json());
 
-//routers(app);
+routers(app);
 
 app.use(session({
     secret: 'beheth_kade',
@@ -24,15 +23,6 @@ app.use(session({
         secure: true
     }
 }));
-
-const URL = process.env.REACT_APP_MONGODB_URL;
-
-mongoose.connect(URL);
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-    console.log("MongoDB connection success!");
-});
 
 app.listen(PORT, () => {
     console.log(`Payment Service is up and running on port ${PORT}`);

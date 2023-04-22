@@ -64,3 +64,14 @@ export const getCartsByBuyerID = async (req, res) => {
     }
 }
 
+//get carts with pending status
+export const getCartsByStatus = async (req, res) => {
+    const status = req.params.status;
+    try {
+        const carts = await Cart.find({ status : status});
+        res.status(200).json(carts);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
