@@ -470,7 +470,6 @@ export default function Navbar() {
   return (
 
     <>
-      {/* forgot password modal */}
 
       {/* reg select modal */}
       <Modal
@@ -902,8 +901,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'Randula9811@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {

@@ -25,9 +25,35 @@ const getCurrentUser = (id) => {
     });
 }
 
+const add = (data) => {
+    return axios.post(url.REGISTER_ADMIN, data, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const update = (id, data) => {
+    return axios.put(url.UPDATE_ADMIN(id), data, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const remove = (id) => {
+    return axios.delete(url.DELETE_ADMIN(id), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     register,
     login,
-    getCurrentUser
+    getCurrentUser,
+    add,
+    update,
+    remove
 }

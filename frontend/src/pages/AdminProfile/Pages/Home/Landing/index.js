@@ -9,24 +9,44 @@ import Table from 'react-bootstrap/Table';
 import { Formik, Form, Field } from 'formik';
 import Swal from 'sweetalert2'
 import * as Yup from 'yup';
+import { storage } from "../../../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 import './Landing.css'
 
 import AdminAuth from '../../../../../services/adminAuth.service';
-import CategoryService from '../../../../../services/category.service';
-import CartService from '../../../../../services/cart.service';
-import DeliveryService from '../../../../../services/delivery.service';
+import CategoryService from '../../../../../services/category.service'; //2
+import ItemService from '../../../../../services/item.service'; //1
+import CartService from '../../../../../services/cart.service'; //3
+import DeliveryService from '../../../../../services/delivery.service'; //4
 
 export default function Landing() {
 
     document.body.style.overflow = "visible";
+
     const [admin, setAdmin] = useState({});
     const [categories, setCategories] = useState([]);
     const [completedOrders, setCompletedOrders] = useState([]);
     const [deliveries, setDeliveries] = useState([]);
+    const [items, setItems] = useState([]);
+
+    const [imageItem, setImageItem] = useState("");
+
+    const [catID, setCatID] = useState("");
+    const [catName, setCatName] = useState("");
+
+    const [delID, setDelID] = useState("");
+    const [delName, setDelName] = useState("");
+    const [delPhone, setDelPhone] = useState("");
+    const [delEmail, setDelEmail] = useState("");
 
     const [showViewCat, setShowViewCat] = useState(false);
     const [showAddCat, setShowAddCat] = useState(false);
+    const [showEditCat, setShowEditCat] = useState(false);
+    const [showDanger, setShowDanger] = useState(false);
+    const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+    const [showAddAdmin, setShowAddAdmin] = useState(false);
 
     const handleCloseViewCat = () => setShowViewCat(false);
     const handleShowViewCat = () => setShowViewCat(true);
@@ -37,13 +57,23 @@ export default function Landing() {
         setShowAddCat(true)
     };
 
+    const handleCloseEditCat = () => setShowEditCat(false);
+    const handleShowEditCat = () => {
+        handleCloseViewCat()
+        setShowEditCat(true)
+    };
+
+    const handleCloseDanger = () => setShowDanger(false);
+    const handleShowDanger = () => setShowDanger(true);
+
     const [showCompletedOrders, setShowCompletedOrders] = useState(false);
+    const [showViewDels, setShowViewDels] = useState(false);
+    const [showAddDels, setShowAddDels] = useState(false);
+    const [showEditDels, setShowEditDels] = useState(false);
+    const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
     const handleCloseCompletedOrders = () => setShowCompletedOrders(false);
     const handleShowCompletedOrders = () => setShowCompletedOrders(true);
-
-    const [showViewDels, setShowViewDels] = useState(false);
-    const [showAddDels, setShowAddDels] = useState(false);
 
     const handleCloseViewDels = () => setShowViewDels(false);
     const handleShowViewDels = () => setShowViewDels(true);
@@ -53,6 +83,80 @@ export default function Landing() {
         handleCloseViewDels();
         setShowAddDels(true);
     }
+
+    const handleCloseEditDels = () => setShowEditDels(false);
+    const handleShowEditDels = () => {
+        handleCloseViewDels();
+        setShowEditDels(true);
+    }
+
+    const handleCloseUpdateProfile = () => setShowUpdateProfile(false);
+    const handleShowUpdateProfile = () => setShowUpdateProfile(true);
+
+    const handleCloseUpdatePassword = () => setShowUpdatePassword(false);
+    const handleShowUpdatePassword = () => {
+        handleCloseDanger();
+        setShowUpdatePassword(true)
+    };
+
+    const handleCloseAddAdmin = () => setShowAddAdmin(false);
+    const handleShowAddAdmin = () => {
+        handleCloseDanger();
+        setShowAddAdmin(true)
+    };
+
+    //admin profile update schema
+    const UpdateProfileSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        contactNo: Yup.string()
+            .min(10, 'Too Short!')
+            .max(10, 'Too Long!')
+            .required('Required'),
+    });
+
+    //add admin schema
+    const AddAdminSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(2, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        contactNo: Yup.string()
+            .min(10, 'Too Short!')
+            .max(10, 'Too Long!')
+            .required('Required'),
+        email: Yup.string()
+            .email('Invalid email')
+            .required('Required'),
+        password: Yup.string()
+            .min(6, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Required'),
+    });
+
+    //password update schema
+    const UpdatePasswordSchema = Yup.object().shape({
+        password: Yup.string()
+            .min(6, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Required'),
+    });
 
     //category validation schema
     const CategorySchema = Yup.object().shape({
@@ -93,7 +197,6 @@ export default function Landing() {
             });
     }, []);
 
-
     //get all completed orders
     useEffect(() => {
         CartService.getByStatus("Completed").then(
@@ -109,7 +212,6 @@ export default function Landing() {
                     error.toString();
             });
     }, []);
-
 
     //get admin details
     useEffect(() => {
@@ -159,38 +261,277 @@ export default function Landing() {
             });
     }, []);
 
-    //add new category
-    async function addCategory(values) {
+    //get all items
+    useEffect(() => {
+        ItemService.getAll().then(
+            (response) => {
+                setItems(response.data);
+                console.log(items, 'items');
+            },
+            (error) => {
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+            });
+    }, []);
+
+    //add admin profile
+    async function addAdmin(values) {
+
+        const storageRef = ref(storage, `admin/${v4()}`);
+
+        await uploadBytes(storageRef, imageItem)
+            .then(() => {
+                console.log("uploaded");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        await getDownloadURL(storageRef)
+            .then((url) => {
+                const data = {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    contactNo: values.contactNo,
+                    email: values.email,
+                    password: values.password,
+                    image: url,
+                };
+
+                AdminAuth.register(data)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success !!',
+                            text: 'New Admin has been added !!',
+                            footer: 'New Admin Can Login Using The Given Credentials'
+                        })
+                        handleCloseAddAdmin();
+                        AdminAuth.getCurrentUser(sessionStorage.getItem("user-id")).then(
+                            (response) => {
+                                setAdmin(response.data);
+                                console.log(admin, 'admin');
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    //update admin profile
+    async function updateProfile(values) {
+
+        const storageRef = ref(storage, `admin/${v4()}`);
+
+        await uploadBytes(storageRef, imageItem)
+            .then(() => {
+                console.log("uploaded");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        await getDownloadURL(storageRef)
+            .then((url) => {
+                const data = {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    contactNo: values.contactNo,
+                    image: url,
+                };
+
+                AdminAuth.update(sessionStorage.getItem("user-id"), data)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire(
+                            'Success!',
+                            'Profile has been updated !!',
+                            'success'
+                        )
+                        handleCloseUpdateProfile();
+                        AdminAuth.getCurrentUser(sessionStorage.getItem("user-id")).then(
+                            (response) => {
+                                setAdmin(response.data);
+                                console.log(admin, 'admin');
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    })
+            })
+    }
+
+    //update admin password
+    async function updatePassword(values) {
         const data = {
-            name: values.name,
+            password: values.password,
         };
 
-        CategoryService.create(data)
+        AdminAuth.update(sessionStorage.getItem("user-id"), data)
             .then(response => {
                 console.log(response.data);
                 Swal.fire(
                     'Success!',
-                    'New Category has been added !!',
+                    'Password has been updated !!',
                     'success'
                 )
-                handleCloseAddCat();
-                handleShowViewCat();
-                CategoryService.getAll().then(
-                    (response) => {
-                        setCategories(response.data);
-                        console.log(categories, 'categories');
-                    },
-                    (error) => {
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                    });
+                handleCloseUpdatePassword();
             })
             .catch(e => {
                 console.log(e);
             });
+    }
+
+    //delete admin profile
+    async function deleteAccount(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                AdminAuth.remove(id)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted !!',
+                            text: 'This Admin has been Deleted !!',
+                            footer: 'You will be redirected to the Home Page'
+                        })
+                            .then(() => {
+                                sessionStorage.clear();
+                                window.location.href = "/";
+                            })
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+        })
+    }
+
+    //add new category
+    async function addCategory(values) {
+        const storageRef = ref(storage, `category/${v4()}`);
+
+        await uploadBytes(storageRef, imageItem)
+            .then(() => {
+                console.log("uploaded");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        await getDownloadURL(storageRef)
+            .then((url) => {
+                const data = {
+                    name: values.name,
+                    image: url,
+                };
+
+                CategoryService.create(data)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success !!',
+                            text: 'New Category has been added !!',
+                            footer: 'New Category Can Be Added To Products'
+                        })
+                        handleCloseAddCat();
+                        CategoryService.getAll().then(
+                            (response) => {
+                                setCategories(response.data);
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+    }
+
+    async function handleUpdateCategory(values) {
+        setCatID(values._id);
+        setCatName(values.name);
+        handleShowEditCat();
+    }
+
+    //update category
+    async function updateCategory(values, catID) {
+        const storageRef = ref(storage, `category/${v4()}`);
+
+        await uploadBytes(storageRef, imageItem)
+            .then(() => {
+                console.log("uploaded");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        await getDownloadURL(storageRef)
+            .then((url) => {
+                const data = {
+                    name: values.name,
+                    image: url,
+                };
+
+                CategoryService.update(catID, data)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success !!',
+                            text: 'Category has been updated !!',
+                            footer: 'Category Can Be Updated In Products'
+                        })
+                        handleCloseEditCat();
+                        CategoryService.getAll().then(
+                            (response) => {
+                                setCategories(response.data);
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
     }
 
     //delete category
@@ -272,6 +613,50 @@ export default function Landing() {
             });
     }
 
+    async function handleUpdateDelivery(values) {
+        setDelID(values._id);
+        setDelName(values.name);
+        setDelEmail(values.email);
+        setDelPhone(values.phone);
+        handleShowEditDels();
+    }
+
+    //update delivery partner
+    async function updateDelivery(values, delID) {
+        const data = {
+            name: values.name,
+            email: values.email,
+            phone: values.phone,
+        };
+
+        DeliveryService.update(delID, data)
+            .then(response => {
+                console.log(response.data);
+                Swal.fire(
+                    'Success!',
+                    'Delivery Partner has been updated !!',
+                    'success'
+                )
+                handleCloseEditDels();
+                handleShowViewDels();
+                DeliveryService.getAll().then(
+                    (response) => {
+                        setDeliveries(response.data);
+                        console.log(deliveries, 'deliveries');
+                    },
+                    (error) => {
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                    });
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
+
     //delete delivery partner
     async function deleteDelivery(id) {
         Swal.fire({
@@ -317,6 +702,269 @@ export default function Landing() {
 
     return (
         <>
+            {/* Danger select modal */}
+            <Modal
+                show={showDanger}
+                onHide={handleCloseDanger}
+                backdrop="static"
+                keyboard={false}
+                size="xl"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Security Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>Update Password</Card.Title>
+                                    <Button variant="danger" onClick={handleShowUpdatePassword}>Update Password</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+
+                        <Col>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>Add New Admin</Card.Title>
+                                    <Button variant="success" onClick={handleShowAddAdmin}>Add New Admin</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+
+                        <Col>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>Delete This Admin Account</Card.Title>
+                                    <Button variant="danger" onClick={() => deleteAccount(sessionStorage.getItem("user-id"))}>Delete Account</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDanger}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* password update modal */}
+            <Modal
+                show={showUpdatePassword}
+                onHide={handleCloseUpdatePassword}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Password</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            password: '',
+                            confirmPassword: '',
+                        }}
+                        validationSchema={UpdatePasswordSchema}
+                        onSubmit={(values) => {
+                            updatePassword(values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                {/* password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="password">Password</label>
+                                    <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.password}</div>
+                                </div>
+
+                                {/* confirm password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.confirmPassword}</div>
+                                </div>
+
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Update Password</button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseUpdatePassword}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* add admin modal */}
+            <Modal
+                show={showAddAdmin}
+                onHide={handleCloseAddAdmin}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Add New Admin</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            firstName: '',
+                            lastName: '',
+                            contactNo: '',
+                            email: '',
+                            password: '',
+                            confirmPassword: '',
+                        }}
+                        validationSchema={AddAdminSchema}
+                        onSubmit={(values) => {
+                            addAdmin(values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                {/* firstName */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="firstName">First Name</label>
+                                    <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.firstName}</div>
+                                </div>
+
+                                {/* lastName */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.lastName}</div>
+                                </div>
+
+                                {/* contactNo */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="contactNo">Contact No</label>
+                                    <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.contactNo}</div>
+                                </div>
+
+                                {/* email */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="email">Email</label>
+                                    <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.email}</div>
+                                </div>
+
+                                {/* password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="password">Password</label>
+                                    <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.password}</div>
+                                </div>
+
+                                {/* confirm password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.confirmPassword}</div>
+                                </div>
+
+                                {/* image */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="image">Image</label>
+                                    <Field name="image" type="file" className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
+                                    <div className="invalid-feedback">{errors.image}</div>
+                                </div>
+
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Add Admin</button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseAddAdmin}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Edit Profile Modal */}
+            <Modal
+                show={showUpdateProfile}
+                onHide={handleCloseUpdateProfile}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Profile</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            firstName: admin.firstName,
+                            lastName: admin.lastName,
+                            contactNo: admin.contactNo,
+                        }}
+                        validationSchema={UpdateProfileSchema}
+
+                        onSubmit={(values) => {
+                            updateProfile(values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                {/* firstName */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="empNo">Buyer First Name</label>
+                                    <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.firstName}</div>
+                                </div>
+
+                                {/* lastName */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="empNo">Buyer Last Name</label>
+                                    <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.lastName}</div>
+                                </div>
+
+                                {/* contactNo */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="empNo">Buyer Contact No</label>
+                                    <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.contactNo}</div>
+                                </div>
+
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="image">Image</label>
+                                    <Field name="image" type="file" className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
+                                    <div className="invalid-feedback">{errors.image}</div>
+                                </div>
+
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Submit</button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseUpdateProfile}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Add Delivery Partners Modal */}
             <Modal
@@ -403,7 +1051,7 @@ export default function Landing() {
                                     <td>{delivery.email}</td>
                                     <td>{delivery.phone}</td>
                                     <td>
-                                        <Button variant="success">Edit</Button>{' '}
+                                        <Button variant="success" onClick={() => handleUpdateDelivery(delivery)}>Edit</Button>{' '}
                                         <Button variant="danger" onClick={() => deleteDelivery(delivery._id)}>Delete</Button>{' '}
                                     </td>
                                 </tr>
@@ -418,6 +1066,63 @@ export default function Landing() {
                 </Modal.Footer>
             </Modal>
 
+            {/* Update Delivery Partners Modal */}
+            <Modal
+                show={showEditDels}
+                onHide={handleCloseEditDels}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Delivery Partner</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            name: delName,
+                            email: delEmail,
+                            phone: delPhone,
+                        }}
+                        validationSchema={DeliverySchema}
+                        onSubmit={(values) => {
+                            updateDelivery(values, delID);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                <div className="form-group">
+                                    <label htmlFor="name"> Name</label>
+                                    <Field name="name" style={{ width: '25rem' }} type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.name}</div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="email"> Email</label>
+                                    <Field name="email" style={{ width: '25rem' }} type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.email}</div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="phone">Phone</label>
+                                    <Field name="phone" style={{ width: '25rem' }} type="text" className={'form-control' + (errors.phone && touched.phone ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.phone}</div>
+                                </div>
+
+                                <br />
+
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Update</button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEditDels}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
             {/* Completed order View Modal */}
             <Modal
@@ -490,14 +1195,20 @@ export default function Landing() {
                     >
                         {({ errors, touched }) => (
                             <Form>
-                                <div className="form-group">
+                                <div className="form-group col-md-6">
                                     <label htmlFor="name">Category Name</label>
-                                    <Field name="name" style={{ width: '25rem' }} type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} />
+                                    <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} />
                                     <div className="invalid-feedback">{errors.name}</div>
+                                </div>
+                                {/* image */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="image">Image</label>
+                                    <Field name="image" type="file" className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
+                                    <div className="invalid-feedback">{errors.image}</div>
                                 </div>
                                 <br />
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-primary mr-2">Add</button>
+                                    <button type="submit" className="btn btn-primary mr-2">Add Category</button>
                                 </div>
                             </Form>
                         )}
@@ -506,6 +1217,55 @@ export default function Landing() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseAddCat}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Edit Category Modal */}
+            <Modal
+                show={showEditCat}
+                onHide={handleCloseEditCat}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Category</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            name: catName,
+                        }}
+                        validationSchema={CategorySchema}
+                        onSubmit={(values) => {
+                            updateCategory(values, catID);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="name">Category Name</label>
+                                    <Field name="name" type="text" className={'form-control' + (errors.name && touched.name ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.name}</div>
+                                </div>
+                                {/* image */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="image">Image</label>
+                                    <Field name="image" type="file" className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
+                                    <div className="invalid-feedback">{errors.image}</div>
+                                </div>
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Edit Category</button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEditCat}>
                         Close
                     </Button>
                 </Modal.Footer>
@@ -528,6 +1288,7 @@ export default function Landing() {
                         <thead>
                             <tr>
                                 <th>Category Name</th>
+                                <th>Image</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -536,7 +1297,16 @@ export default function Landing() {
                                 <tr>
                                     <td>{category.name}</td>
                                     <td>
-                                        <Button variant="success">Edit</Button>{' '}
+                                        <Button variant="primary" onClick={() => {
+                                            Swal.fire({
+                                                imageUrl: category.image,
+                                                imageHeight: 200,
+                                                imageAlt: 'No Image Found'
+                                            })
+                                        }}>View</Button>{' '}
+                                    </td>
+                                    <td>
+                                        <Button variant="success" onClick={() => handleUpdateCategory(category)}>Edit</Button>{' '}
                                         <Button variant="danger" onClick={() => deleteCategory(category._id)}>Delete</Button>{' '}
                                     </td>
                                 </tr>
@@ -570,8 +1340,8 @@ export default function Landing() {
                                             {admin.contactNo}
                                         </h6>
                                     </Card.Text>
-                                    <p><Button variant="primary">Update Profile</Button></p>
-                                    <p><Button variant="danger">Security Details</Button></p>
+                                    <p><Button variant="primary" onClick={handleShowUpdateProfile}>Update Profile</Button></p>
+                                    <p><Button variant="danger" onClick={handleShowDanger}>Security Details</Button></p>
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -580,14 +1350,14 @@ export default function Landing() {
                                 <Col>
                                     <div className='box'>
                                         <h4>Number of Items in the system</h4>
-                                        <h1>1</h1>
+                                        <h1>{items.length}</h1>
                                         <p><a href="/adminProfile/items"><Button variant="primary">Manage Items</Button></a></p>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className='box'>
                                         <h4>Number of Categories in the system</h4>
-                                        <h1>2</h1>
+                                        <h1>{categories.length}</h1>
                                         <p><Button variant="primary" onClick={handleShowViewCat}>Manage Categories</Button></p>
                                     </div>
                                 </Col>
@@ -597,14 +1367,14 @@ export default function Landing() {
                                 <Col>
                                     <div className='box'>
                                         <h4>Number of Completed Orders in the system</h4>
-                                        <h1>1</h1>
+                                        <h1>{completedOrders.length}</h1>
                                         <p><Button variant="primary" onClick={handleShowCompletedOrders}>Completed Orders</Button></p>
                                     </div>
                                 </Col>
                                 <Col>
                                     <div className='box'>
                                         <h4>Number of Delivery Partners in the system</h4>
-                                        <h1>2</h1>
+                                        <h1>{deliveries.length}</h1>
                                         <p><Button variant="primary" onClick={handleShowViewDels}>Manage Delivery Partners</Button></p>
                                     </div>
                                 </Col>
