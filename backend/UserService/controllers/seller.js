@@ -1,6 +1,15 @@
 import Seller from "../models/seller.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+});
 
 //authenticating the seller
 export const authSeller = async (req, res) => {
@@ -56,6 +65,18 @@ export const createSeller = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error });
     }
+
+    const id = newSeller._id;
+
+
+    const url = `http://localhost:3000/verifySeller/${id}`;
+
+    await transporter.sendMail({
+        from: process.env.EMAIL,
+        to: newSeller.email,
+        subject: "Verify your email",
+        html: `Please click this email to <a href="${url}">verify</a>`,
+    });
 }
 
 export const updateSeller = async (req, res) => {
@@ -75,6 +96,16 @@ export const deleteSeller = async (req, res) => {
         await Seller.findByIdAndDelete(id);
         res.status(200).send({ status: "Seller details deleted" });
     } catch {
+        res.status(404).json({ message: error });
+    }   
+}
+
+export const verifySeller = async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Seller.findByIdAndUpdate(id, { verified: true });
+        res.status(200).send({ status: "Seller verified" });
+    } catch (error) {
         res.status(404).json({ message: error });
     }
 }
