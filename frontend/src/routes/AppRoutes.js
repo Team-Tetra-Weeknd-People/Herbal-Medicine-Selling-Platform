@@ -26,7 +26,6 @@ import {
 import {
     Home as SellerHome,
     ItemView,
-    ItemSearch
 } from '../pages/SellerProfile/Pages'
 
 import {
@@ -60,7 +59,6 @@ export default function App() {
                     {/* Seller Routes */}
                     <Route path="/sellerProfile" element={<SellerHome />} />
                     <Route path="/sellerProfile/items" element={<ItemView />} />
-                    <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
 
                     {/* Verify Buyer Route */}
                     <Route path="/verify/:id" element={<BuyerVerifyEmail />} />

@@ -68,7 +68,7 @@ export const getReviewsByItem = async (req, res) => {
 export const getReviewsByUser = async (req, res) => {
     const id = req.params.id;
     try {
-        const reviews = await Review.find({ userID: id });
+        const reviews = await Review.find({ buyerID: id });
         res.status(200).json(reviews);
     } catch (error) {
         res.status(409).json({ message: error.message });

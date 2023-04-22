@@ -56,7 +56,6 @@ export const DELETE_REVIEW = (id) => `${BASE_URL}/reviews/delete/${id}`;
 export const GET_REVIEWS_BY_ITEMID = (item) => `${BASE_URL}/reviews/item/${item}`;
 export const GET_REVIEWS_BY_USERID = (buyer) => `${BASE_URL}/reviews/user/${buyer}`;
 
-
 //cart
 export const GET_ALL_CARTS = `${BASE_URL}/carts`;
 export const GET_CART = (id) => `${BASE_URL}/carts/${id}`;
@@ -75,6 +74,7 @@ export const CREATE_CARTITEM = `${BASE_URL}/cartItems/create`;
 export const UPDATE_CARTITEM = (id) => `${BASE_URL}/cartItems/update/${id}`;
 export const DELETE_CARTITEM = (id) => `${BASE_URL}/cartItems/delete/${id}`;
 export const GET_CARTITEMS_BY_CARTID = (cart) => `${BASE_URL}/cartItems/cart/${cart}`;
+export const GET_RECENT_CARTITEMS_BY_BRAND = (brand) => `${BASE_URL}/cartItems/recentorders/${brand}`;
 
 //payment
 export const INITIATE_PAYMENT = `${BASE_URL}/stripe/payment`;

@@ -6,6 +6,11 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 import Swal from 'sweetalert2'
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import { storage } from "../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 import './buyerProfile.css'
 
@@ -23,6 +28,8 @@ export default function Home() {
     const [reviews, setReviews] = useState([]);
     const [cartItems, setCartItems] = useState([]);
     const [item, setItem] = useState({});
+
+    const [imageItem, setImageItem] = useState("");
 
     const [showOnGoingCarts, setShowOnGoingCarts] = useState(false);
     const handleCloseOnGoingCarts = () => setShowOnGoingCarts(false);
@@ -43,6 +50,53 @@ export default function Home() {
     const [showItem, setShowItem] = useState(false);
     const handleCloseShowItem = () => setShowItem(false);
     const handleShowShowItem = () => setShowItem(true);
+
+    const [showUpdateProfile, setShowUpdateProfile] = useState(false);
+    const [showDanger, setShowDanger] = useState(false);
+    const [showUpdatePassword, setShowUpdatePassword] = useState(false);
+
+    const handleCloseUpdateProfile = () => setShowUpdateProfile(false);
+    const handleShowUpdateProfile = () => setShowUpdateProfile(true);
+
+    const handleCloseDanger = () => setShowDanger(false);
+    const handleShowDanger = () => setShowDanger(true);
+
+    const handleCloseUpdatePassword = () => setShowUpdatePassword(false);
+    const handleShowUpdatePassword = () => {
+        handleCloseDanger();
+        setShowUpdatePassword(true)
+    };
+
+    //buyer register validation
+    const buyerUpdateSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        lastName: Yup.string()
+            .min(5, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        contactNo: Yup.string()
+            .min(10, 'Too Short!')
+            .max(10, 'Too Long!')
+            .required('Required'),
+        address: Yup.string()
+            .min(5, 'Too Short!')
+            .max(100, 'Too Long!')
+            .required('Required'),
+    });
+
+    //password update schema
+    const UpdatePasswordSchema = Yup.object().shape({
+        password: Yup.string()
+            .min(8, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Required'),
+    });
 
     //get reviews posted by buyer
     useEffect(() => {
@@ -107,6 +161,113 @@ export default function Home() {
                     error.toString();
             });
     }, []);
+
+    // update buyer details
+    async function updateBuyer(id, values) {
+        const storageRef = ref(storage, `buyer/${v4()}`);
+
+        await uploadBytes(storageRef, imageItem)
+            .then(() => {
+                console.log("uploaded");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        await getDownloadURL(storageRef)
+            .then((url) => {
+                console.log(url);
+
+                const data = {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    contactNo: values.contactNo,
+                    address: values.address,
+                    image: url,
+                };
+
+                BuyerAuth.updateBuyer(id, data)
+                    .then((response) => {
+                        console.log(response.data);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Profile Updated Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        handleCloseUpdateProfile();
+                        BuyerAuth.getCurrentUser(sessionStorage.getItem("user-id")).then(
+                            (response) => {
+                                setBuyer(response.data);
+                                console.log(buyer, 'seller');
+                            },
+                            (error) => {
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                    error.message ||
+                                    error.toString();
+                            });
+                    })
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    //update password
+    async function updatePassword(values) {
+        const data = {
+            password: values.password,
+        };
+
+        BuyerAuth.updateBuyer(sessionStorage.getItem("user-id"), data)
+            .then((response) => {
+                console.log(response.data);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Password Updated Successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                handleCloseUpdatePassword();
+            })
+    }
+
+    //delete seller
+    async function deleteBuyer(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                BuyerAuth.deleteBuyer(id)
+                    .then(response => {
+                        console.log(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted !!',
+                            text: 'This Seller has been Deleted !!',
+                            footer: 'You will be redirected to the Home Page'
+                        })
+                            .then(() => {
+                                sessionStorage.clear();
+                                window.location.href = "/";
+                            })
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
+        })
+    }
 
     //detele cart
     async function deleteCart(cartId) {
@@ -234,8 +395,180 @@ export default function Home() {
             });
     }
 
+
     return (
         <>
+            {/* Danger select modal */}
+            <Modal
+                show={showDanger}
+                onHide={handleCloseDanger}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Security Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Row>
+                        <Col>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>Update Password</Card.Title>
+                                    <Button variant="danger" onClick={handleShowUpdatePassword}>Update Password</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        64444b457d27ab49dbde1da7
+                        <Col>
+                            <Card style={{ width: '18rem' }}>
+                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Body>
+                                    <Card.Title>Delete This Seller Account</Card.Title>
+                                    <Button variant="danger" onClick={() => deleteBuyer(sessionStorage.getItem("user-id"))}>Delete Account</Button>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDanger}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* password update modal */}
+            <Modal
+                show={showUpdatePassword}
+                onHide={handleCloseUpdatePassword}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Password</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            password: '',
+                            confirmPassword: '',
+                        }}
+                        validationSchema={UpdatePasswordSchema}
+                        onSubmit={(values) => {
+                            updatePassword(values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                {/* password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="password">Password</label>
+                                    <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.password}</div>
+                                </div>
+
+                                {/* confirm password */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="confirmPassword">Confirm Password</label>
+                                    <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.confirmPassword}</div>
+                                </div>
+
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Update Password</button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseUpdatePassword}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Buyer Profile Update Modal*/}
+            <Modal
+                show={showUpdateProfile}
+                onHide={handleCloseUpdateProfile}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Profile</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Formik
+                        initialValues={{
+                            firstName: buyer.firstName,
+                            lastName: buyer.lastName,
+                            contactNo: buyer.contactNo,
+                            address: buyer.address,
+                        }}
+                        validationSchema={buyerUpdateSchema}
+                        onSubmit={(values) => {
+                            updateBuyer(sessionStorage.getItem("user-id"), values);
+                        }}
+                    >
+                        {({ errors, touched }) => (
+                            <Form>
+                                {/* first name */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="firstName">First Name</label>
+                                    <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.firstName}</div>
+                                </div>
+
+                                {/* last name */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="lastName">Last Name</label>
+                                    <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.lastName}</div>
+                                </div>
+
+                                {/* contact no */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="contactNo">Contact No</label>
+                                    <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.contactNo}</div>
+                                </div>
+
+
+                                {/* address */}
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="address">Address</label>
+                                    <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
+                                    <div className="invalid-feedback">{errors.address}</div>
+                                </div>
+
+                                {/* image upload */}
+                                <div className="form-group">
+                                    <label htmlFor="image">Image</label>
+                                    <Field name="image" type="file" style={{ width: '25rem' }} className={'form-control' + (errors.image && touched.image ? ' is-invalid' : '')} onChange={(e) => setImageItem(e.target.files[0])} />
+                                    <div className="invalid-feedback">{errors.image}</div>
+                                </div>
+
+                                <br />
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary mr-2">Update Profile</button>
+                                </div>
+
+                            </Form>
+                        )}
+                    </Formik>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseUpdateProfile}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             {/* Show Item Modal */}
             <Modal
                 show={showItem}
@@ -493,8 +826,8 @@ export default function Home() {
                                         {buyer.companyAddress}
                                     </h6>
                                 </Card.Text>
-                                <p><Button variant="primary">Update Profile</Button></p>
-                                <p><Button variant="danger">Security Details</Button></p>
+                                <p><Button variant="primary" onClick={handleShowUpdateProfile}>Update Profile</Button></p>
+                                <p><Button variant="danger" onClick={handleShowDanger}>Security Details</Button></p>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -510,7 +843,7 @@ export default function Home() {
                             <Col>
                                 <div className='box'>
                                     <h4>Number of Completed Orders</h4>
-                                    <h1>{onGoingCarts.length}</h1>
+                                    <h1>{deliveredCarts.length}</h1>
                                     <p><Button variant="primary" onClick={handleShowDelivered}>View Orders</Button></p>
                                 </div>
                             </Col>
