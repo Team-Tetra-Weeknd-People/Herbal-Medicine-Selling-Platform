@@ -492,7 +492,7 @@ export default function Navbar() {
           <Row>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4729171.jpg?alt=media&token=37de4a8b-0f81-49f8-940b-a6dfdd56f8f7" />
                 <Card.Body>
                   <Card.Title>Register as a Seller</Card.Title>
                   <Card.Text>
@@ -504,7 +504,7 @@ export default function Navbar() {
             </Col>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F8586.jpg?alt=media&token=634a4d32-a789-4519-b126-0c7dc4b403cb" />
                 <Card.Body>
                   <Card.Title>Register as a Buyer</Card.Title>
                   <Card.Text>
@@ -746,7 +746,7 @@ export default function Navbar() {
           <Row>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4729171.jpg?alt=media&token=37de4a8b-0f81-49f8-940b-a6dfdd56f8f7" />
                 <Card.Body>
                   <Card.Title>Login as a Seller</Card.Title>
                   <Card.Text>
@@ -759,7 +759,7 @@ export default function Navbar() {
 
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F8586.jpg?alt=media&token=634a4d32-a789-4519-b126-0c7dc4b403cb" />
                 <Card.Body>
                   <Card.Title>Login as a Buyer</Card.Title>
                   <Card.Text>
@@ -772,7 +772,7 @@ export default function Navbar() {
 
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4759943.jpg?alt=media&token=f204fe7c-9eb0-481d-95af-d877add70a65" />
                 <Card.Body>
                   <Card.Title>Login as an Admin</Card.Title>
                   <Card.Text>
