@@ -335,6 +335,7 @@ export default function Navbar() {
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
           buyeremail: sessionStorage.getItem("email"),
+          buyercontactno: sessionStorage.getItem("contactNo"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
