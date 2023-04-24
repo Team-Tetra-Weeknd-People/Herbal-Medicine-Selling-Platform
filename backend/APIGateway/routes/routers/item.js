@@ -1,5 +1,5 @@
 import express from "express";
-import { getItems, createItem, updateItem, deleteItem, getOneItem, getNewItems, getNewItemsBySeller, getItemsBySeller, getItemsByCategory, getItemByBrand } from "../../controllers/item.js";
+import { getItems, createItem, updateItem, deleteItem, getOneItem, getNewItems, getNewItemsBySeller, getItemsBySeller, getItemsByCategory, getItemByBrand, getRandomItems, getTopRatingItems, getItemsBySearch } from "../../controllers/item.js";
 
 const router = express.Router();
 
@@ -13,5 +13,8 @@ router.get("/new/:seller", getNewItemsBySeller);
 router.get("/seller/:seller", getItemsBySeller);
 router.get("/category/:category", getItemsByCategory);
 router.get("/brand/:brand", getItemByBrand);
+router.get("/get/random", getRandomItems);
+router.get("/get/top", getTopRatingItems);
+router.get("/search/:search", getItemsBySearch);
 
 export default router;

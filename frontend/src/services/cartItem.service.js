@@ -49,6 +49,15 @@ const getByCartID = async (cart) => {
     });
 }
 
+const getRecentOrdersByBrand = async (brand) => {
+    return await axios.get(url.GET_RECENT_CARTITEMS_BY_BRAND(brand), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+
 /* eslint-disable import/no-anonymous-default-export */
 export default {
     getAll,
@@ -56,5 +65,6 @@ export default {
     create,
     update,
     remove,
-    getByCartID
+    getByCartID,
+    getRecentOrdersByBrand
 };

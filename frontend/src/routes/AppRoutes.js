@@ -6,10 +6,13 @@ import {
     BuyerProfile,
     ForgotPassword,
     UpdatePassword,
+    BuyerVerifyEmail,
+    SellerVerifyEmail,
     ContactUs,
     AboutUs,
     ItemOne,
-    StripeContainer
+    StripeContainer,
+    ItemSearch
 } from '../pages'
 
 import {
@@ -24,7 +27,6 @@ import {
 import {
     Home as SellerHome,
     ItemView,
-    ItemSearch
 } from '../pages/SellerProfile/Pages'
 
 import {
@@ -58,7 +60,12 @@ export default function App() {
                     {/* Seller Routes */}
                     <Route path="/sellerProfile" element={<SellerHome />} />
                     <Route path="/sellerProfile/items" element={<ItemView />} />
-                    <Route path="/sellerProfile/items/:param" element={<ItemSearch />} />
+
+                    {/* Verify Buyer Route */}
+                    <Route path="/verify/:id" element={<BuyerVerifyEmail />} />
+
+                    {/* Verify Seller Route */}
+                    <Route path="/verifySeller/:id" element={<SellerVerifyEmail />} />
 
                     {/* ContactUs Routes */}
                     <Route path="/ContactUS" element={<ContactUs />} />
@@ -76,6 +83,7 @@ export default function App() {
 
                     {/* Item Routes */}
                     <Route path="/itemOne/:param" element={<ItemOne />} />
+                    <Route path="/search/:param" element={<ItemSearch />} />
 
                     {/* Payment Routes */}
                     <Route path="/payment" element={<StripeContainer />} />

@@ -32,6 +32,8 @@ export default function Navbar() {
   const [imageBuyer, setImageBuyer] = useState("");
   const [imageSeller, setImageSeller] = useState("");
 
+  const [search, setSearch] = useState("");
+
   //buyer register validation
   const buyerRegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -149,6 +151,11 @@ export default function Navbar() {
     setShowLoginSelect(false);
     setShowLoginAdmin(true);
   };
+
+  function handleSearch() {
+    console.log(search);
+    window.location.href = "/search/" + search;
+  }
 
   function handleToken(token) {
     //decode token
@@ -470,8 +477,6 @@ export default function Navbar() {
   return (
 
     <>
-      {/* forgot password modal */}
-
       {/* reg select modal */}
       <Modal
         show={showRegSelect}
@@ -532,15 +537,15 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              firstName: '123123',
-              lastName: '123123',
-              email: 'mail@mail.com',
-              contactNo: '1234567890',
-              address: '123456789',
-              password: '123456789',
-              confirmPassword: '123456789',
-              companyName: '123456789',
-              companyAddress: '123456789',
+              firstName: '',
+              lastName: '',
+              email: '',
+              contactNo: '',
+              address: '',
+              password: '',
+              confirmPassword: '',
+              companyName: '',
+              companyAddress: '',
             }}
             validationSchema={sellerRegisterSchema}
             onSubmit={values => {
@@ -836,6 +841,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* buyer login modal */}
@@ -851,8 +862,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'notRandula98@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -887,6 +898,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* admin login modal */}
@@ -902,8 +919,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'Randula9811@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -938,6 +955,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* Navbar component */}
@@ -962,12 +985,17 @@ export default function Navbar() {
               <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/AboutUs" className="navlink">
                 About Us
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/ContactUS" className="navlink">
                 Contact Us
               </Nav.Link>
+              <div className="searchBar">
+                <input type="text" className="barInput" placeholder="Search Items ..." onChange={(e) => setSearch(e.target.value)} />
+                <Button variant="success" className="searchbtn" onClick={handleSearch}><i class="fa-solid fa-search bar"></i></Button>{' '}
+              </div>
+
             </Nav>
             {view()}
 

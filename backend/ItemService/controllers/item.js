@@ -56,7 +56,27 @@ export const getOneItem = async (req, res) => {
 //get new 8 items
 export const getNewItems = async (req, res) => {
     try {
-        const items = await Item.find().limit(8);
+        const items = await Item.find().limit(8).sort({ _id: -1 });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get random 10 items
+export const getRandomItems = async (req, res) => {
+    try {
+        const items = await Item.aggregate([{ $sample: { size: 10 } }]);
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get top 10 rating items
+export const getTopRatingItems = async (req, res) => {
+    try {
+        const items = await Item.find().sort({ rating: -1 }).limit(10);
         res.status(200).json(items);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -101,6 +121,24 @@ export const getItemsByBrand = async (req, res) => {
     const brand = req.params.brand;
     try {
         const items = await Item.find({ brand: brand });
+        res.status(200).json(items);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+//get items by search
+export const getItemsBySearch = async (req, res) => {
+    const search = req.params.search;
+    try {
+        const items = await Item.find({
+            $or: [
+                { name: { $regex: search, $options: 'i' } },
+                { category: { $regex: search, $options: 'i' } },
+                { brand: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
+            ]
+        });
         res.status(200).json(items);
     } catch (error) {
         res.status(409).json({ message: error.message });

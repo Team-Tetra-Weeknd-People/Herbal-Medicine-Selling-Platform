@@ -92,3 +92,31 @@ export const getItemByBrand = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+export const getRandomItems = async (req, res) => {
+    axios.get(`${itemAPI}/get/random`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
+
+export const getTopRatingItems = async (req, res) => {
+    axios.get(`${itemAPI}/get/top`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
+}
+
+export const getItemsBySearch = async (req, res) => {
+    axios.get(`${itemAPI}/search/${req.params.search}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }
+        ).catch(error => {
+            res.status(500).json(error);
+        });
+}

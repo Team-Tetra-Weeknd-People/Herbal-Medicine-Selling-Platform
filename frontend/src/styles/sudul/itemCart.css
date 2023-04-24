@@ -29,7 +29,7 @@
     cursor: pointer;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 }
-.fa-cart-shopping{
+.cart{
     transform: translate(0%, 110%);
     cursor: pointer;
 }

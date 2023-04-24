@@ -41,14 +41,6 @@ const remove = async (id) => {
     });
 }
 
-const getNew = async () => {
-    return await axios.get(url.GET_NEW_ITEMS, {
-        headers: {
-            "Content-Type": "application/json"
-        },
-    });
-}
-
 const getNewBySeller = async (seller) => {
     return await axios.get(url.GET_NEW_ITEMS_BY_SELLERID(seller), {
         headers: {
@@ -81,6 +73,38 @@ const getByBrand = async (brand) => {
     });
 }
 
+const getNew = async () => {
+    return await axios.get(url.GET_NEW_ITEMS, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getRandom = async () => {
+    return await axios.get(url.GET_RANDOM_ITEMS, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const getTopRating = async () => {
+    return await axios.get(url.GET_TOP_RATING_ITEMS, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const search = async (keyword) => {
+    return await axios.get(url.GET_ITEMS_BY_SEARCH(keyword), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getAll,
@@ -88,9 +112,12 @@ export default {
     create,
     update,
     remove,
-    getNew,
     getNewBySeller,
     getBySeller,
     getByCategory,
-    getByBrand
+    getByBrand,
+    getNew,
+    getRandom,
+    getTopRating,
+    search
 }

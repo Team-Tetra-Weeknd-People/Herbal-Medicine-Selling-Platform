@@ -24,13 +24,13 @@
 .NavbarList {}
 
 .me-auto {
-    margin-left: 100px;
+    margin-left: 0px;
 }
 
 .navlink {
     color: rgb(255, 255, 255);
     text-align: center;
-    margin: 0px 35px;
+    margin: 0px 20px;
 }
 
 /* .NavbarList Button {
@@ -57,4 +57,23 @@
 
 .form-control{
     width: 150%;
+}
+
+.searchBar{
+    width: 40%;
+}
+
+.bar{
+    transform:none;
+}
+
+.searchbtn{
+    margin-left: 20px;
+}
+
+.barInput{
+    width: 60%;
+    background-color: rgba(98, 189, 154, 0.658);
+    border: none;
+    border-radius: 10px;
 }

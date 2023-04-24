@@ -5,12 +5,15 @@ import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import "../../styles/chanudi/aboutUs.css";
 
-
 import './AboutUs.css'
+
+import Navbar from '../../components/navbar';
 
 export default function aboutUs() {
     return (
         <>
+            <Navbar />
+            <br/><br/><br/><br/>
             <div className='maincontainer'>
                 <div className='container_about'>
                     <Carousel>
@@ -49,7 +52,7 @@ export default function aboutUs() {
                     </Carousel>
 
                     <div className='container_des'>
-                        <Card  className='card'>
+                        <Card className='Aboutcard'>
                             <Card.Header className='header1'>ABOUT US</Card.Header>
                             <Card.Body>
                                 <Card.Title className='title'>Who We Are?</Card.Title>

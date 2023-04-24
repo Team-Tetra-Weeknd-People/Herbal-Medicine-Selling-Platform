@@ -5,6 +5,8 @@ import {
   ItemCart
 } from "../../components";
 
+import Home from "./Home";
+
 export default function BuyerProfile() {
 
   document.title = "Buyer Profile"
@@ -12,6 +14,7 @@ export default function BuyerProfile() {
   return (
     <>
       <Navbar />
+      <Home />
       <ItemCart />
     </>
   )
