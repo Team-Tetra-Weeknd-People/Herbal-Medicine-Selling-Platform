@@ -7,7 +7,7 @@ export const createPaymentIntent = async (req, res) => {
     try {
         const payment = await stripe.paymentIntents.create({
             amount,
-            currency: "USD",
+            currency: "LKR",
             description: "Beheth Kade Pay",
             payment_method: id,
             confirm: true

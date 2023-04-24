@@ -68,7 +68,6 @@ export const createSeller = async (req, res) => {
 
     const id = newSeller._id;
 
-
     const url = `http://localhost:3000/verifySeller/${id}`;
 
     await transporter.sendMail({
