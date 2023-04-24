@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 import CategoryService from '../../../../services/category.service'
 
@@ -28,8 +30,14 @@ export default function Landing() {
                 <br /><br /><br /><br /><br />
                 <div className='CategoryLanding'>
                     {!category.length ? (
-                        <div className='landing__container'>
-                            <h1 className='landing__container__title'>No categories found</h1>
+                        <div className='landing__container' style={{ width: '240%' }}>
+                            <Alert variant="success" style={{ margin: '0 auto' }}>
+                                <Alert.Heading>Loading Categories&nbsp; &nbsp; &nbsp;
+                                    <Spinner animation="border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </Spinner>
+                                </Alert.Heading>
+                            </Alert>
                         </div>
                     ) : (
                         category.map((category) => (

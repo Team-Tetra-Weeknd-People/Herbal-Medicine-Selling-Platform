@@ -79,6 +79,7 @@ export default function PaymentForm() {
                                 buyerID: sessionStorage.getItem("user-id"),
                                 buyerfname: sessionStorage.getItem("fname"),
                                 buyerlname: sessionStorage.getItem("lname"),
+                                buyeremail: sessionStorage.getItem("email"),
                             }
                             CartService.create(cart).then((res) => {
                                 console.log(res);

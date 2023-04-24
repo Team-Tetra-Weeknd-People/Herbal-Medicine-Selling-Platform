@@ -5,12 +5,14 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Modal from "react-bootstrap/Modal";
+import Alert from 'react-bootstrap/Alert';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import jwt_decode from "jwt-decode";
 import { Navigation, Pagination } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
 
 import './ItemOneLanding.css'
 
@@ -85,6 +87,7 @@ export default function Landing(props) {
 
   document.title = item.name;
 
+
   function handleToken(token) {
     //decode token
     const decodedToken = jwt_decode(token);
@@ -95,6 +98,7 @@ export default function Landing(props) {
     sessionStorage.setItem("brand", decodedToken.brand);
     sessionStorage.setItem("fname", decodedToken.fname);
     sessionStorage.setItem("lname", decodedToken.lname);
+    sessionStorage.setItem("email", decodedToken.email);
   }
 
   async function loginBuyer(values) {
@@ -111,6 +115,7 @@ export default function Landing(props) {
           buyerID: sessionStorage.getItem("user-id"),
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
+          buyeremail: sessionStorage.getItem("email"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
@@ -345,7 +350,7 @@ export default function Landing(props) {
 
                 <br />
                 {/* submit button */}
-                <Button  type="submit">
+                <Button type="submit">
                   Submit
                 </Button>
               </Form>
@@ -374,12 +379,16 @@ export default function Landing(props) {
               </Card>
             </Row>
             <Row className="itemDesc">
-              <h3>{item.description}</h3>
+              <h4>{item.description}</h4>
             </Row>
             <Row className="itemReview">
               <Row style={{ height: '120px' }}>
                 {!reviews.length ? (
-                  <h3 className="text-center">No Reviews available to display</h3>
+                  <div className='landing__container' style={{ width: '200%' }}>
+                    <Alert variant="success" style={{ margin: '0 auto' }}>
+                      <Alert.Heading>No Reviews posted for this item</Alert.Heading>
+                    </Alert>
+                  </div>
                 ) : (
                   <div>
                     <Swiper modules={[Navigation, Pagination]} navigation pagination={{ clickable: true }}>

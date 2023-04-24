@@ -167,6 +167,7 @@ export default function Navbar() {
     sessionStorage.setItem("brand", decodedToken.brand);
     sessionStorage.setItem("fname", decodedToken.fname);
     sessionStorage.setItem("lname", decodedToken.lname);
+    sessionStorage.setItem("email", decodedToken.email);
   }
 
   function logout() {
@@ -332,6 +333,7 @@ export default function Navbar() {
           buyerID: sessionStorage.getItem("user-id"),
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
+          buyeremail: sessionStorage.getItem("email"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
