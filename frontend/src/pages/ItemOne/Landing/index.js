@@ -87,6 +87,7 @@ export default function Landing(props) {
 
   document.title = item.name;
 
+
   function handleToken(token) {
     //decode token
     const decodedToken = jwt_decode(token);
@@ -97,6 +98,7 @@ export default function Landing(props) {
     sessionStorage.setItem("brand", decodedToken.brand);
     sessionStorage.setItem("fname", decodedToken.fname);
     sessionStorage.setItem("lname", decodedToken.lname);
+    sessionStorage.setItem("email", decodedToken.email);
   }
 
   async function loginBuyer(values) {
@@ -113,6 +115,7 @@ export default function Landing(props) {
           buyerID: sessionStorage.getItem("user-id"),
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
+          buyeremail: sessionStorage.getItem("email"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
