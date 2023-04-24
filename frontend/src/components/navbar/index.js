@@ -648,13 +648,13 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              firstName: '123123',
-              lastName: '123123123',
-              email: '123123@123123.com',
-              contactNo: '1231231231',
-              address: '123123123',
-              password: '123123123',
-              confirmPassword: '123123123',
+              firstName: '',
+              lastName: '',
+              email: '',
+              contactNo: '',
+              address: '',
+              password: '',
+              confirmPassword: '',
             }}
             validationSchema={buyerRegisterSchema}
             onSubmit={values => {
