@@ -39,7 +39,19 @@ img.itemimg{
     margin-right: auto;
     width: 80%;
     height: 50%;
-    background-color: rgba(83, 173, 143, 0.178);
+    background-color:#ACDF87;
     border-radius: 10px;
     padding: 20px;
+}
+
+.btn-primary{
+    background-color: #1f9e32;
+    color: white;
+    border-radius: 10px;
+    border-color: #1f9e32;
+}
+
+.btn-primary:hover{
+    background-color: #2ebb43;
+    color: white;
 }

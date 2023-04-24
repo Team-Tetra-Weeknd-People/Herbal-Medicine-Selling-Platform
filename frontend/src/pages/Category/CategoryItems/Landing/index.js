@@ -42,7 +42,7 @@ export default function Landing(props) {
                                     <Card.Text style={{ height: '1rem' }}>
                                         Rs. {item.price}.00
                                     </Card.Text>
-                                    <Button variant="primary">View Item</Button>
+                                    <Button className='btn2'>View Item</Button>
                                 </Card.Body>
                             </Card>
                         </a>
