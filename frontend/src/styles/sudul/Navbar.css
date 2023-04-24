@@ -24,13 +24,15 @@
 .NavbarList {}
 
 .me-auto {
-    margin-left: 0px;
+    margin-left: 30px;
 }
 
 .navlink {
     color: rgb(255, 255, 255);
     text-align: center;
-    margin: 0px 20px;
+    margin: 0px 8px;
+    overflow: show;
+    white-space: nowrap;
 }
 
 /* .NavbarList Button {
@@ -60,7 +62,11 @@
 }
 
 .searchBar{
-    width: 40%;
+    align-content: right;
+    margin-left: 30px;
+    width: 80%;
+    overflow: show;
+    white-space: nowrap;
 }
 
 .bar{
@@ -68,12 +74,16 @@
 }
 
 .searchbtn{
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .barInput{
-    width: 60%;
+    width: 90%;
+    height: 30px;
     background-color: rgba(98, 189, 154, 0.658);
     border: none;
     border-radius: 10px;
+}
+.barInput::placeholder{
+    color:rgb(34, 54, 54);
 }
