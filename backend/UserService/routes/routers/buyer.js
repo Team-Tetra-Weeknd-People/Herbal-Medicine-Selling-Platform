@@ -1,6 +1,6 @@
 import express from "express";
 
-import { getAllBuyers, getBuyer, createBuyer, updateBuyer, deleteBuyer, authBuyer, verifyBuyer } from "../../controllers/buyer.js";
+import { getAllBuyers, getBuyer, createBuyer, updateBuyer, deleteBuyer, authBuyer, verifyBuyer, getBuyerByEmail, resetPassword } from "../../controllers/buyer.js";
 
 const router = express.Router();
 
@@ -11,5 +11,7 @@ router.delete("/delete/:id", deleteBuyer);
 router.post("/login", authBuyer);
 router.get("/:id", getBuyer);
 router.get("/verify/:id", verifyBuyer);
+router.post("/getBuyerByEmail", getBuyerByEmail);
+router.get("/forgetPassword/:id", resetPassword);
 
 export default router;
