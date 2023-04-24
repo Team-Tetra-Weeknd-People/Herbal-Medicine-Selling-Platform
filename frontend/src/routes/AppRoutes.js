@@ -50,8 +50,8 @@ export default function App() {
                     <Route path="/buyerProfile" element={<BuyerProfile />} />
 
                     {/* Forgot Password Routes  */}
-                    <Route path="/UpdatePassword" element={<UpdatePassword />} />
-                    <Route path="/ForgotPassword" element={<ForgotPassword />} />
+                    <Route path="/resetPassword/:id" element={<UpdatePassword />} />
+                    <Route path="/getBuyerByEmail" element={<ForgotPassword />} />
 
                     {/* Admin Routes  */}
                     <Route path="/adminProfile" element={<AdminHome />} />
