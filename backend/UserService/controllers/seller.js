@@ -2,6 +2,7 @@ import Seller from "../models/seller.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import nodemailer from 'nodemailer';
+import axios from 'axios';
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -20,7 +21,7 @@ export const authSeller = async (req, res) => {
             if (bcrypt.compareSync(password, seller.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName, emai: seller.email }, secret, {
+                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName, emai: seller.email, contactNo: seller.contactNo }, secret, {
                     expiresIn: "3h",
                 });
 
@@ -76,6 +77,20 @@ export const createSeller = async (req, res) => {
         subject: "Verify your email",
         html: `Please click this email to <a href="${url}">verify</a>`,
     });
+
+    axios.post(`https://app.notify.lk/api/v1/send`, {
+        user_id: process.env.USER_ID,
+        api_key: process.env.API_KEY,
+        sender_id: "NotifyDEMO",
+        to: newSeller.contactNo,
+        message: "Test"
+    })
+        .then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        }
+        );
 }
 
 export const updateSeller = async (req, res) => {

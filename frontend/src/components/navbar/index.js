@@ -48,8 +48,8 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(10, 'Too Short!')
-      .max(10, 'Too Long!')
+      .min(12, 'Too Short!')
+      .max(12, 'Too Long!')
       .required('Required'),
     address: Yup.string()
       .min(5, 'Too Short!')
@@ -78,8 +78,8 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(10, 'Too Short!')
-      .max(10, 'Too Long!')
+      .min(12, 'Too Short!')
+      .max(12, 'Too Long!')
       .required('Required'),
     password: Yup.string()
       .min(8, 'Too Short! Enter More Than 8 Characters')
@@ -168,6 +168,7 @@ export default function Navbar() {
     sessionStorage.setItem("fname", decodedToken.fname);
     sessionStorage.setItem("lname", decodedToken.lname);
     sessionStorage.setItem("email", decodedToken.email);
+    sessionStorage.setItem("contactNo", decodedToken.contactNo);
   }
 
   function logout() {
@@ -334,6 +335,7 @@ export default function Navbar() {
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
           buyeremail: sessionStorage.getItem("email"),
+          buyercontactno: sessionStorage.getItem("contactNo"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
@@ -843,12 +845,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           Can't remember your password?
           <Button variant="secondary">
             Reset Password
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
 
       {/* buyer login modal */}
@@ -900,12 +902,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           Can't remember your password?
           <Button variant="secondary">
             Reset Password
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
 
       {/* admin login modal */}
@@ -957,12 +959,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           Can't remember your password?
           <Button variant="secondary">
             Reset Password
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
 
       {/* Navbar component */}
