@@ -154,11 +154,11 @@
   }
   #img2{
   background-color: #000000;
-  background-image: url('./images/wg.jpeg');
+  background-image: url('./images/pd.jpeg');
   background-size: cover;
   }
   #img2 h1, #img2 p{
-    color: #ee5252;
+    color: #020202;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: black;
   }

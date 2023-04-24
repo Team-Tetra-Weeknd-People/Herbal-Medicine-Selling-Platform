@@ -193,7 +193,7 @@ function ItemCart() {
                     <div className="floating-parent">
                         <div className="tooltip">My Cart</div>
                         <div className="right-button" onClick={handleShow}>
-                            <i class="fa-solid fa-cart-shopping"></i>
+                            <i class="fa-solid fa-cart-shopping cart"></i>
                         </div>
                     </div>
                 )}

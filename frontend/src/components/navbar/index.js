@@ -32,6 +32,8 @@ export default function Navbar() {
   const [imageBuyer, setImageBuyer] = useState("");
   const [imageSeller, setImageSeller] = useState("");
 
+  const [search, setSearch] = useState("");
+
   //buyer register validation
   const buyerRegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -150,6 +152,11 @@ export default function Navbar() {
     setShowLoginAdmin(true);
   };
 
+  function handleSearch() {
+    console.log(search);
+    window.location.href = "/search/" + search;
+  }
+
   function handleToken(token) {
     //decode token
     const decodedToken = jwt_decode(token);
@@ -160,6 +167,7 @@ export default function Navbar() {
     sessionStorage.setItem("brand", decodedToken.brand);
     sessionStorage.setItem("fname", decodedToken.fname);
     sessionStorage.setItem("lname", decodedToken.lname);
+    sessionStorage.setItem("email", decodedToken.email);
   }
 
   function logout() {
@@ -325,6 +333,7 @@ export default function Navbar() {
           buyerID: sessionStorage.getItem("user-id"),
           buyerfname: sessionStorage.getItem("fname"),
           buyerlname: sessionStorage.getItem("lname"),
+          buyeremail: sessionStorage.getItem("email"),
         }
         CartService.create(cart).then((res) => {
           console.log(res);
@@ -470,7 +479,6 @@ export default function Navbar() {
   return (
 
     <>
-
       {/* reg select modal */}
       <Modal
         show={showRegSelect}
@@ -486,7 +494,7 @@ export default function Navbar() {
           <Row>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4729171.jpg?alt=media&token=37de4a8b-0f81-49f8-940b-a6dfdd56f8f7" />
                 <Card.Body>
                   <Card.Title>Register as a Seller</Card.Title>
                   <Card.Text>
@@ -498,7 +506,7 @@ export default function Navbar() {
             </Col>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F8586.jpg?alt=media&token=634a4d32-a789-4519-b126-0c7dc4b403cb" />
                 <Card.Body>
                   <Card.Title>Register as a Buyer</Card.Title>
                   <Card.Text>
@@ -740,7 +748,7 @@ export default function Navbar() {
           <Row>
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4729171.jpg?alt=media&token=37de4a8b-0f81-49f8-940b-a6dfdd56f8f7" />
                 <Card.Body>
                   <Card.Title>Login as a Seller</Card.Title>
                   <Card.Text>
@@ -753,7 +761,7 @@ export default function Navbar() {
 
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F8586.jpg?alt=media&token=634a4d32-a789-4519-b126-0c7dc4b403cb" />
                 <Card.Body>
                   <Card.Title>Login as a Buyer</Card.Title>
                   <Card.Text>
@@ -766,7 +774,7 @@ export default function Navbar() {
 
             <Col>
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img variant="top" src="https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4759943.jpg?alt=media&token=f204fe7c-9eb0-481d-95af-d877add70a65" />
                 <Card.Body>
                   <Card.Title>Login as an Admin</Card.Title>
                   <Card.Text>
@@ -835,6 +843,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* buyer login modal */}
@@ -850,8 +864,8 @@ export default function Navbar() {
         <Modal.Body>
           <Formik
             initialValues={{
-              email: 'notRandula98@gmail.com',
-              password: 'QWERTY123',
+              email: '',
+              password: '',
             }}
             validationSchema={loginSchema}
             onSubmit={values => {
@@ -886,6 +900,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* admin login modal */}
@@ -937,6 +957,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* Navbar component */}
@@ -961,14 +987,18 @@ export default function Navbar() {
               <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/AboutUs" className="navlink">
                 About Us
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/ContactUS" className="navlink">
                 Contact Us
               </Nav.Link>
+              <div className="searchBar">
+                <input type="text" className="barInput" placeholder="Search Items ..." onChange={(e) => setSearch(e.target.value)} />
+                <Button variant="success" className="searchbtn" onClick={handleSearch}><i class="fa-solid fa-search bar"></i></Button>{' '}
+              </div>
+
             </Nav>
-            <input type="text" placeholder="Search.." className="searchbar" />
             {view()}
 
           </Navbarx.Collapse>

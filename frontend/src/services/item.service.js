@@ -97,6 +97,14 @@ const getTopRating = async () => {
     });
 }
 
+const search = async (keyword) => {
+    return await axios.get(url.GET_ITEMS_BY_SEARCH(keyword), {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getAll,
@@ -110,5 +118,6 @@ export default {
     getByBrand,
     getNew,
     getRandom,
-    getTopRating
+    getTopRating,
+    search
 }

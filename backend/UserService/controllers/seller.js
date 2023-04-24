@@ -20,7 +20,7 @@ export const authSeller = async (req, res) => {
             if (bcrypt.compareSync(password, seller.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName }, secret, {
+                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName, emai: seller.email }, secret, {
                     expiresIn: "3h",
                 });
 
@@ -68,7 +68,6 @@ export const createSeller = async (req, res) => {
 
     const id = newSeller._id;
 
-
     const url = `http://localhost:3000/verifySeller/${id}`;
 
     await transporter.sendMail({
@@ -97,7 +96,7 @@ export const deleteSeller = async (req, res) => {
         res.status(200).send({ status: "Seller details deleted" });
     } catch {
         res.status(404).json({ message: error });
-    }   
+    }
 }
 
 export const verifySeller = async (req, res) => {

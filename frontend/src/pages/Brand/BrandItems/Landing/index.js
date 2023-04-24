@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import '../../Brand.css'
 import ItemService from '../../../../services/item.service'
@@ -27,10 +28,15 @@ export default function Landing(props) {
         <>
             <br /><br /><br /><br /><br />
             <div className='BrandLanding'>
-
                 {!items.length ? (
-                    <div className='landing__container'>
-                        <h1 className='landing__container__title'>No items found</h1>
+                    <div className='landing__container' style={{ width: '190%' }}>
+                        <Alert variant="success" style={{ margin: '0 auto' }}>
+                            <Alert.Heading>No items found for the Brand - {props.brand}</Alert.Heading>
+                            <hr />
+                            <p className="mb-0">
+                                Please Check Other Brands
+                            </p>
+                        </Alert>
                     </div>
                 ) : (
                     items.map((item) => (

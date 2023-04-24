@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import '../../Category.css'
 
@@ -29,8 +30,14 @@ export default function Landing(props) {
             <div className='CategoryLanding'>
 
                 {!items.length ? (
-                    <div className='landing__container'>
-                        <h1 className='landing__container__title'>No items found for the Category - {props.category}</h1>
+                    <div className='landing__container' style={{ width: '180%' }}>
+                        <Alert variant="success" style={{ margin: '0 auto' }}>
+                            <Alert.Heading>No items found for the Category - {props.category}</Alert.Heading>
+                            <hr />
+                            <p className="mb-0">
+                                Please Check Other Cateogries
+                            </p>
+                        </Alert>
                     </div>
                 ) : (
                     items.map((item) => (
@@ -42,7 +49,7 @@ export default function Landing(props) {
                                     <Card.Text style={{ height: '1rem' }}>
                                         Rs. {item.price}.00
                                     </Card.Text>
-                                    <Button variant="primary">View Item</Button>
+                                    <Button className='btn2'>View Item</Button>
                                 </Card.Body>
                             </Card>
                         </a>

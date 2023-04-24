@@ -115,8 +115,8 @@ function AppSlider() {
             <div className="slide" >
               <div className="container" id='img2'>
                 <div className="caption">
-                  <h1>Weight Gainer</h1>
-                  <p>Follow the passion</p>
+                  <h1>Pharmaceutical Drugs</h1>
+                  <p>Take a Pill.</p>
                   <a href="" >More...</a>
                 </div>
               </div>

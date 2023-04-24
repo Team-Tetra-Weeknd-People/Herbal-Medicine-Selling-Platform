@@ -420,7 +420,6 @@ export default function Home() {
                                 </Card.Body>
                             </Card>
                         </Col>
-                        64444b457d27ab49dbde1da7
                         <Col>
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="holder.js/100px180" />
