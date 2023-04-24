@@ -44,6 +44,10 @@ const CartSchema = new Schema({
         type: String,
         required: true
     },
+    buyercontactno: {
+        type: String,
+        required: true
+    },
     placedDate: {
         type: Date,
         default: fulldate

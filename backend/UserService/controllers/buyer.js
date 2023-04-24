@@ -82,7 +82,7 @@ export const createBuyer = async (req, res) => {
         user_id: process.env.USER_ID,
         api_key:process.env.API_KEY,
         sender_id: "NotifyDEMO",
-        to: "94765901787",
+        to: newBuyer.contactNo,
         message: "Test"
     })
     .then(res => {
