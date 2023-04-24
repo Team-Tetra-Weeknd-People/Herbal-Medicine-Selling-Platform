@@ -477,7 +477,6 @@ export default function Navbar() {
   return (
 
     <>
-
       {/* reg select modal */}
       <Modal
         show={showRegSelect}
@@ -842,6 +841,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* buyer login modal */}
@@ -893,6 +898,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* admin login modal */}
@@ -944,6 +955,12 @@ export default function Navbar() {
 
           </Formik>
         </Modal.Body>
+        <Modal.Footer>
+          Can't remember your password?
+          <Button variant="secondary">
+            Reset Password
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {/* Navbar component */}
@@ -968,10 +985,10 @@ export default function Navbar() {
               <Nav.Link as={Link} to="/brands" className="navlink">
                 Brands
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/AboutUs" className="navlink">
                 About Us
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="navlink">
+              <Nav.Link as={Link} to="/ContactUS" className="navlink">
                 Contact Us
               </Nav.Link>
               <div className="searchBar">
