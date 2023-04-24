@@ -20,7 +20,7 @@ export const authSeller = async (req, res) => {
             if (bcrypt.compareSync(password, seller.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName, emai: seller.email }, secret, {
+                const token = jwt.sign({ id: seller._id, verified: seller.verified, brand: seller.companyName, emai: seller.email , contactNo : seller.contactNo}, secret, {
                     expiresIn: "3h",
                 });
 
