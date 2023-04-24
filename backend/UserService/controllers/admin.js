@@ -11,7 +11,7 @@ export const authAdmin = async (req, res) => {
             if (bcrypt.compareSync(password, admin.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: admin._id, verified: admin.verified }, secret, {
+                const token = jwt.sign({ id: admin._id, verified: admin.verified, email: admin.email }, secret, {
                     expiresIn: "3h",
                 });
 

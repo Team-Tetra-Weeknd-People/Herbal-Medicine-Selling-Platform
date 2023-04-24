@@ -1,6 +1,6 @@
 .ItemOneLanding{
     width: 90%;
-    min-height: 580px;
+    height: 600px;
     background-color: rgba(83, 153, 94, 0.274);
     margin: 0px auto;
     border-radius: 10px;
@@ -34,7 +34,7 @@ img.itemimg{
 }
 
 .itemReview{
-    margin-top: 40px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     width: 80%;

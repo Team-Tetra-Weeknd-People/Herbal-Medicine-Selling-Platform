@@ -2,6 +2,7 @@ import Buyer from "../models/buyer.js";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
+import axios from 'axios';
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -20,7 +21,7 @@ export const authBuyer = async (req, res) => {
             if (bcrypt.compareSync(password, buyer.password)) {
                 const secret = process.env.JWT_SECRET;
 
-                const token = jwt.sign({ id: buyer._id, verified: buyer.verified, fname: buyer.firstName, lname: buyer.lastName }, secret, {
+                const token = jwt.sign({ id: buyer._id, verified: buyer.verified, fname: buyer.firstName, lname: buyer.lastName, email: buyer.email, contactNo: buyer.contactNo }, secret, {
                     expiresIn: "3h",
                 });
 
@@ -76,7 +77,23 @@ export const createBuyer = async (req, res) => {
         subject: "Verify your email",
         html: `Please click this email to <a href="${url}">verify</a>`,
     });
+
+    axios.post(`https://app.notify.lk/api/v1/send`, {
+        user_id: process.env.USER_ID,
+        api_key:process.env.API_KEY,
+        sender_id: "NotifyDEMO",
+        to: newBuyer.contactNo,
+        message: "Test"
+    })
+    .then(res => {
+        console.log(res.data);
+    }).catch(err => {
+        console.log(err);
+    }
+    );
+
 }
+
 
 export const updateBuyer = async (req, res) => {
     const id = req.params.id;
@@ -104,6 +121,41 @@ export const verifyBuyer = async (req, res) => {
         const id = req.params.id;
         await Buyer.findByIdAndUpdate(id, { verified: true });
         res.status(200).send({ status: "Buyer verified" });
+    } catch (error) {
+        res.status(404).json({ message: error });
+    }
+}
+
+export const getBuyerByEmail = async (req, res) => {
+    const email = req.body;
+    try {
+        const newBuyer = await Buyer.findOne(email);
+
+        const id = newBuyer._id;
+
+        const URL = `http://localhost:3000/forgotPassword/${id}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: newBuyer.email,
+            subject: "Reset your password",
+            html: `Please click this email to <a href="${URL}">reset</a>`,
+        });
+
+        res.status(200).send({ status: "email sent" });
+
+    } catch (error) {
+        res.status(404).json({ message: error });                    
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const password = req.body;
+        const hashedPassword = bcrypt.hashSync(password.password, 10);
+        await Buyer.findByIdAndUpdate(id, { password: hashedPassword });
+        res.status(200).send({ status: "Password reset" });
     } catch (error) {
         res.status(404).json({ message: error });
     }

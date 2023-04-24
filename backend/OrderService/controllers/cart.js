@@ -1,6 +1,14 @@
-import mongoose from "mongoose";
-
 import Cart from "../models/cart.js";
+import nodemailer from 'nodemailer';
+import axios from 'axios';
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+});
 
 export const getCarts = async (req, res) => {
     try {
@@ -31,6 +39,32 @@ export const updateCart = async (req, res) => {
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
+
+    const cart = await Cart.findById(id);
+    const email = cart.buyeremail;
+    const status = cart.status;
+    const contactNo = cart.buyercontactno;
+
+    await transporter.sendMail({
+        from: process.env.EMAIL,
+        to: email,
+        subject: `Order ${status}`,
+        html: `Your Order (${id}) is ${status} now!!`,
+    });
+
+    axios.post(`https://app.notify.lk/api/v1/send`, {
+        user_id: process.env.USER_ID,
+        api_key: process.env.API_KEY,
+        sender_id: "NotifyDEMO",
+        to: contactNo,
+        message: `Your Order (${id}) is ${status} now!!`
+    })
+        .then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        }
+        );
 }
 
 export const deleteCart = async (req, res) => {
@@ -79,7 +113,7 @@ export const getCartsByStatus = async (req, res) => {
 export const getCartsByBuyerIDAndNotDelivered = async (req, res) => {
     const buyerid = req.params.id;
     try {
-        const carts = await Cart.find({ buyerID: buyerid, status: {$nin: ["Delivered", "Cart"]} });
+        const carts = await Cart.find({ buyerID: buyerid, status: { $nin: ["Delivered", "Cart"] } });
         res.status(200).json(carts);
     } catch (error) {
         res.status(409).json({ message: error.message });
