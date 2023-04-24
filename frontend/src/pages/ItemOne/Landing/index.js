@@ -296,7 +296,7 @@ export default function Landing(props) {
                 </div>
                 <br />
                 <div className="form-group col-md-6">
-                  <button type="submit" className="btn btn-primary mr-2">Submit</button>
+                  <button type="submit" className="btn-primary">Submit</button>
                 </div>
               </Form>
             )}
@@ -345,7 +345,7 @@ export default function Landing(props) {
 
                 <br />
                 {/* submit button */}
-                <Button variant="primary" type="submit">
+                <Button  type="submit">
                   Submit
                 </Button>
               </Form>

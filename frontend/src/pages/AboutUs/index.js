@@ -11,7 +11,7 @@ export default function aboutUs() {
     return (
         <>
             <Navbar />
-            <br/><br/><br/><br/>
+            <br /><br /><br /><br />
             <div className='maincontainer'>
                 <div className='container_about'>
                     <Carousel>
@@ -55,13 +55,13 @@ export default function aboutUs() {
                             <Card.Body>
                                 <Card.Title className='title'>Who We Are?</Card.Title>
                                 <Card.Text className='text_des'>
-                                    BEHETH KADE is Sri Lankan leading online store of natural, ayurvedic and herbal products. 
+                                    BEHETH KADE is Sri Lankan leading online store of natural, ayurvedic and herbal products.
                                     We offer variety of products from different brands which help to enhance your beauty and health.
                                     <br></br>
                                     We at BEHETH KADE, strive for the best for our consumers and our ultimate goal is to provide the finest and branded products
                                     and serve our clients to our greatest aptitude.
                                     <br></br>
-                                    We provide consumers all kind of herbs in various forms and other products in one platform. All the herb products in BEHETH KADE are 
+                                    We provide consumers all kind of herbs in various forms and other products in one platform. All the herb products in BEHETH KADE are
                                     provided by branded companies and packed in fully hygienical environment with all the measurable qualities.
                                 </Card.Text>
                                 <Card.Title className='title'>Our Vision</Card.Title>
@@ -72,10 +72,10 @@ export default function aboutUs() {
                                     <br></br>
 
                                 </Card.Text>
-                                <Card.Title className='title'>Our Mision</Card.Title>
+                                <Card.Title className='title'>Our Mission</Card.Title>
                                 <Card.Text className='text_des1'>
-                                   Our mission is to become a trusted global leader enriching the lives of people across the world by providing
-                                   high quality Ayurvedic and herbal products
+                                    Our mission is to become a trusted global leader enriching the lives of people across the world by providing
+                                    high quality Ayurvedic and herbal products
 
                                 </Card.Text>
                             </Card.Body>
