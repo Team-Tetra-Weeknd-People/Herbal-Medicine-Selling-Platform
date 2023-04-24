@@ -17,16 +17,22 @@ export default function contactUs() {
                     <Form.Group className="mb-3" controlId="formUP">
                         <Form.Label className='label_c'>CONTACT US</Form.Label>
                         <br></br>
-                        <Form.Control type="text" className='name' placeholder="name" />
+                        <Form.Label className='txt_1'>We Love to Hear from You...</Form.Label>
                         <br></br>
-                        <Form.Control type="email" className='email' placeholder="E-mail" />
                         <br></br>
-                        <Form.Control type="text" className='contact' placeholder="Contact Number" />
+                        <Form.Control type="text" className='inputc' placeholder="Name" />
                         <br></br>
-                        <Form.Control type="text" className='contact' placeholder="Contact Number" />
+                        <Form.Control type="email" className='inputc' placeholder="E-mail" />
+                        <br></br>
+                        <Form.Control type="text" className='inputc' placeholder="Contact Number" />
+                        <br></br>
+                        {/* <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1"> */}
+                        <Form.Control as="textarea" className='area' coulmns={2} rows={3} placeholder='Your Message' />
+                        {/* </Form.Group> */}
+
                     </Form.Group>
 
-                    <Button type="submit" className="button1">
+                    <Button type="submit" className="button_1">
                         Submit
                     </Button>
                 </Form>
