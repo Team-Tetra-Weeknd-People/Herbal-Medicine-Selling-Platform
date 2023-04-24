@@ -5,11 +5,14 @@ import Form from 'react-bootstrap/Form';
 //import Col from 'react-bootstrap/Col';
 
 import './contactUs.css'
+import Navbar from '../../components/navbar';
 
 export default function contactUs() {
     return (
         <>
-        <div className='c_container'>
+            <Navbar />
+            <br /><br /><br /><br />
+            <div className='c_container'>
                 <Form>
                     <Form.Group className="mb-3" controlId="formUP">
                         <Form.Label className='label_c'>CONTACT US</Form.Label>

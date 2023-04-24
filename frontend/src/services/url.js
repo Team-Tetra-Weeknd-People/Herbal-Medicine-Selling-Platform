@@ -46,6 +46,7 @@ export const GET_ITEMS_BY_BRAND = (brand) => `${BASE_URL}/items/brand/${brand}`;
 export const GET_NEW_ITEMS = `${BASE_URL}/items/new/items`;
 export const GET_RANDOM_ITEMS = `${BASE_URL}/items/get/random`;
 export const GET_TOP_RATING_ITEMS = `${BASE_URL}/items/get/top`;
+export const GET_ITEMS_BY_SEARCH = (search) => `${BASE_URL}/items/search/${search}`;
 
 //review
 export const GET_ALL_REVIEWS = `${BASE_URL}/reviews`;

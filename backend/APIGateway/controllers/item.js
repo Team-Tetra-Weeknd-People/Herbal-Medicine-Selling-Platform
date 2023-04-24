@@ -110,3 +110,13 @@ export const getTopRatingItems = async (req, res) => {
             res.status(500).json(error);
         });
 }
+
+export const getItemsBySearch = async (req, res) => {
+    axios.get(`${itemAPI}/search/${req.params.search}`)
+        .then(response => {
+            res.status(200).json(response.data);
+        }
+        ).catch(error => {
+            res.status(500).json(error);
+        });
+}

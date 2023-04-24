@@ -11,7 +11,8 @@ import {
     ContactUs,
     AboutUs,
     ItemOne,
-    StripeContainer
+    StripeContainer,
+    ItemSearch
 } from '../pages'
 
 import {
@@ -82,6 +83,7 @@ export default function App() {
 
                     {/* Item Routes */}
                     <Route path="/itemOne/:param" element={<ItemOne />} />
+                    <Route path="/search/:param" element={<ItemSearch />} />
 
                     {/* Payment Routes */}
                     <Route path="/payment" element={<StripeContainer />} />

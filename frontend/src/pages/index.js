@@ -8,6 +8,7 @@ import ContactUs from './ContactUs'
 import AboutUs from './AboutUs'
 import ItemOne from './ItemOne'
 import StripeContainer from './CardPayment/StripeContainer.js'
+import ItemSearch from './ItemSearch'
 
 export {
     Home,
@@ -19,5 +20,6 @@ export {
     ContactUs,
     AboutUs,
     ItemOne,
-    StripeContainer
+    StripeContainer,
+    ItemSearch
 }

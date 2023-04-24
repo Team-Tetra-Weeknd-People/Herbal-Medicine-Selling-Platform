@@ -11,9 +11,6 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-
-
-
 //authenticating the buyer
 export const authBuyer = async (req, res) => {
     const { email, password } = req.body;
@@ -65,14 +62,11 @@ export const createBuyer = async (req, res) => {
     try {
         await newBuyer.save();
         res.status(201).json(newBuyer);
-
-        
     } catch (error) {
         res.status(404).json({ message: error });
     }
 
     const id = newBuyer._id;
-
 
     const url = `http://localhost:3000/verify/${id}`;
 
