@@ -14,7 +14,7 @@
     font-size: 30px;
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
-    background-color: rgba(192, 249, 143, 0.985);
+    background-color: #ACDF87;
   }
   
   .text {
@@ -26,7 +26,7 @@
   }
   
   .Aboutcard {
-    background-color: rgba(192, 249, 143, 0.985);
+    background-color: #ACDF87;
   }
 
   .text_des{

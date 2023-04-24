@@ -1,13 +1,13 @@
 .c_container{
     padding: 100px;
-    background-color: rgba(239, 235, 235, 0.904);
+    background-color:#ACDF87;
     border-radius: 10px;
     border: 2px double black;
     margin-top: 150px;
     width: 600px;
     height: 700px;
     margin: 0px auto;
-    border-color:rgba(239, 235, 235, 0.904);
+    border-color:#ACDF87;
   
 }
 
