@@ -561,56 +561,56 @@ export default function Navbar() {
                 {/* firstName */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller First Name</label>
-                  <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                  <Field name="firstName" placeholder="First Name" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.firstName}</div>
                 </div>
 
                 {/* lastName */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Last Name</label>
-                  <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
+                  <Field name="lastName" placeholder="Last Name" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.lastName}</div>
                 </div>
 
                 {/* email */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Email</label>
-                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <Field name="email" placeholder="example@abc.com" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* contactNo */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Contact No</label>
-                  <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
+                  <Field name="contactNo" placeholder="+94770000000" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.contactNo}</div>
                 </div>
 
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Password</label>
-                  <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                  <Field name="password" placeholder="Password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
                 {/* confirmPassword */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Confirm Password</label>
-                  <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                  <Field name="confirmPassword" placeholder="Confirm Password" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.confirmPassword}</div>
                 </div>
 
                 {/* companyName */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Company Name</label>
-                  <Field name="companyName" type="text" className={'form-control' + (errors.companyName && touched.companyName ? ' is-invalid' : '')} />
+                  <Field name="companyName" placeholder="Company Name" type="text" className={'form-control' + (errors.companyName && touched.companyName ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.companyName}</div>
                 </div>
 
                 {/* companyAddress */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Company Address</label>
-                  <Field name="companyAddress" type="text" className={'form-control' + (errors.companyAddress && touched.companyAddress ? ' is-invalid' : '')} />
+                  <Field name="companyAddress" placeholder="Company Address" type="text" className={'form-control' + (errors.companyAddress && touched.companyAddress ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.companyAddress}</div>
                 </div>
 
@@ -667,49 +667,49 @@ export default function Navbar() {
                 {/* firstName */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer First Name</label>
-                  <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                  <Field name="firstName" placeholder="First name" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.firstName}</div>
                 </div>
 
                 {/* lastName */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Last Name</label>
-                  <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
+                  <Field name="lastName" placeholder="Last name" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.lastName}</div>
                 </div>
 
                 {/* email */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Email</label>
-                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <Field name="email" placeholder="example@abc.com" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* contactNo */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Contact No</label>
-                  <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
+                  <Field name="contactNo" placeholder="+94770000000" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.contactNo}</div>
                 </div>
 
                 {/* address */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Address</label>
-                  <Field name="address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
+                  <Field name="address" placeholder="Address" type="text" className={'form-control' + (errors.address && touched.address ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.address}</div>
                 </div>
 
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Password</label>
-                  <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                  <Field name="password" placeholder="Password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
                 {/* confirmPassword */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Confirm Password</label>
-                  <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                  <Field name="confirmPassword" placeholder="Confirm Password" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.confirmPassword}</div>
                 </div>
 
@@ -824,14 +824,14 @@ export default function Navbar() {
                 {/* email */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Email</label>
-                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <Field name="email" placeholder="example@abc.com" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Seller Password</label>
-                  <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                  <Field name="password" placeholder="Password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
@@ -881,14 +881,14 @@ export default function Navbar() {
                 {/* email */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Email</label>
-                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <Field name="email" placeholder="example@abc.com" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Buyer Password</label>
-                  <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                  <Field name="password" placeholder="Password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
@@ -938,14 +938,14 @@ export default function Navbar() {
                 {/* username */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Admin Email</label>
-                  <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                  <Field name="email" placeholder="example@abc.com" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 {/* password */}
                 <div className="form-group col-md-6">
                   <label htmlFor="empNo">Admin Password</label>
-                  <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                  <Field name="password" placeholder="Password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
                   <div className="invalid-feedback">{errors.password}</div>
                 </div>
 
