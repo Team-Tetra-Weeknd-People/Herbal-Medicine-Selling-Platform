@@ -79,7 +79,7 @@ export default function Home() {
             .required('Required'),
         contactNo: Yup.string()
             .min(10, 'Too Short!')
-            .max(10, 'Too Long!')
+            .max(12, 'Too Long!')
             .required('Required'),
         address: Yup.string()
             .min(5, 'Too Short!')
@@ -806,7 +806,7 @@ export default function Home() {
             </Modal>
 
             <br /><br /><br /><br /><br />
-            <div className="Sellerlanding">
+            <div className="Buyerlanding">
                 <Row>
                     <Col>
                         <br />

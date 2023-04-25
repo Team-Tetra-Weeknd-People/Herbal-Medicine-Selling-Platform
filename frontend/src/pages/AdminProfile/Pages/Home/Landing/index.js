@@ -925,21 +925,21 @@ export default function Landing() {
                             <Form>
                                 {/* firstName */}
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="empNo">Buyer First Name</label>
+                                    <label htmlFor="empNo">First Name</label>
                                     <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                                     <div className="invalid-feedback">{errors.firstName}</div>
                                 </div>
 
                                 {/* lastName */}
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="empNo">Buyer Last Name</label>
+                                    <label htmlFor="empNo">Last Name</label>
                                     <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                                     <div className="invalid-feedback">{errors.lastName}</div>
                                 </div>
 
                                 {/* contactNo */}
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="empNo">Buyer Contact No</label>
+                                    <label htmlFor="empNo">Contact No</label>
                                     <Field name="contactNo" type="text" className={'form-control' + (errors.contactNo && touched.contactNo ? ' is-invalid' : '')} />
                                     <div className="invalid-feedback">{errors.contactNo}</div>
                                 </div>

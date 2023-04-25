@@ -100,7 +100,7 @@ function AppSlider() {
   return (
 
     <>
-      <div className='container'><div className='home-container'><h1><center>Home</center></h1>
+      <div className='container'><div className='home-container'><h1 className='home_c'><center>Home</center></h1>
         <section className="slide-show">
           <div className="slider">
             <div className="slide active" >
@@ -116,7 +116,7 @@ function AppSlider() {
               <div className="container" id='img2'>
                 <div className="caption">
                   <h1>Oil</h1>
-                  <p>For healthy and long hair</p>
+                  <p>For a healthy and Long Hair</p>
                   <a href="" >More...</a>
                 </div>
               </div>
@@ -142,8 +142,8 @@ function AppSlider() {
             <div className="slide" >
               <div className="container" id='img5'>
                 <div className="caption">
-                  <h1>Janet</h1>
-                  <p>Confidence is the KEY</p>
+                  <h1>Body Lotions</h1>
+                  <p>Moisturize Your Skin</p>
                   <a href="" >More...</a>
                 </div>
               </div>

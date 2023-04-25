@@ -191,7 +191,7 @@
   }
   #img5{
   background-color: #000000;
-  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Fmaxresdefault.jpg?alt=media&token=6986b62c-0575-4535-9274-58bf61257eac');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Fbody-lotion-with-lemon-skin-care-cosmetics-realistic-ads-poster-dispenser-bottle-with-organic-moisturizer_88138-131.avif?alt=media&token=7179dbf2-b6cb-449a-947f-56c49f89b2b8');
   background-size: cover;
   }
   #img5 h1, #img5 p{
@@ -218,4 +218,8 @@
     color: rgb(5, 46, 53);
     transform: translate(-0%,0%);
     z-index: 1;
+  }
+
+  .home_c{
+    color: white;
   }
