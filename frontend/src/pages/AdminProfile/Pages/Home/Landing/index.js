@@ -116,8 +116,8 @@ export default function Landing() {
             .max(50, 'Too Long!')
             .required('Required'),
         contactNo: Yup.string()
-            .min(10, 'Too Short!')
-            .max(10, 'Too Long!')
+            .min(11, 'Too Short!')
+            .max(11, 'Too Long!')
             .required('Required'),
     });
 
@@ -132,8 +132,8 @@ export default function Landing() {
             .max(50, 'Too Long!')
             .required('Required'),
         contactNo: Yup.string()
-            .min(10, 'Too Short!')
-            .max(10, 'Too Long!')
+            .min(11, 'Too Short!')
+            .max(11, 'Too Long!')
             .required('Required'),
         email: Yup.string()
             .email('Invalid email')

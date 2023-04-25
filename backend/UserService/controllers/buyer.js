@@ -80,17 +80,17 @@ export const createBuyer = async (req, res) => {
 
     axios.post(`https://app.notify.lk/api/v1/send`, {
         user_id: process.env.USER_ID,
-        api_key:process.env.API_KEY,
+        api_key: process.env.API_KEY,
         sender_id: "NotifyDEMO",
         to: newBuyer.contactNo,
-        message: "Test"
+        message: `New Buyer Account Created for ${newBuyer.firstName} ${newBuyer.lastName}`
     })
-    .then(res => {
-        console.log(res.data);
-    }).catch(err => {
-        console.log(err);
-    }
-    );
+        .then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        }
+        );
 
 }
 
@@ -145,7 +145,7 @@ export const getBuyerByEmail = async (req, res) => {
         res.status(200).send({ status: "email sent" });
 
     } catch (error) {
-        res.status(404).json({ message: error });                    
+        res.status(404).json({ message: error });
     }
 }
 
