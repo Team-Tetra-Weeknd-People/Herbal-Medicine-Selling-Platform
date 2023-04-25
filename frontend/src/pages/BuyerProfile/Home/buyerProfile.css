@@ -39,3 +39,11 @@ img.itemimgprofile{
     margin-left: 10px;
     margin-top: 10px;
 }
+
+.Buyerlanding{
+    width: 90%;
+    height: 530px;
+    margin: 0px auto;
+    border-radius: 10px;
+    background-color: #ACDF87; 
+}

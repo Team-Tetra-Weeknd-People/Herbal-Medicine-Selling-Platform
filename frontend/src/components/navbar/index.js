@@ -48,7 +48,7 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(12, 'Too Short!')
+      .min(10, 'Too Short!')
       .max(12, 'Too Long!')
       .required('Required'),
     address: Yup.string()
@@ -78,7 +78,7 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(12, 'Too Short!')
+      .min(10, 'Too Short!')
       .max(12, 'Too Long!')
       .required('Required'),
     password: Yup.string()

@@ -157,7 +157,7 @@ export default function ConfirmedOrders() {
                     className={`form-control ${touched.deliveryPartner && errors.deliveryPartner ? "is-invalid" : ""
                       }`}
                   >
-                    <option value="" >Select Delivery Partner</option>
+                    <option value="">Select Delivery Partner</option>
                     {delivery.map((del) => (
                       <option value={del.email}>{del.name}</option>
                     ))}
@@ -189,7 +189,7 @@ export default function ConfirmedOrders() {
         keyboard={false}
         size="xl"
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='headerM'>
           <Modal.Title>Cart Items</Modal.Title>
         </Modal.Header>
         <Modal.Body>
