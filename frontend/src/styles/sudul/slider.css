@@ -143,55 +143,55 @@
   }
   #img1{
   background-color: #000000;
-  background-image: url('./images/st.jpeg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2FE1-R_PBVUAE1EI9.jpg?alt=media&token=556d0ee7-91b2-4611-9f2d-91bd872f5433');
   background-size: cover;
   }
   #img1 h1, #img1 p{
     color: #ffffff;
   }
   #img1 a{
-    background-color: brown;
+    background-color: rgb(42, 165, 61);
   }
   #img2{
   background-color: #000000;
-  background-image: url('./images/pd.jpeg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Flarge_694664_thp4zwfqktr_tn6sibjkxktbh.jpg?alt=media&token=22960715-4649-44e6-8b76-2fa035bba619');
   background-size: cover;
   }
   #img2 h1, #img2 p{
-    color: #020202;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
+    color: black
+    /* -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black; */
   }
   #img2 a{
-    background-color: rgb(107, 2, 2);
+    background-color: rgb(42, 165, 93);
   }
   #img3{
   background-color: #000000;
-  background-image: url('./images/sp.jpg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Fsoap-ad%20(2).jpg?alt=media&token=47b81438-bb38-4780-b5a0-5e20208c9016');
   background-size: cover;
   }
   #img3 h1, #img3 p{
     color: #000000;
   }
   #img3 a{
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(42, 165, 61);
   }
   #img4{
   background-color: #000000;
-  background-image: url('./images/fw1.jpg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2FGirl-1.jpg?alt=media&token=9c71a909-f550-4c2c-90b5-516c5ae07aeb');
   background-size: cover;
   }
   #img4 h1, #img4 p{
-    color: #aa004f;
+    color: black;
     -webkit-text-stroke-width: 0.3px;
     -webkit-text-stroke-color: wheat;
   }
   #img4 a{
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(12, 207, 41);
   }
   #img5{
   background-color: #000000;
-  background-image: url('./images/tp.jpg');
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2Fmaxresdefault.jpg?alt=media&token=6986b62c-0575-4535-9274-58bf61257eac');
   background-size: cover;
   }
   #img5 h1, #img5 p{
@@ -200,8 +200,9 @@
     -webkit-text-stroke-color: limegreen;
   }
   #img5 a{
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(12, 207, 41);
   }
+  
   .home-container{
   background-color: rgb(255, 255, 255);
   padding-top: 0.25%;
