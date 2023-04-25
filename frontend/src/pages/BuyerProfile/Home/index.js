@@ -23,7 +23,7 @@ import ItemService from '../../../services/item.service'
 export default function Home() {
 
     const update = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F20943587.jpg?alt=media&token=046cad2b-0e68-478c-b913-7adf12f35169";
-    const deleteImage = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F3024051.jpg?alt=media&token=a122e178-df9f-48b2-b38a-865012714094";
+    const deleteImage = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2FWavy_Bus-26_Single-11.jpg?alt=media&token=3abd8831-4bef-4558-b230-f8cde15cd869";
 
     document.body.style.overflow = "visible";
 
