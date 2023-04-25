@@ -227,6 +227,20 @@ export default function Navbar() {
               BuyerAuth.login(login).then((res) => {
                 sessionStorage.setItem("user-type", res.data.user);
                 handleToken(res.data.token);
+                const cart = {
+                  buyerID: sessionStorage.getItem("user-id"),
+                  buyerfname: sessionStorage.getItem("fname"),
+                  buyerlname: sessionStorage.getItem("lname"),
+                  buyeremail: sessionStorage.getItem("email"),
+                  buyercontactno: sessionStorage.getItem("contactNo"),
+                }
+                CartService.create(cart).then((res) => {
+                  console.log(res);
+                  console.log(res.data._id);
+                  sessionStorage.setItem("cart-id", res.data._id);
+                }).catch((err) => {
+                  console.log(err);
+                });
                 window.location.href = "/buyerProfile";
               }).catch((err) => {
                 console.log(err);
@@ -239,7 +253,7 @@ export default function Navbar() {
             icon: 'error',
             title: 'Error',
             text: 'Please Check Your Email!!',
-            footer: 'Your Your Email is already in the Database!!'
+            footer: 'Your Email is already in the Database!!'
           }).then((result) => {
             if (result.isConfirmed) {
               return;
