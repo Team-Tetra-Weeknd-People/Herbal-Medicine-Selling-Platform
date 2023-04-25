@@ -1,7 +1,7 @@
 .sellerItemsPage {
     width: 90%;
     min-height: 580px;
-    background-color: rgba(83, 153, 94, 0.274);
+    background-color: #ACDF87;
     margin: 0px auto;
     border-radius: 10px;
     margin-top: 20px;
@@ -17,7 +17,7 @@ Card.itemCard {
 .sellerItemRow {
     width: 90%;
     height: 60px;
-    background-color: rgba(83, 153, 94, 0.274);
+    background-color: #ACDF87;
     margin: 0px auto;
     border-radius: 10px;
     padding-top: 8px
@@ -30,4 +30,10 @@ Card.itemCard {
 
 .searchInput {
     width: 400px;
+}
+
+.itemAlert{
+    background-color: #ACDF87;
+  
+  
 }
