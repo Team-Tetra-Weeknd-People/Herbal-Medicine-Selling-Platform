@@ -48,7 +48,7 @@ export default function Landing() {
     const ItemSchema = Yup.object().shape({
         name: Yup.string()
             .min(5, 'Too Short!')
-            .max(50, 'Too Long!')
+            .max(60, 'Too Long!')
             .required('Required'),
         description: Yup.string()
             .min(10, 'Too Short!')
@@ -416,7 +416,7 @@ export default function Landing() {
                         <Button variant="primary" onClick={handleShowItemAdd}>Add New Item</Button>
                     </Col>
                     <Col sm={8}>
-                        <Alert key='success' variant='success'>
+                        <Alert key='success' variant='success' className='itemAlert'>
                             All The Items Registered To Your Account/Brand
                         </Alert>
                     </Col>

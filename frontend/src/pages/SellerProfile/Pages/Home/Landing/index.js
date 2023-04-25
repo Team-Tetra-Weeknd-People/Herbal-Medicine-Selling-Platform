@@ -428,7 +428,7 @@ export default function Landing() {
                     </Col>
                     <Col style={{ padding: '10px' }}>
 
-                        <Alert variant='success'>
+                        <Alert variant='success'className='alertI'>
                             Recently Sold Items From Your Store
                         </Alert>
                         <Table striped bordered hover >
