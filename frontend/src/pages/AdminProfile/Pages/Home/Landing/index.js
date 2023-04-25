@@ -23,6 +23,10 @@ import DeliveryService from '../../../../../services/delivery.service'; //4
 
 export default function Landing() {
 
+    const add = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F4270272.jpg?alt=media&token=fbdd98a6-040e-4ccd-9b7a-472201ed1dec";
+    const update = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F20943587.jpg?alt=media&token=046cad2b-0e68-478c-b913-7adf12f35169";
+    const deleteImage = "https://firebasestorage.googleapis.com/v0/b/beheth-kade-6ds3w9c.appspot.com/o/asserts%2F3024051.jpg?alt=media&token=a122e178-df9f-48b2-b38a-865012714094";
+
     document.body.style.overflow = "visible";
 
     const [admin, setAdmin] = useState({});
@@ -717,7 +721,7 @@ export default function Landing() {
                     <Row>
                         <Col>
                             <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Img variant="top" src={update} />
                                 <Card.Body>
                                     <Card.Title>Update Password</Card.Title>
                                     <Button variant="danger" onClick={handleShowUpdatePassword}>Update Password</Button>
@@ -727,7 +731,7 @@ export default function Landing() {
 
                         <Col>
                             <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Img variant="top" src={add} />
                                 <Card.Body>
                                     <Card.Title>Add New Admin</Card.Title>
                                     <Button variant="success" onClick={handleShowAddAdmin}>Add New Admin</Button>
@@ -737,7 +741,7 @@ export default function Landing() {
 
                         <Col>
                             <Card style={{ width: '18rem' }}>
-                                <Card.Img variant="top" src="holder.js/100px180" />
+                                <Card.Img variant="top" src={deleteImage} />
                                 <Card.Body>
                                     <Card.Title>Delete This Admin Account</Card.Title>
                                     <Button variant="danger" onClick={() => deleteAccount(sessionStorage.getItem("user-id"))}>Delete Account</Button>
