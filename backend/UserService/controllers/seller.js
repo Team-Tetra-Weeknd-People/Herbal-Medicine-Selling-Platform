@@ -83,7 +83,7 @@ export const createSeller = async (req, res) => {
         api_key: process.env.API_KEY,
         sender_id: "NotifyDEMO",
         to: newSeller.contactNo,
-        message: "Test"
+        message: `New Seller Account Created for ${newSeller.companyName}`
     })
         .then(res => {
             console.log(res.data);

@@ -78,8 +78,8 @@ export default function Home() {
             .max(50, 'Too Long!')
             .required('Required'),
         contactNo: Yup.string()
-            .min(10, 'Too Short!')
-            .max(12, 'Too Long!')
+            .min(11, 'Too Short!')
+            .max(11, 'Too Long!')
             .required('Required'),
         address: Yup.string()
             .min(5, 'Too Short!')
@@ -146,12 +146,12 @@ export default function Home() {
             });
     }, []);
 
-    //get seller details
+    //get buyer details
     useEffect(() => {
         BuyerAuth.getCurrentUser(sessionStorage.getItem("user-id")).then(
             (response) => {
                 setBuyer(response.data);
-                console.log(buyer, 'seller');
+                console.log(buyer, 'buyer');
             },
             (error) => {
                 (error.response &&
@@ -200,7 +200,7 @@ export default function Home() {
                         BuyerAuth.getCurrentUser(sessionStorage.getItem("user-id")).then(
                             (response) => {
                                 setBuyer(response.data);
-                                console.log(buyer, 'seller');
+                                console.log(buyer, 'buyer');
                             },
                             (error) => {
                                 (error.response &&
@@ -236,7 +236,7 @@ export default function Home() {
             })
     }
 
-    //delete seller
+    //delete buyer
     async function deleteBuyer(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -254,7 +254,7 @@ export default function Home() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Deleted !!',
-                            text: 'This Seller has been Deleted !!',
+                            text: 'This Buyer has been Deleted !!',
                             footer: 'You will be redirected to the Home Page'
                         })
                             .then(() => {
@@ -424,7 +424,7 @@ export default function Home() {
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src="holder.js/100px180" />
                                 <Card.Body>
-                                    <Card.Title>Delete This Seller Account</Card.Title>
+                                    <Card.Title>Delete This Buyer Account</Card.Title>
                                     <Button variant="danger" onClick={() => deleteBuyer(sessionStorage.getItem("user-id"))}>Delete Account</Button>
                                 </Card.Body>
                             </Card>
