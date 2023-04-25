@@ -95,7 +95,7 @@ export default function Dispatched() {
         keyboard={false}
         size="xl"
       >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='headerM'>
           <Modal.Title>Cart Items</Modal.Title>
         </Modal.Header>
         <Modal.Body>

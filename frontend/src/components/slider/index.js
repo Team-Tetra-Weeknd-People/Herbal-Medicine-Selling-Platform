@@ -100,14 +100,14 @@ function AppSlider() {
   return (
 
     <>
-      <div className='container'><div className='home-container'><h1><center>Home</center></h1>
+      <div className='container'><div className='home-container'><h1 className='home_c'><center>Home</center></h1>
         <section className="slide-show">
           <div className="slider">
             <div className="slide active" >
               <div className="container" id='img1'>
                 <div className="caption">
-                  <h1>Slim Tea</h1>
-                  <p>Tummy Tea.Flat Tummy.</p>
+                  <h1>Teas</h1>
+                  <p>Refresh Your Day</p>
                   <a href="" >More...</a>
                 </div>
               </div>
@@ -115,8 +115,8 @@ function AppSlider() {
             <div className="slide" >
               <div className="container" id='img2'>
                 <div className="caption">
-                  <h1>Pharmaceutical Drugs</h1>
-                  <p>Take a Pill.</p>
+                  <h1>Oil</h1>
+                  <p>For a healthy and Long Hair</p>
                   <a href="" >More...</a>
                 </div>
               </div>
@@ -125,7 +125,7 @@ function AppSlider() {
               <div className="container" id='img3'>
                 <div className="caption">
                   <h1>Soap</h1>
-                  <p>Happy Kids. Happy Life</p>
+                  <p>Healthy Skin. Happy Life</p>
                   <a href="" >More...</a>
                 </div>
               </div>
@@ -134,7 +134,7 @@ function AppSlider() {
               <div className="container" id='img4'>
                 <div className="caption">
                   <h1>Face Wash</h1>
-                  <p>Confidence is the KEY</p>
+                  <p>Control Your Pimples</p>
                   <a href="" >More...</a>
                 </div>
               </div>
@@ -142,8 +142,8 @@ function AppSlider() {
             <div className="slide" >
               <div className="container" id='img5'>
                 <div className="caption">
-                  <h1>ToothPaste</h1>
-                  <p>Confidence is the KEY</p>
+                  <h1>Body Lotions</h1>
+                  <p>Moisturize Your Skin</p>
                   <a href="" >More...</a>
                 </div>
               </div>
