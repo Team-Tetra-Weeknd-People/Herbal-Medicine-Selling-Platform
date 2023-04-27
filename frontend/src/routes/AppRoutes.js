@@ -16,7 +16,7 @@ import {
 } from '../pages'
 
 import {
-    footer,
+    Footer,
 } from '../components'
 
 import {
@@ -89,7 +89,7 @@ export default function App() {
                     <Route path="/payment" element={<StripeContainer />} />
 
                 </Routes>
-                <footer />
+                <Footer />
             </Router>
         </>
     )

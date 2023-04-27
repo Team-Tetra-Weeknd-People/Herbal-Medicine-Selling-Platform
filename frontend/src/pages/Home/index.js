@@ -3,7 +3,7 @@ import "../../styles/sudul/Home.css";
 import {
   Navbar,
   ItemCart,
-  AppSlider
+  AppSlider,
 } from "../../components";
 
 import NewItems from "./NewItems";
@@ -22,7 +22,6 @@ function Home() {
       <NewItems />
       <TopItems />
       <RandomItems />
-
     </>
   );
 }
