@@ -48,8 +48,8 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(11, 'Too Short!')
-      .max(11, 'Too Long!')
+      .min(12, 'Too Short!')
+      .max(12, 'Too Long!')
       .required('Required'),
     address: Yup.string()
       .min(5, 'Too Short!')
@@ -78,8 +78,8 @@ export default function Navbar() {
       .email('Invalid email')
       .required('Required'),
     contactNo: Yup.string()
-      .min(11, 'Too Short!')
-      .max(11, 'Too Long!')
+      .min(12, 'Too Short!')
+      .max(12, 'Too Long!')
       .required('Required'),
     password: Yup.string()
       .min(8, 'Too Short! Enter More Than 8 Characters')
